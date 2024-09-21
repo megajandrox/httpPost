@@ -1,5 +1,6 @@
 package com.http.post;
 
+import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.model.*;
 
 import java.util.ArrayList;
@@ -22,22 +23,26 @@ public class RequestBuilder {
     private RequestBuilder() {}
 
 
-    public Request build(String url, String method) {
-        final Request request = new Request(url, Method.valueOf(method));
-        components.forEach(c -> {
-            switch (c.getClass().getSimpleName()) {
-                case "Body":
-                    request.setBody((Body) c);
-                    break;
-                case "Header":
-                    request.getHeaders().add((Header) c);
-                    break;
-                case "QueryParam":
-                    request.getQueryParams().add((QueryParam) c);
-                    break;
-            }
-        });
-        return request;
+    public Request build(String url, String method) throws InvalidMethodException {
+        try {
+            final Request request = new Request(url, Method.valueOf(method));
+            components.forEach(c -> {
+                switch (c.getClass().getSimpleName()) {
+                    case "Body":
+                        request.setBody((Body) c);
+                        break;
+                    case "Header":
+                        request.getHeaders().add((Header) c);
+                        break;
+                    case "QueryParam":
+                        request.getQueryParams().add((QueryParam) c);
+                        break;
+                }
+            });
+            return request;
+        } catch (IllegalArgumentException e) {
+            throw new InvalidMethodException(method);
+        }
     }
 
 }
