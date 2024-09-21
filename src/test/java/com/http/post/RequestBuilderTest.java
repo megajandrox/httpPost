@@ -2,10 +2,13 @@ package com.http.post;
 
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.model.*;
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-public class RequestBuilderTest extends TestCase {
+public class RequestBuilderTest {
 
+    @Test
     public void testBuild() throws InvalidMethodException {
         Request request = RequestBuilder.getInstance()
                 .addComponent(new Body("body", "application/json"))
@@ -20,7 +23,8 @@ public class RequestBuilderTest extends TestCase {
         assertEquals("value", request.getQueryParams().get(0).getValue());
     }
 
-    public void testBuildInvalidMethod() throws InvalidMethodException {
+    @Test
+    public void testBuildInvalidMethod(){
         try {
             RequestBuilder.getInstance()
                     .addComponent(new Body("body", "application/json"))
