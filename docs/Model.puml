@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+
+Method <-- Request
+Body <-- Request
+Header <-- Request
+QueryParam <-- Request
+Request <-- RequestBuilder
+
+class QueryParam {
+    Long id
+    String key
+    String value
+}
+
+class Header {
+    Long id
+    String key
+    String value
+}
+
+class Body {
+    Long id
+    String contentType
+    String content
+}
+
+enum Method {
+    GET, POST, PUT, DELETE, PATCH
+}
+
+class Request {
+    Long id
+    String url
+    Method method
+    Body body
+    List<Header> headers
+    List<QueryParam> queryParams
+}
+
+class RequestBuilder {
+    List<Component> components
+    RequestBuilder addComponent(Component component)
+    Request build()
+}
+@enduml
