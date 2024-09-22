@@ -10,6 +10,7 @@ import com.http.post.model.Response;
 import org.junit.Test;
 import java.io.IOException;
 
+import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 
 public class GetRequestTest extends WireMockHttpClientTest {
@@ -18,7 +19,7 @@ public class GetRequestTest extends WireMockHttpClientTest {
     public void testExecute() throws IOException, InvalidMethodException, RequestExecutionException {
         RequestBuilder builder = RequestBuilder.getInstance();
         builder.addComponent(new Header("Content-Type", CONTENT_TYPE));
-        Request request = builder.build(String.format(BASE_URL + "%s",ENDPOINT), "GET");
+        Request request = builder.build(format(BASE_URL + "%s",ENDPOINT), "GET");
         SingleRunner runner = new SingleRunner(request);
         Response response = runner.execute();
         assertEquals(response.getStatusCode(), 200);
@@ -31,7 +32,7 @@ public class GetRequestTest extends WireMockHttpClientTest {
     public void testQueryParamExecute() throws IOException, InvalidMethodException, RequestExecutionException {
         RequestBuilder builder = RequestBuilder.getInstance();
         builder.addComponent(new QueryParam("param1", "value1"));
-        Request request = builder.build(String.format(BASE_URL + "%s",ENDPOINT), "GET");
+        Request request = builder.build(format(BASE_URL + "%s",ENDPOINT), "GET");
         SingleRunner runner = new SingleRunner(request);
         Response response = runner.execute();
         assertEquals(response.getStatusCode(), 200);

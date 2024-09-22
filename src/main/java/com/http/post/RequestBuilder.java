@@ -6,6 +6,10 @@ import com.http.post.model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to build a request
+ * Is a builder pattern with singleton pattern
+ */
 public class RequestBuilder {
 
     private static final RequestBuilder INSTANCE = new RequestBuilder();
@@ -42,6 +46,8 @@ public class RequestBuilder {
             return request;
         } catch (IllegalArgumentException e) {
             throw new InvalidMethodException(method);
+        } finally {
+            components.clear();
         }
     }
 

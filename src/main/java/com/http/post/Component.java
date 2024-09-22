@@ -1,4 +1,6 @@
 package com.http.post;
 
-public interface Component {
-}
+/**
+ * Interface to create the request based on the method
+ */
+public interface Component { }

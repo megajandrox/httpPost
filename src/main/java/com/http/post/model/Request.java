@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @lombok.Data
 public class Request {
@@ -22,4 +23,13 @@ public class Request {
     private List<Header> headers = new ArrayList<>();
     @EqualsAndHashCode.Exclude
     private List<QueryParam> queryParams = new ArrayList<>();
+
+    private String getQueryParamsAsString() {
+        return this.queryParams.stream()
+                .map(qp -> String.format("%s=%s", qp.getKey(), qp.getValue())).collect(Collectors.joining("&"));
+    }
+
+    public String getFullUrl() {
+        return queryParams.isEmpty() ? this.getUrl() : this.getUrl() + "?" + getQueryParamsAsString();
+    }
 }

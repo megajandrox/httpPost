@@ -1,83 +1,77 @@
 package com.http.post.service;
 
+import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.exceptions.RequestExecutionException;
 import com.http.post.model.Request;
 import com.http.post.model.Response;
+import com.http.post.service.build.DeleteStrategy;
+import com.http.post.service.build.GetStrategy;
+import com.http.post.service.build.PostStrategy;
+import com.http.post.service.build.PutStrategy;
+import com.http.post.utils.HttpEntityUtils;
+import com.http.post.utils.RequestConfigUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
 
-//TODO: factory pattern to create different request types
+import java.io.IOException;
+
+/**
+ * This class is used to execute a single request. It is the most basic class to use.
+ * It is used to execute a request and get the response.
+ * <p>
+ */
 public class SingleRunner {
 
-    private Request request;
-
+    private final Request request;
     public SingleRunner(Request request) {
         this.request = request;
     }
 
-    //TODO: Create an strategy pattern to execute different requests methods
-    public Response execute() throws IOException, RequestExecutionException {
-        RequestConfig requestConfig = getRequestConfig();
+    /**
+     * Factory method to create the request based on the method
+     * @return HttpRequestBase request to execute  {@link HttpRequestBase}
+     * @throws InvalidMethodException if the method is not supported
+     */
+    private HttpRequestBase factoryStrategy() throws InvalidMethodException {
+        switch (this.request.getMethod()) {
+            case GET:
+                return new GetStrategy().createRequest(this.request);
+            case POST:
+                return new PostStrategy().createRequest(this.request);
+            case PUT:
+                return new PutStrategy().createRequest(this.request);
+            case DELETE:
+                return new DeleteStrategy().createRequest(this.request);
+        }
+        throw new InvalidMethodException(this.request.getMethod().toString());
+    }
+
+    /**
+     * Execute the request and get the response
+     * @return Response response of the request
+     * @throws IOException if there is an error in the connection
+     * @throws RequestExecutionException if there is an error in the request
+     * @throws InvalidMethodException if the method is not supported
+     */
+    public Response execute() throws IOException, RequestExecutionException, InvalidMethodException {
+        RequestConfig requestConfig = RequestConfigUtils.basicConfiguration();
         try (CloseableHttpClient httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(requestConfig)
                 .build()) {
-            String queryParams = getQueryParams();
-            HttpGet getRequest = new HttpGet(queryParams.isEmpty() ? this.request.getUrl() : this.request.getUrl() + "?" + queryParams);
-            // TODO: Create an strategy pattern to execute different requests methods
-            // HttpPost postRequest = new HttpPost(queryParams.isEmpty() ? this.request.getUrl() : this.request.getUrl() + "?" + queryParams);
-            addHeaders(getRequest);
-            try (CloseableHttpResponse response = httpClient.execute(getRequest)) {
+            HttpRequestBase httpRequest = factoryStrategy();
+            try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
                 Response responseModel = new Response();
                 HttpEntity entity = response.getEntity();
-                try (InputStream inputStream = entity.getContent()) {
-                    String responseString = convertInputStreamToString(inputStream);
-                    responseModel.setBody(responseString);
-                    responseModel.setContentType(entity.getContentType().getValue());
-                } catch (IOException e) {
-                    throw new RequestExecutionException(e);
-                }
+                responseModel.setBody(HttpEntityUtils.getContentType(entity));
+                responseModel.setContentType(entity.getContentType() != null ? entity.getContentType().getValue() : null);
                 responseModel.setStatusCode(response.getStatusLine().getStatusCode());
                 responseModel.setStatusMessage(response.getStatusLine().getReasonPhrase());
                 return responseModel;
             }
         }
-    }
-
-    private void addHeaders(HttpGet getRequest) {
-        this.request.getHeaders().forEach(header -> getRequest.addHeader(header.getKey(), header.getValue()));
-    }
-
-    private String getQueryParams() {
-        return this.request.getQueryParams().stream()
-                .map(qp -> String.format("%s=%s", qp.getKey(), qp.getValue())).collect(Collectors.joining("&"));
-    }
-
-    private static RequestConfig getRequestConfig() {
-        return RequestConfig.custom()
-               .setConnectTimeout(5000)
-               .setSocketTimeout(5000)
-               .setConnectionRequestTimeout(5000)
-               .setContentCompressionEnabled(false)
-               .build();
-    }
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream result = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = inputStream.read(buffer)) != -1) {
-            result.write(buffer, 0, length);
-        }
-        return result.toString(StandardCharsets.UTF_8.name());
     }
 }
