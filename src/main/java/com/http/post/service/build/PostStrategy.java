@@ -1,6 +1,10 @@
 package com.http.post.service.build;
 
 import com.http.post.model.Request;
+import com.http.post.utils.InputStreamUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 
 /**
@@ -9,6 +13,11 @@ import org.apache.http.client.methods.HttpRequestBase;
 public class PostStrategy implements RequestStrategy {
     @Override
     public HttpRequestBase createRequest(Request request) {
-        return null;
+        HttpPost requestBase = new HttpPost(request.getFullUrl());
+        BasicHttpEntity entity = new BasicHttpEntity();
+        entity.setContent(InputStreamUtils.convertStringToInputStream(request.getBody().getContent()));
+        entity.setContentType(request.getBody().getContentType());
+        requestBase.setEntity(entity);
+        return addHeaders(requestBase, request);
     }
 }

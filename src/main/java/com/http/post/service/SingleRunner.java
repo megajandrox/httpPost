@@ -66,8 +66,10 @@ public class SingleRunner {
             try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
                 Response responseModel = new Response();
                 HttpEntity entity = response.getEntity();
-                responseModel.setBody(HttpEntityUtils.getContentType(entity));
-                responseModel.setContentType(entity.getContentType() != null ? entity.getContentType().getValue() : null);
+                if (entity != null) {
+                    responseModel.setBody(HttpEntityUtils.getContentType(entity));
+                    responseModel.setContentType(entity.getContentType() != null ? entity.getContentType().getValue() : null);
+                }
                 responseModel.setStatusCode(response.getStatusLine().getStatusCode());
                 responseModel.setStatusMessage(response.getStatusLine().getReasonPhrase());
                 return responseModel;

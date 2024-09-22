@@ -1,6 +1,7 @@
 package com.http.post.service.build;
 
 import com.http.post.model.Request;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpRequestBase;
 
 /**
@@ -9,6 +10,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 public class DeleteStrategy implements RequestStrategy {
     @Override
     public HttpRequestBase createRequest(Request request) {
-        return null;
+        HttpRequestBase requestBase = new HttpDelete(request.getUrl());
+        return addHeaders(requestBase, request);
     }
 }
