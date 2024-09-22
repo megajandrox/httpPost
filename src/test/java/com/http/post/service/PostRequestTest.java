@@ -35,7 +35,7 @@ public class PostRequestTest extends WireMockHttpClientTest {
     public void testNotFoundExecute() throws IOException, InvalidMethodException, RequestExecutionException {
         RequestBuilder builder = RequestBuilder.getInstance();
         builder.addComponent(new Header("Content-Type", CONTENT_TYPE));
-        Request request = builder.build(format(BASE_URL + "%s/bad",ENDPOINT), "POST");
+        Request request = builder.build(format(BASE_URL + "%s/pepe",ENDPOINT), "POST");
         request.setBody(new Body("{\"message\": \"success\"}", CONTENT_TYPE));
         SingleRunner runner = new SingleRunner(request);
         Response response = runner.execute();
