@@ -2,6 +2,8 @@
 
 A simple library to build http requests.
 
+[![Java CI with Maven](https://github.com/megajandrox/httpPost/actions/workflows/maven.yml/badge.svg)](https://github.com/megajandrox/httpPost/actions/workflows/maven.yml)
+
 ### Requirements
 
 * Java 8    
