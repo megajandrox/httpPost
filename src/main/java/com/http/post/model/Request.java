@@ -32,4 +32,16 @@ public class Request {
     public String getFullUrl() {
         return queryParams.isEmpty() ? this.getUrl() : this.getUrl() + "?" + getQueryParamsAsString();
     }
+
+    public void addQueryParam(QueryParam queryParam) {
+        this.queryParams.add(queryParam);
+    }
+
+    public void addHeader(Header header) {
+        this.headers.add(header);
+    }
+
+    public String toString() {
+        return String.format("Request{url='%s', method='%s', body='%s', headers=%s, queryParams=%s}", url, method, body, headers, queryParams);
+    }
 }

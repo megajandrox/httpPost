@@ -1,4 +1,4 @@
-package com.http.post.view;
+package com.http.post.view.buttonPanel;
 
 import javax.swing.*;
 

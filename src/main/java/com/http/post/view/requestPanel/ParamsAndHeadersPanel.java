@@ -1,18 +1,18 @@
-package com.http.post.view;
+package com.http.post.view.requestPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ParamsAndHeadersPanel extends JPanel {
+public class ParamsAndHeadersPanel extends JTabbedPane {
     private JTable parametersTable;
     private JTable headersTable;
 
-    public ParamsAndHeadersPanel(JTable parametersTable, JTable headersTable) {
+    public ParamsAndHeadersPanel(JTable parametersTable, JTable headersTable, BodyPanel bodyArea) {
         this.parametersTable = parametersTable;
         this.headersTable = headersTable;
-        setLayout(new GridLayout(1, 2));
-        add(createTablePanel("Parameters", parametersTable));
-        add(createTablePanel("Headers", headersTable));
+        addTab("Body", bodyArea);
+        addTab("Parameters", createTablePanel("Parameters", parametersTable));
+        addTab("Headers",  createTablePanel("Headers", headersTable));
     }
 
     private JPanel createTablePanel(String title, JTable table) {
