@@ -5,6 +5,7 @@ import com.http.post.exceptions.RequestExecutionException;
 import com.http.post.model.*;
 import com.http.post.service.SingleRunner;
 import com.http.post.view.ViewManager;
+import com.http.post.view.buttonPanel.ButtonPanel;
 import com.http.post.view.buttonPanel.ExecuteButton;
 
 import java.awt.event.ActionEvent;
@@ -15,8 +16,13 @@ public class RequestController {
 
     private ViewManager view;
 
+    //TODO: Implement clear button
+    //TODO: Implement add to favorites button
+    //TODO: Implement message errors dialog and custom exceptions
+    //TODO: Implement show response status code, status message and headers
     public RequestController(ViewManager viewManager) {
         this.view = viewManager;
+        view.getRequestPanel().getButtonPanel();
         view.getRequestPanel().getButtonPanel().getExecuteButton().addActionListener(new IncrementButtonListener());
         //view.getResetButton().addActionListener(new ResetButtonListener());
     }
@@ -32,11 +38,9 @@ public class RequestController {
             executeButton.getRequestPanel().getParameters().forEach(kv -> request.addQueryParam(new QueryParam(kv.getKey(), kv.getValue())));
             executeButton.getRequestPanel().getHeaders().forEach(kv -> request.addHeader(new Header(kv.getKey(), kv.getValue())));
             request.setBody(new Body(executeButton.getRequestPanel().getRequestBodyArea().getText(), "application/json"));
-            System.out.println(request);
             SingleRunner runner = new SingleRunner(request);
             try {
                 Response response = runner.execute();
-                System.out.println(response);
                 view.getRequestPanel().setResponseBodyArea(response.getBody());
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
