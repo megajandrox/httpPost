@@ -1,8 +1,6 @@
 package commons.db.utils;
 
 import commons.db.utils.bussiness.exceptions.*;
-import commons.db.utils.exceptions.CreateTableRuntimeException;
-import commons.db.utils.exceptions.DropTableRuntimeException;
 
 import java.util.List;
 

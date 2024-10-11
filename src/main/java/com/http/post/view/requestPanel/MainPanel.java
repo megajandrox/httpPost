@@ -18,8 +18,8 @@ public class MainPanel extends JPanel {
     private UrlPanel urlPanel = new UrlPanel();
     private ButtonPanel buttonPanel;
 
-    public MainPanel(BorderLayout bl) {
-        super(bl);
+    public MainPanel() {
+        super(new BorderLayout());
         this.buttonPanel = new ButtonPanel(this);
         add(urlPanel, BorderLayout.NORTH);
         BodyPanel bodyPanel = new BodyPanel();

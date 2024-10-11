@@ -5,7 +5,6 @@ import com.http.post.exceptions.RequestExecutionException;
 import com.http.post.model.*;
 import com.http.post.service.SingleRunner;
 import com.http.post.view.ViewManager;
-import com.http.post.view.buttonPanel.ButtonPanel;
 import com.http.post.view.buttonPanel.ExecuteButton;
 
 import java.awt.event.ActionEvent;

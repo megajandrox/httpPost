@@ -15,7 +15,7 @@
 Bonus:
 
 - Add a pattern observer to change the value of the URL when the URL changes and similar manner when the grid changes.
-- When the user types a URL, should be displayed a list of favorites.
+- When the customer types a URL, should be displayed a list of favorites.
 
 To improve the code, you can apply several design patterns to enhance modularity, maintainability, and flexibility. Below are the design patterns that could improve different aspects of the code:
 
@@ -24,13 +24,13 @@ To improve the code, you can apply several design patterns to enhance modularity
 - **How to Apply**:
     - **Model**: Represents the data or state of the application (e.g., the URL, HTTP method, parameters, headers, and response).
     - **View**: The Swing components that handle the UI, such as `JTextField`, `JComboBox`, `JTable`, and `JTextArea`.
-    - **Controller**: Acts as the mediator between the view and the model, processing user actions like button clicks, executing requests, and updating the view based on model changes.
+    - **Controller**: Acts as the mediator between the view and the model, processing customer actions like button clicks, executing requests, and updating the view based on model changes.
 - **Benefits**: Decouples UI from business logic, making the UI easier to modify without affecting the core logic.
 
 ### 2. **Observer Pattern**
 - **Purpose**: To handle dynamic updates between objects, where one object changes and dependent objects are notified.
 - **How to Apply**:
-    - Use this to track changes in the URL field, parameters table, and headers table. When a user updates the URL, you can notify observers (e.g., autocomplete for favorites, validation).
+    - Use this to track changes in the URL field, parameters table, and headers table. When a customer updates the URL, you can notify observers (e.g., autocomplete for favorites, validation).
     - For the `JTextField` (URL input) and tables, you can add listeners (observers) that react when the data changes and notify the dependent components.
 - **Benefits**: Keeps UI elements in sync with data changes, e.g., auto-updating the list of favorites or dynamically enabling/disabling the execute button when valid data is present.
 
@@ -46,14 +46,14 @@ To improve the code, you can apply several design patterns to enhance modularity
 - **Purpose**: To create objects without specifying the exact class of object that will be created.
 - **How to Apply**:
     - Use a factory to create different types of requests (`GET`, `POST`, `PUT`, `DELETE`) based on the selected method in the dropdown.
-    - You could implement a `RequestFactory` that returns an appropriate `HttpRequest` object based on the method chosen by the user.
+    - You could implement a `RequestFactory` that returns an appropriate `HttpRequest` object based on the method chosen by the customer.
 - **Benefits**: Simplifies object creation and isolates the logic of creating different HTTP request types, making it easier to extend and modify.
 
 ### 5. **Strategy Pattern**
 - **Purpose**: To define a family of algorithms or behaviors and make them interchangeable.
 - **How to Apply**:
     - Use this to handle different types of response visualizations (XML, JSON, IMAGE). Each visualization method can be a separate strategy (e.g., `JsonVisualizer`, `XmlVisualizer`, `ImageVisualizer`).
-    - You can switch between strategies dynamically based on user input (from the `JComboBox` dropdown).
+    - You can switch between strategies dynamically based on customer input (from the `JComboBox` dropdown).
 - **Benefits**: Makes it easier to add new response visualization formats (e.g., adding HTML in the future) without modifying the existing code.
 
 ### 6. **Decorator Pattern**

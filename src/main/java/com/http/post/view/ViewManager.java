@@ -18,7 +18,7 @@ public class ViewManager extends JFrame {
         setLayout(new BorderLayout());
 
         // Initialize components
-        this.mainPanel = new MainPanel(new BorderLayout());
+        this.mainPanel = new MainPanel();
         add(mainPanel, BorderLayout.CENTER);
         add(mainPanel.getButtonPanel(), BorderLayout.SOUTH);
         this.pack();

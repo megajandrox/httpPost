@@ -2,7 +2,9 @@ package com.http.post.view.table;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 public class CustomJTable extends JTable {
