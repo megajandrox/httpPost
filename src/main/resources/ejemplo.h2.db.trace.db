@@ -33,3 +33,51 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at org.jkiss.dbeaver.ui.LoadingJob.run(LoadingJob.java:88)
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:117)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+2024-10-11 16:28:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" already exists; SQL statement:
+CREATE TABLE customer (id INTEGER IDENTITY, username VARCHAR(256), email VARCHAR(256)) [42101-200]
+2024-10-11 16:28:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+SELECT * FROM customer [42102-200]
+2024-10-11 16:30:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+SELECT * FROM customer [42102-200]
+2024-10-11 16:31:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+SELECT * FROM customer [42102-200]
+2024-10-11 16:31:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" already exists; SQL statement:
+CREATE TABLE customer (id INTEGER IDENTITY, username VARCHAR(256), email VARCHAR(256)) [42101-200]
+2024-10-11 16:32:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+DELETE FROM customer WHERE username = 'user0.38498006569052345' [42102-200]
+2024-10-11 16:33:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+INSERT INTO customer (username, email) VALUES ('user0.09260714228356348', 'user0.2048167498773299@gmail.com' ) [42102-200]
+2024-10-11 16:33:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+INSERT INTO customer (username, email) VALUES ('user0.9006970433636193', 'user0.29097433126437655@gmail.com' ) [42102-200]
+2024-10-11 17:37:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" already exists; SQL statement:
+CREATE TABLE customer (id INTEGER IDENTITY, username VARCHAR(256), email VARCHAR(256)) [42101-200]
+2024-10-11 17:40:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" already exists; SQL statement:
+CREATE TABLE customer (id INTEGER IDENTITY, username VARCHAR(256), email VARCHAR(256)) [42101-200]
+2024-10-11 17:44:19 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" already exists; SQL statement:
+CREATE TABLE customer (id INTEGER IDENTITY, username VARCHAR(256), email VARCHAR(256)) [42101-200]
+2024-10-11 17:53:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" already exists; SQL statement:
+CREATE TABLE customer (id INTEGER IDENTITY, username VARCHAR(256), email VARCHAR(256)) [42101-200]
+2024-10-11 17:55:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+SELECT * FROM customer [42102-200]
+2024-10-11 17:56:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" already exists; SQL statement:
+CREATE TABLE customer (id INTEGER IDENTITY, username VARCHAR(256), email VARCHAR(256)) [42101-200]
+2024-10-11 19:05:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+SELECT * FROM customer [42102-200]
+10-11 21:01:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "CUSTOMER" not found; SQL statement:
+SELECT * FROM customer [42102-176]

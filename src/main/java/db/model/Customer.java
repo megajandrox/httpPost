@@ -1,7 +1,11 @@
 package db.model;
 
-public class Customer {
+import java.io.Serializable;
 
+public class Customer implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private int id;
     private String username;
     private String email;
 
@@ -24,5 +28,21 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

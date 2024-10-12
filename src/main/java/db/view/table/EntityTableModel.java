@@ -16,7 +16,7 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         this.columnClasses = columnClasses;
     }
 
-    public void addContent(List<T> content) {
+    public void setContent(List<T> content) {
         this.content.clear();
         this.content.addAll(content);
         fireTableDataChanged();
@@ -50,5 +50,10 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
     public void removeRow(int selectedRow) {
         this.content.remove(selectedRow);
         fireTableRowsDeleted(selectedRow, selectedRow);
+    }
+
+    public void removeAllRows() {
+        this.content.clear();
+        fireTableDataChanged();
     }
 }

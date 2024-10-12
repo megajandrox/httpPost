@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class TableManager {
 	
-	public static void createUserTable() {
+	public static void createCustomerTable() {
 		Connection c = DBManager.connect();
 		DBOperationManager.getInstance().tryDDLAction(c, () -> {
 			String sql = "CREATE TABLE customer (id INTEGER IDENTITY, username VARCHAR(256), email VARCHAR(256))";
@@ -18,7 +18,7 @@ public class TableManager {
 	}
 	
 	
-	public static void dropUserTable() {
+	public static void dropCustomerTable() {
 		Connection c = DBManager.connect();
 		DBOperationManager.getInstance().tryDDLAction(c, () -> {
 			String sql = "DROP TABLE customer";

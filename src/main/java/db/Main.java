@@ -3,26 +3,27 @@ package db;
 import commons.db.utils.bussiness.exceptions.SearchException;
 import db.controller.CustomerController;
 import db.dao.DAO;
-import db.dao.CustomerDAOH2;
+import db.dao.LocatorDAO;
 import db.model.Customer;
 import db.view.JViewManager;
 
 import javax.swing.*;
 
+import static db.dao.DAOSelector.H2;
+
 public class Main {
 
     public static void main(String[] args) {
-        //TableManager.createUserTable();
         SwingUtilities.invokeLater(() -> {
-            DAO<Customer> userDAO = new CustomerDAOH2();
+            DAO<Customer> customerDAO = LocatorDAO.getInstance().getCustomerDAO();
             try {
-                JViewManager viewManager = new JViewManager(userDAO.getAll());
-                new CustomerController(userDAO, viewManager);
+                JViewManager viewManager = new JViewManager(customerDAO.getAll());
+                new CustomerController(viewManager);
                 viewManager.setVisible(true);
             } catch (SearchException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                TableManager.createCustomerTable();
             }
         });
-        //TableManager.dropUserTable();
     }
 }
