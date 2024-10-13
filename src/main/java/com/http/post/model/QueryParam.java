@@ -1,9 +1,7 @@
 package com.http.post.model;
 
-import com.http.post.Component;
-
 @lombok.Data
-public class QueryParam implements Component {
+public class QueryParam implements HttpRequestComponent {
 
     public QueryParam(String key, String value) {
         this.key = key;

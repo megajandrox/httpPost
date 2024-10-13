@@ -1,7 +1,6 @@
-package com.http.post;
+package com.http.post.model;
 
 import com.http.post.exceptions.InvalidMethodException;
-import com.http.post.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +12,14 @@ import java.util.List;
 public class RequestBuilder {
 
     private static final RequestBuilder INSTANCE = new RequestBuilder();
-    private final List<Component> components = new ArrayList<>();
+    private final List<HttpRequestComponent> httpRequestComponents = new ArrayList<>();
 
     public static RequestBuilder getInstance() {
         return INSTANCE;
     }
 
-    public RequestBuilder addComponent(Component component) {
-        components.add(component);
+    public RequestBuilder addComponent(HttpRequestComponent httpRequestComponent) {
+        httpRequestComponents.add(httpRequestComponent);
         return this;
     }
 
@@ -30,7 +29,7 @@ public class RequestBuilder {
     public Request build(String url, String method) throws InvalidMethodException {
         try {
             final Request request = new Request(url, Method.valueOf(method));
-            components.forEach(c -> {
+            httpRequestComponents.forEach(c -> {
                 switch (c.getClass().getSimpleName()) {
                     case "Body":
                         request.setBody((Body) c);
@@ -47,7 +46,7 @@ public class RequestBuilder {
         } catch (IllegalArgumentException e) {
             throw new InvalidMethodException(method);
         } finally {
-            components.clear();
+            httpRequestComponents.clear();
         }
     }
 

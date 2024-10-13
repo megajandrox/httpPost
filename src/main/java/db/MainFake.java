@@ -9,9 +9,7 @@ import db.view.JViewManager;
 
 import javax.swing.*;
 
-import static db.dao.DAOSelector.H2;
-
-public class Main {
+public class MainFake {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

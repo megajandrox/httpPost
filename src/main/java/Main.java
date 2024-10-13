@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             ViewManager viewManager = new ViewManager();
-            RequestController requestController = new RequestController(viewManager);
+            new RequestController(viewManager);
             viewManager.setVisible(true);
         });
     }

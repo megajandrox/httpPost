@@ -1,6 +1,6 @@
 package com.http.post.service;
 
-import com.http.post.RequestBuilder;
+import com.http.post.model.RequestBuilder;
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.exceptions.RequestExecutionException;
 import com.http.post.model.Body;

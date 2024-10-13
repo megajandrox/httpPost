@@ -1,10 +1,8 @@
 package com.http.post.model;
 
 
-import com.http.post.Component;
-
 @lombok.Data
-public class Body implements Component {
+public class Body implements HttpRequestComponent {
 
     public Body(String content, String contentType) {
         this.contentType = contentType;

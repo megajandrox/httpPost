@@ -127,7 +127,7 @@ class XmlVisualizer implements ResponseVisualizerStrategy {
 ```
 
 ### How these patterns improve the code:
-- **Modularity**: Each component (e.g., request handling, visualization) can evolve independently.
+- **Modularity**: Each httpRequestComponent (e.g., request handling, visualization) can evolve independently.
 - **Flexibility**: You can easily add new request types (via `Factory`) or visualization methods (via `Strategy`) without touching core logic.
 - **Testability**: The logic for executing HTTP requests and visualizing results is decoupled, so each part can be tested independently.
 - **Maintainability**: Separating concerns through `MVC` makes the code more maintainable as the UI and logic are independent.

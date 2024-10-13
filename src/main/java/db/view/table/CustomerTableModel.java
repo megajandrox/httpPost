@@ -8,7 +8,7 @@ public class CustomerTableModel extends EntityTableModel {
     public static final int EMAIL = 1;
 
     public CustomerTableModel() {
-        super(new Class[]{String.class, String.class}, new String[]{"Username", "Email"});
+        super(new Class[]{String.class, String.class}, new String[]{"Username", "Email"},"Customer");
     }
 
     @Override

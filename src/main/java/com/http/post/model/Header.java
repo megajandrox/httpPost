@@ -1,9 +1,7 @@
 package com.http.post.model;
 
-import com.http.post.Component;
-
 @lombok.Data
-public class Header implements Component {
+public class Header implements HttpRequestComponent {
 
     public Header(String key, String value) {
         this.key = key;

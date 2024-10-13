@@ -1,5 +1,4 @@
-package db.view.table;
-
+package com.http.post.view.table;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -10,12 +9,10 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
     protected final List<T> content = new ArrayList<>();
     private Class[] columnClasses = {};
     private String[]  columnNames = {};
-    private String tableName;
 
-    public EntityTableModel(Class[] columnClasses, String[] columnNames, String tableName) {
+    public EntityTableModel(Class[] columnClasses, String[] columnNames) {
         this.columnNames = columnNames;
         this.columnClasses = columnClasses;
-        this.tableName = tableName;
     }
 
     public void setContent(List<T> content) {
@@ -57,9 +54,5 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
     public void removeAllRows() {
         this.content.clear();
         fireTableDataChanged();
-    }
-
-    public String getTableName() {
-        return tableName;
     }
 }

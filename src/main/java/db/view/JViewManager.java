@@ -1,9 +1,7 @@
 package db.view;
 
-import db.dao.DAOSelector;
-import db.dao.LocatorDAO;
 import db.model.Customer;
-import db.view.panel.MainPanel;
+import db.view.panel.MainPanelFake;
 import db.view.table.CustomerTableModel;
 
 import javax.swing.*;
@@ -13,7 +11,7 @@ import java.util.List;
 
 public class JViewManager extends JFrame {
 
-    private MainPanel mainPanel;
+    private MainPanelFake mainPanelFake;
     private JMenuBar menuBar;
     private JMenu configMenu;
     private JCheckBoxMenuItem useDatabaseItem;
@@ -26,7 +24,7 @@ public class JViewManager extends JFrame {
         setSize(800, 600);
         CustomerTableModel tableModel = new CustomerTableModel();
         tableModel.setContent(customers);
-        this.mainPanel = new MainPanel(Collections.singletonList(tableModel));
+        this.mainPanelFake = new MainPanelFake(Collections.singletonList(tableModel));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -45,13 +43,13 @@ public class JViewManager extends JFrame {
         menuBar.add(configMenu);
         this.setJMenuBar(menuBar);
 
-        getContentPane().add(mainPanel, BorderLayout.CENTER);
+        getContentPane().add(mainPanelFake, BorderLayout.CENTER);
         pack();
         setVisible(true);
     }
 
-    public MainPanel getMainPanel() {
-        return mainPanel;
+    public MainPanelFake getMainPanel() {
+        return mainPanelFake;
     }
 
     public JCheckBoxMenuItem getUseDatabaseItem() {

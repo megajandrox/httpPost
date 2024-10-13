@@ -9,13 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainPanel extends JPanel {
+public class MainPanelFake extends JPanel {
 
     private List<EntityJPanel> entityJPanels = new ArrayList<>();
 
-    public MainPanel(List<EntityTableModel> tableModels) {
+    public MainPanelFake(List<EntityTableModel> tableModels) {
         super(new java.awt.BorderLayout());
         JTabbedPane jTabbedPane = new JTabbedPane();
+        JPanel bodyPanel = new JPanel(new BorderLayout());
+        bodyPanel.add(new JLabel("Body content goes here."), BorderLayout.CENTER);
+        jTabbedPane.add("Body", bodyPanel);
         tableModels.forEach(tableModel -> {
             EntityJPanel<Customer> panel = new CustomerJPanel(tableModel);
             entityJPanels.add(panel);
