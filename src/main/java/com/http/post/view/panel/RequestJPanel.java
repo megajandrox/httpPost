@@ -1,38 +1,33 @@
 package com.http.post.view.panel;
 
-import db.model.Customer;
-import db.view.panel.EntityJPanel;
-import db.view.table.EntityTableModel;
+import com.http.post.view.table.EntityTableModel;
+import com.http.post.view.table.KeyValue;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class RequestJPanel extends EntityJPanel<Customer> {
+public class RequestJPanel extends EntityJPanel<KeyValue> {
 
-    private EntityTableModel<Customer> tableModel;
+    private EntityTableModel tableModel;
     private JTable table;
     private JButton addButton;
     private JButton removeButton;
 
-    public RequestJPanel(String tableName) {
-        super(tableName);
-    }
 
-    public RequestJPanel(EntityTableModel<Customer> tableModel) {
-        this(tableModel.getTableName());
+    public RequestJPanel(EntityTableModel tableModel) {
+        super(tableModel.getTableName());
         setLayout(new BorderLayout());
-        add(new JLabel("Params content goes here."), BorderLayout.CENTER);
-        this.tableModel = tableModel;
-        /*
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
-        this.addButton = new JButton("Add");
-        add(addButton, BorderLayout.EAST);
-        this.removeButton = new JButton("Remove");
-        add(removeButton, BorderLayout.WEST);
+        this.addButton = new JButton("+");
+        this.removeButton = new JButton("-");
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(this.addButton);
+        buttonPanel.add(this.removeButton);
         add(scrollPane, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.WEST);
         setPreferredSize(new Dimension(800, 600));
-        */
+        this.tableModel = tableModel;
     }
 
     public JButton getAddButton() {
@@ -45,7 +40,7 @@ public class RequestJPanel extends EntityJPanel<Customer> {
     }
 
     @Override
-    public EntityTableModel<Customer> getTableModel() {
+    public EntityTableModel getTableModel() {
         return this.tableModel;
     }
 

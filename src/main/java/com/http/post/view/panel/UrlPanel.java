@@ -23,4 +23,12 @@ public class UrlPanel extends JPanel {
         add(new JLabel("URL:"));
         add(urlField);
     }
+
+    public JTextField getUrlField() {
+        return urlField;
+    }
+
+    public JComboBox<String> getMethodDropdown() {
+        return methodDropdown;
+    }
 }

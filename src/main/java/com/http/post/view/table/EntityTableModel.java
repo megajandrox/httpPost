@@ -4,18 +4,22 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EntityTableModel<T> extends AbstractTableModel {
+public abstract class EntityTableModel extends AbstractTableModel {
 
-    protected final List<T> content = new ArrayList<>();
+    protected final List<KeyValue> content = new ArrayList<>();
     private Class[] columnClasses = {};
     private String[]  columnNames = {};
 
-    public EntityTableModel(Class[] columnClasses, String[] columnNames) {
+    private String tableName;
+
+    public EntityTableModel(Class[] columnClasses, String[] columnNames, String tableName) {
         this.columnNames = columnNames;
         this.columnClasses = columnClasses;
+        this.tableName = tableName;
     }
 
-    public void setContent(List<T> content) {
+
+    public void setContent(List<KeyValue> content) {
         this.content.clear();
         this.content.addAll(content);
         fireTableDataChanged();
@@ -41,7 +45,7 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         return this.columnClasses[col];
     }
 
-    public void addRow(T object) {
+    public void addRow(KeyValue object) {
         this.content.add(object);
         fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
     }
@@ -55,4 +59,32 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         this.content.clear();
         fireTableDataChanged();
     }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        KeyValue keyValue = this.content.get(rowIndex);
+        switch (columnIndex) {
+            case 0:
+                keyValue.setKey((String) aValue);
+                break;
+            case 1:
+                keyValue.setValue((String) aValue);
+                break;
+        }
+        fireTableCellUpdated(rowIndex, columnIndex);
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return true;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public List<KeyValue> getContent() {
+        return content;
+    }
+
 }

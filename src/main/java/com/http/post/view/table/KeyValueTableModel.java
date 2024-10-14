@@ -1,8 +1,5 @@
 package com.http.post.view.table;
 
-import db.model.Customer;
-import db.view.table.EntityTableModel;
-
 public class KeyValueTableModel extends EntityTableModel {
 
     public static final int KEY = 0;
@@ -14,12 +11,12 @@ public class KeyValueTableModel extends EntityTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Customer item = (Customer) content.get(rowIndex);
+        KeyValue item = (KeyValue) this.content.get(rowIndex);
         switch (columnIndex) {
             case KEY:
-                return item.getUsername();
+                return item.getKey();
             case VALUE:
-                return item.getEmail();
+                return item.getValue();
             default:
                 return "";
         }

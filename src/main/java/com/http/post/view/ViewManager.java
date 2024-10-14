@@ -2,7 +2,6 @@ package com.http.post.view;
 
 import com.http.post.view.panel.MainPanel;
 import com.http.post.view.table.KeyValueTableModel;
-import db.view.panel.MainPanelFake;
 
 import javax.swing.*;
 import java.awt.*;

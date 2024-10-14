@@ -1,7 +1,6 @@
 package com.http.post.view.panel;
 
-import db.view.panel.EntityJPanel;
-import db.view.table.EntityTableModel;
+import com.http.post.view.table.EntityTableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +25,7 @@ public class MainPanel extends JPanel {
         this.bodyPanel = new TextPanel("Body", true, BorderLayout.CENTER);
         jTabbedPane.add("Body", bodyPanel);
         tableModels.forEach(tableModel -> {
-            EntityJPanel panel = new RequestJPanel(tableModel);
+            RequestJPanel panel = new RequestJPanel(tableModel);
             entityJPanels.add(panel);
             jTabbedPane.add(panel, panel.getTableName());
         });

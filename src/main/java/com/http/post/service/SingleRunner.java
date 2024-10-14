@@ -63,6 +63,7 @@ public class SingleRunner {
                 .setDefaultRequestConfig(requestConfig)
                 .build()) {
             HttpRequestBase httpRequest = factoryStrategy();
+            System.out.println(httpRequest.toString());
             try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
                 Response responseModel = new Response();
                 HttpEntity entity = response.getEntity();
