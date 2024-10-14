@@ -1,4 +1,4 @@
-package com.http.post.dao;
+package com.http.post.repository;
 
 import commons.db.utils.DBManager;
 import commons.db.utils.exceptions.DBOperationManager;

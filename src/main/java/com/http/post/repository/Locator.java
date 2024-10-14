@@ -1,4 +1,4 @@
-package com.http.post.dao;
+package com.http.post.repository;
 
 import com.http.post.model.Request;
 
