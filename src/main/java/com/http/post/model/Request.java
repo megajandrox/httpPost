@@ -1,5 +1,6 @@
 package com.http.post.model;
 
+import com.http.post.utils.json.ToJson;
 import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @lombok.Data
-public class Request {
+public class Request implements ToJson {
 
     public Request(String url, Method method) {
         this.url = url;
@@ -43,5 +44,9 @@ public class Request {
 
     public String toString() {
         return String.format("Request{url='%s', method='%s', body='%s', headers=%s, queryParams=%s}", url, method, body, headers, queryParams);
+    }
+
+    public String toJson() {
+        return toJson(this);
     }
 }

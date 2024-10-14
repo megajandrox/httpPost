@@ -1,4 +1,4 @@
-package db.dao;
+package com.http.post.dao;
 
 import commons.db.utils.bussiness.exceptions.*;
 

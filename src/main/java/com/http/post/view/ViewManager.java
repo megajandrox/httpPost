@@ -10,6 +10,9 @@ import java.util.Arrays;
 public class ViewManager extends JFrame {
 
     private MainPanel mainPanel;
+    private JMenuBar menuBar;
+    private JMenu configMenu;
+    private JCheckBoxMenuItem createDatabase;
 
     public ViewManager() {
         // Setting up the main frame
@@ -21,6 +24,15 @@ public class ViewManager extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().add(mainPanel, BorderLayout.CENTER);
+
+        // Create the menu bar
+        menuBar = new JMenuBar();
+        configMenu = new JMenu("Settings");
+        createDatabase = new JCheckBoxMenuItem("Create Database");
+        configMenu.add(createDatabase);
+        menuBar.add(configMenu);
+        this.setJMenuBar(menuBar);
+
         pack();
         setVisible(true);
     }
@@ -31,5 +43,9 @@ public class ViewManager extends JFrame {
 
     public void setMainPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
+    }
+
+    public JCheckBoxMenuItem getCreateDatabase() {
+        return createDatabase;
     }
 }
