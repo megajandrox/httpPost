@@ -6,6 +6,7 @@ import java.util.Map;
 @lombok.Data
 public class RequestData {
 
+    private Long id;
     private String url;
     private String method;
     private boolean isFavorite;

@@ -82,11 +82,11 @@ public class RequestDAOH2 implements DAO<Request> {
     }
 
     @Override
-    public void delete(Request request) throws DeletionException {
+    public void delete(Long id) throws DeletionException {
         Connection c = DBManager.connect();
         try {
             DBOperationManager.getInstance().trySqlAction(c, () -> {
-                String sql = "DELETE FROM request WHERE url = '" + request.getUrl() + "' AND method = '" + request.getMethod().toString() + "'";
+                String sql = "DELETE FROM request WHERE id = " + id ;
                 Statement s = c.createStatement();
                 s.executeUpdate(sql);
                 c.commit();

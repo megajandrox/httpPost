@@ -1,9 +1,7 @@
 package com.http.post.controller;
 
 import com.http.post.controller.listener.*;
-import com.http.post.repository.Locator;
 import com.http.post.view.ViewManager;
-import com.http.post.view.model.RequestData;
 import com.http.post.view.panel.EntityJPanel;
 import commons.db.utils.bussiness.exceptions.SearchException;
 
@@ -20,7 +18,7 @@ public class RequestController {
     public RequestController(ViewManager viewManager) {
         this.view = viewManager;
         try {
-            new PopulateHttpRequest(this.view.getMainPanel().getUrlPanel().getUrlField());
+            URLFieldHelper.populateHttpRequest(this.view.getMainPanel().getUrlPanel().getUrlField());
         } catch (SearchException e) {
             System.err.println(e.getMessage());
             JOptionPane.showMessageDialog(viewManager, "There was an error getting the URLs",
@@ -29,7 +27,8 @@ public class RequestController {
         this.view.getMainPanel().getUrlPanel().getSendButton().addActionListener(new SendButtonListener(this.view));
         this.view.getMainPanel().getUrlPanel().getClearButton().addActionListener(new ClearButtonListener(this.view));
         this.view.getMainPanel().getUrlPanel().getSaveButton().addActionListener(new SaveButtonListener(this.view));
-
+        this.view.getMainPanel().getUrlPanel().getUrlField().addActionListener(new UrlFieldListener(this.view));
+        this.view.getMainPanel().getUrlPanel().getUrlField().addPopupMenuListener(new UrlFieldPopupListener(this.view));
         List<EntityJPanel> entityJPanels = this.view.getMainPanel().getEntityJPanels();
 
         entityJPanels.get(HEADER_TABLE).getAddButton()
@@ -43,18 +42,6 @@ public class RequestController {
                 .addActionListener(new RemoveKeyValueItemListener(this.view, PARAMETERS_TABLE));
 
         this.view.getCreateDatabase().addActionListener(new DatabaseCreationListener(this.view));
-    }
-
-    private static class PopulateHttpRequest {
-        public PopulateHttpRequest(JComboBox<RequestData> urlField) throws SearchException {
-            Locator.getInstance().getRequestDAO().getAll().forEach(r -> {
-                String content = r.getBody() != null ? r.getBody().getContent() : "";
-                RequestData requestData = new RequestData(r.getFullUrl(), r.getMethod().toString(), content);
-                r.getHeaders().forEach(h -> requestData.addHeader(h.getKey(), h.getValue()));
-                r.getQueryParams().forEach(p -> requestData.addParameter(p.getKey(), p.getValue()));
-                urlField.addItem(requestData);
-            });
-        }
     }
 }
 

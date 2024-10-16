@@ -1,7 +1,11 @@
 package com.http.post.controller.listener;
 
+import com.http.post.repository.Locator;
 import com.http.post.view.ViewManager;
+import com.http.post.view.model.RequestData;
+import commons.db.utils.bussiness.exceptions.DeletionException;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,10 +21,25 @@ public class ClearButtonListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        view.getMainPanel().getEntityJPanels().forEach(EntityJPanel -> EntityJPanel.getTableModel().removeAllRows());
-        view.getMainPanel().getBodyPanel().getTextArea().setText(EMPTY);
-        view.getMainPanel().getResponsePanel().getTextArea().setText(EMPTY);
-        view.getMainPanel().getUrlPanel().getUrlField().setSelectedIndex(FIRST_INDEX);
-        view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedIndex(FIRST_INDEX);
+        Object selectedItem = this.view.getMainPanel().getUrlPanel().getUrlField().getSelectedItem();
+        if(selectedItem instanceof RequestData) {
+            RequestData requestData = (RequestData) selectedItem;
+            try {
+                Locator.getInstance().getRequestDAO().delete(requestData.getId());
+                this.view.getMainPanel().getEntityJPanels().forEach(EntityJPanel -> EntityJPanel.getTableModel().removeAllRows());
+                this.view.getMainPanel().getBodyPanel().getTextArea().setText(EMPTY);
+                this.view.getMainPanel().getResponsePanel().getTextArea().setText(EMPTY);
+                JComboBox<RequestData> urlField = this.view.getMainPanel().getUrlPanel().getUrlField();
+                urlField.removeItem(requestData);
+                if(urlField.getItemCount() > 0) {
+                    urlField.setSelectedIndex(FIRST_INDEX);
+                }
+                this.view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedIndex(FIRST_INDEX);
+            } catch (DeletionException ex) {
+                System.err.println(ex.getMessage());
+                JOptionPane.showMessageDialog(view, "Cannot delete request",
+                        "Delete", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
