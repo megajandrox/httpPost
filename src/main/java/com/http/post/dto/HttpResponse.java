@@ -1,9 +1,9 @@
-package com.http.post.model;
+package com.http.post.dto;
 
 import lombok.Data;
 
 @Data
-public class Response {
+public class HttpResponse {
 
     private String body;
     private int statusCode;

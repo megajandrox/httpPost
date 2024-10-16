@@ -2,6 +2,7 @@ package com.http.post.repository;
 
 import com.http.post.model.Method;
 import com.http.post.model.Request;
+import com.http.post.model.RequestParser;
 import commons.db.utils.DBManager;
 import commons.db.utils.bussiness.exceptions.*;
 import commons.db.utils.exceptions.DBOperationManager;
@@ -108,9 +109,10 @@ public class RequestDAOH2 implements DAO<Request> {
                     Statement s = c.createStatement();
                     ResultSet rs = s.executeQuery(sql);
                     while (rs.next()) {
-                        String url = rs.getString("url");
-                        String method = rs.getString("method");
-                        result.add(new Request(url, Method.valueOf(method)));
+                        String json = rs.getString("json_data");
+                        Request request = RequestParser.parse(json);
+                        request.setId(rs.getLong("id"));
+                        result.add(request);
                     }
                     return Optional.empty();
                 }, c::rollback);

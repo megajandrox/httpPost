@@ -6,7 +6,7 @@ import com.http.post.exceptions.RequestExecutionException;
 import com.http.post.model.Body;
 import com.http.post.model.Header;
 import com.http.post.model.Request;
-import com.http.post.model.Response;
+import com.http.post.dto.HttpResponse;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,11 +23,11 @@ public class PutRequestTest extends WireMockHttpClientTest {
         Request request = builder.build(format(BASE_URL + "%s",ENDPOINT), "PUT");
         request.setBody(new Body("{\"message\": \"success\"}", CONTENT_TYPE));
         SingleRunner runner = new SingleRunner(request);
-        Response response = runner.execute();
-        assertEquals(response.getStatusCode(), 201);
-        assertEquals(response.getStatusMessage(), "Created");
-        assertEquals(response.getContentType(), "application/json");
-        assertEquals(response.getBody(), POST_MSG);
+        HttpResponse httpResponse = runner.execute();
+        assertEquals(httpResponse.getStatusCode(), 201);
+        assertEquals(httpResponse.getStatusMessage(), "Created");
+        assertEquals(httpResponse.getContentType(), "application/json");
+        assertEquals(httpResponse.getBody(), POST_MSG);
     }
 
 }

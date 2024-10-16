@@ -1,9 +1,9 @@
 package com.http.post.service;
 
+import com.http.post.dto.HttpResponse;
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.exceptions.RequestExecutionException;
 import com.http.post.model.Request;
-import com.http.post.model.Response;
 import com.http.post.service.build.DeleteStrategy;
 import com.http.post.service.build.GetStrategy;
 import com.http.post.service.build.PostStrategy;
@@ -57,7 +57,7 @@ public class SingleRunner {
      * @throws RequestExecutionException if there is an error in the request
      * @throws InvalidMethodException if the method is not supported
      */
-    public Response execute() throws IOException, RequestExecutionException, InvalidMethodException {
+    public HttpResponse execute() throws IOException, RequestExecutionException, InvalidMethodException {
         RequestConfig requestConfig = RequestConfigUtils.basicConfiguration();
         try (CloseableHttpClient httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(requestConfig)
@@ -65,15 +65,15 @@ public class SingleRunner {
             HttpRequestBase httpRequest = factoryStrategy();
             System.out.println(httpRequest.toString());
             try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
-                Response responseModel = new Response();
+                HttpResponse httpResponseModel = new HttpResponse();
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
-                    responseModel.setBody(HttpEntityUtils.getContentType(entity));
-                    responseModel.setContentType(entity.getContentType() != null ? entity.getContentType().getValue() : null);
+                    httpResponseModel.setBody(HttpEntityUtils.getContentType(entity));
+                    httpResponseModel.setContentType(entity.getContentType() != null ? entity.getContentType().getValue() : null);
                 }
-                responseModel.setStatusCode(response.getStatusLine().getStatusCode());
-                responseModel.setStatusMessage(response.getStatusLine().getReasonPhrase());
-                return responseModel;
+                httpResponseModel.setStatusCode(response.getStatusLine().getStatusCode());
+                httpResponseModel.setStatusMessage(response.getStatusLine().getReasonPhrase());
+                return httpResponseModel;
             }
         }
     }

@@ -6,9 +6,9 @@ import com.http.post.utils.exception.JsonMappingException;
 
 import java.util.Optional;
 
-public interface FromJson {
+public class FromJson {
 
-    default <T> Optional<T> fromJson(String json, Class<T> clazz) {
+    public static <T> Optional<T> fromJson(String json, Class<T> clazz) {
         T result = null;
         ObjectMapper objectMapper = new ObjectMapper();
         try {

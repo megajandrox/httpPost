@@ -1,10 +1,9 @@
-# Create a view to manage the request and response
+# Create a view to manage the request and httpResponse
 
 - Add a button to add the request on a favorites list
-- Add a visualizer to show response as XML, JSON or IMAGE.
-- Add a tab option to show the String response as HTTP protocol format.
+- Add a visualizer to show httpResponse as XML, JSON or IMAGE.
+- Add a tab option to show the String httpResponse as HTTP protocol format.
   Bonus:
-
 - Add a pattern observer to change the value of the URL when the URL changes and similar manner when the grid changes.
 - When the customer types a URL, should be displayed a list of favorites.
 
@@ -14,7 +13,7 @@
 - Add a grid to add parameters to the request
 - Add a grid to add headers to the request
 - Add a text area to add a body to the request
-- Add a text area to add a body of the response
+- Add a text area to add a body of the httpResponse
 - Add button to execute the request
 - Add a button to clear/delete the request
 
@@ -23,7 +22,7 @@ To improve the code, you can apply several design patterns to enhance modularity
 ### 1. **MVC (Model-View-Controller)**
 - **Purpose**: To separate concerns and make the UI, business logic, and data handling independent of each other.
 - **How to Apply**:
-    - **Model**: Represents the data or state of the application (e.g., the URL, HTTP method, parameters, headers, and response).
+    - **Model**: Represents the data or state of the application (e.g., the URL, HTTP method, parameters, headers, and httpResponse).
     - **View**: The Swing components that handle the UI, such as `JTextField`, `JComboBox`, `JTable`, and `JTextArea`.
     - **Controller**: Acts as the mediator between the view and the model, processing customer actions like button clicks, executing requests, and updating the view based on model changes.
 - **Benefits**: Decouples UI from business logic, making the UI easier to modify without affecting the core logic.
@@ -53,9 +52,9 @@ To improve the code, you can apply several design patterns to enhance modularity
 ### 5. **Strategy Pattern**
 - **Purpose**: To define a family of algorithms or behaviors and make them interchangeable.
 - **How to Apply**:
-    - Use this to handle different types of response visualizations (XML, JSON, IMAGE). Each visualization method can be a separate strategy (e.g., `JsonVisualizer`, `XmlVisualizer`, `ImageVisualizer`).
+    - Use this to handle different types of httpResponse visualizations (XML, JSON, IMAGE). Each visualization method can be a separate strategy (e.g., `JsonVisualizer`, `XmlVisualizer`, `ImageVisualizer`).
     - You can switch between strategies dynamically based on customer input (from the `JComboBox` dropdown).
-- **Benefits**: Makes it easier to add new response visualization formats (e.g., adding HTML in the future) without modifying the existing code.
+- **Benefits**: Makes it easier to add new httpResponse visualization formats (e.g., adding HTML in the future) without modifying the existing code.
 
 ### 6. **Decorator Pattern**
 - **Purpose**: To add behavior to objects dynamically without affecting other objects of the same class.
@@ -107,12 +106,12 @@ class GetRequest implements HttpRequestCommand {
 
 // Strategy for visualizing responses
 interface ResponseVisualizerStrategy {
-    void visualize(String response);
+    void visualize(String httpResponse);
 }
 
 class JsonVisualizer implements ResponseVisualizerStrategy {
     @Override
-    public void visualize(String response) {
+    public void visualize(String httpResponse) {
         // Logic to visualize JSON
         System.out.println("Visualizing as JSON");
     }
@@ -120,7 +119,7 @@ class JsonVisualizer implements ResponseVisualizerStrategy {
 
 class XmlVisualizer implements ResponseVisualizerStrategy {
     @Override
-    public void visualize(String response) {
+    public void visualize(String httpResponse) {
         // Logic to visualize XML
         System.out.println("Visualizing as XML");
     }

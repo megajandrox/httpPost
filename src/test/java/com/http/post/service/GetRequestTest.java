@@ -1,12 +1,12 @@
 package com.http.post.service;
 
+import com.http.post.dto.HttpResponse;
 import com.http.post.model.RequestBuilder;
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.exceptions.RequestExecutionException;
 import com.http.post.model.Header;
 import com.http.post.model.QueryParam;
 import com.http.post.model.Request;
-import com.http.post.model.Response;
 import org.junit.Test;
 import java.io.IOException;
 
@@ -21,11 +21,11 @@ public class GetRequestTest extends WireMockHttpClientTest {
         builder.addComponent(new Header("Content-Type", CONTENT_TYPE));
         Request request = builder.build(format(BASE_URL + "%s",ENDPOINT), "GET");
         SingleRunner runner = new SingleRunner(request);
-        Response response = runner.execute();
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getStatusMessage(), "OK");
-        assertEquals(response.getContentType(), CONTENT_TYPE);
-        assertEquals(response.getBody(), GET_MSG);
+        HttpResponse httpResponse = runner.execute();
+        assertEquals(httpResponse.getStatusCode(), 200);
+        assertEquals(httpResponse.getStatusMessage(), "OK");
+        assertEquals(httpResponse.getContentType(), CONTENT_TYPE);
+        assertEquals(httpResponse.getBody(), GET_MSG);
     }
 
     @Test
@@ -34,10 +34,10 @@ public class GetRequestTest extends WireMockHttpClientTest {
         builder.addComponent(new QueryParam("param1", "value1"));
         Request request = builder.build(format(BASE_URL + "%s",ENDPOINT), "GET");
         SingleRunner runner = new SingleRunner(request);
-        Response response = runner.execute();
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getStatusMessage(), "OK");
-        assertEquals(response.getContentType(), CONTENT_TYPE);
-        assertEquals(response.getBody(), GET_MSG);
+        HttpResponse httpResponse = runner.execute();
+        assertEquals(httpResponse.getStatusCode(), 200);
+        assertEquals(httpResponse.getStatusMessage(), "OK");
+        assertEquals(httpResponse.getContentType(), CONTENT_TYPE);
+        assertEquals(httpResponse.getBody(), GET_MSG);
     }
 }

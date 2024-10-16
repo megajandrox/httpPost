@@ -1,10 +1,13 @@
 package com.http.post.controller;
 
 import com.http.post.controller.listener.*;
+import com.http.post.repository.Locator;
 import com.http.post.view.ViewManager;
-import com.http.post.view.panel.ButtonPanel;
+import com.http.post.view.model.RequestData;
 import com.http.post.view.panel.EntityJPanel;
+import commons.db.utils.bussiness.exceptions.SearchException;
 
+import javax.swing.*;
 import java.util.List;
 
 public class RequestController {
@@ -16,10 +19,17 @@ public class RequestController {
     //TODO: Implement show response status code, status message and headers
     public RequestController(ViewManager viewManager) {
         this.view = viewManager;
-        ButtonPanel buttonPanel = this.view.getMainPanel().getButtonPanel();
-        buttonPanel.getSendButton().addActionListener(new SendButtonListener(this.view));
-        buttonPanel.getClearButton().addActionListener(new ClearButtonListener(this.view));
-        buttonPanel.getSaveButton().addActionListener(new SaveButtonListener(this.view));
+        try {
+            new PopulateHttpRequest(this.view.getMainPanel().getUrlPanel().getUrlField());
+        } catch (SearchException e) {
+            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(viewManager, "There was an error getting the URLs",
+                    "Persistence Error", JOptionPane.ERROR_MESSAGE);
+        }
+        this.view.getMainPanel().getUrlPanel().getSendButton().addActionListener(new SendButtonListener(this.view));
+        this.view.getMainPanel().getUrlPanel().getClearButton().addActionListener(new ClearButtonListener(this.view));
+        this.view.getMainPanel().getUrlPanel().getSaveButton().addActionListener(new SaveButtonListener(this.view));
+
         List<EntityJPanel> entityJPanels = this.view.getMainPanel().getEntityJPanels();
 
         entityJPanels.get(HEADER_TABLE).getAddButton()
@@ -34,4 +44,17 @@ public class RequestController {
 
         this.view.getCreateDatabase().addActionListener(new DatabaseCreationListener(this.view));
     }
+
+    private static class PopulateHttpRequest {
+        public PopulateHttpRequest(JComboBox<RequestData> urlField) throws SearchException {
+            Locator.getInstance().getRequestDAO().getAll().forEach(r -> {
+                String content = r.getBody() != null ? r.getBody().getContent() : "";
+                RequestData requestData = new RequestData(r.getFullUrl(), r.getMethod().toString(), content);
+                r.getHeaders().forEach(h -> requestData.addHeader(h.getKey(), h.getValue()));
+                r.getQueryParams().forEach(p -> requestData.addParameter(p.getKey(), p.getValue()));
+                urlField.addItem(requestData);
+            });
+        }
+    }
 }
+

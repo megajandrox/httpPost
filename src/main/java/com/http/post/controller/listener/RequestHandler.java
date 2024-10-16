@@ -19,7 +19,7 @@ public class RequestHandler {
 
     public Request createRequest() throws InvalidMethodException {
         RequestBuilder requestBuilder = RequestBuilder.getInstance()
-                .addComponent(new Body(view.getMainPanel().getBodyPanel().getTextArea().getText(), "application/json"));
+                .addComponent(new Body("application/json", view.getMainPanel().getBodyPanel().getTextArea().getText()));
         String url = view.getMainPanel().getUrlPanel().getUrl();
         String method = view.getMainPanel().getUrlPanel().getMethod();
         List<EntityJPanel> entityJPanels = view.getMainPanel().getEntityJPanels();

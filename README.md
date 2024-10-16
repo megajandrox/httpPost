@@ -24,15 +24,15 @@ mvn clean install
 
 ```java
 Request request = new Request("https://jsonplaceholder.typicode.com/users/1", "GET");
-Response response = new SingleRunner(request).execute();
-System.out.println(response.getBody());
+Response httpResponse = new SingleRunner(request).execute();
+System.out.println(httpResponse.getBody());
 ```
 ### Patterns used 
 
 #### SingleRunner
 
 This class is used to execute a single request. It is the most basic class to use. 
-It is used to execute a request and get the response.
+It is used to execute a request and get the httpResponse.
 
 ### License
 

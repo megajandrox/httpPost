@@ -20,7 +20,7 @@ public class ClearButtonListener implements ActionListener {
         view.getMainPanel().getEntityJPanels().forEach(EntityJPanel -> EntityJPanel.getTableModel().removeAllRows());
         view.getMainPanel().getBodyPanel().getTextArea().setText(EMPTY);
         view.getMainPanel().getResponsePanel().getTextArea().setText(EMPTY);
-        view.getMainPanel().getUrlPanel().getUrlField().setText(EMPTY);
+        view.getMainPanel().getUrlPanel().getUrlField().setSelectedIndex(FIRST_INDEX);
         view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedIndex(FIRST_INDEX);
     }
 }
