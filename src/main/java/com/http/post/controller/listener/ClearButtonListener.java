@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static com.http.post.controller.URLFieldHelper.setRequestDataOnView;
+
 public class ClearButtonListener implements ActionListener {
 
     public static final String EMPTY = "";
@@ -26,15 +28,17 @@ public class ClearButtonListener implements ActionListener {
             RequestData requestData = (RequestData) selectedItem;
             try {
                 Locator.getInstance().getRequestDAO().delete(requestData.getId());
-                this.view.getMainPanel().getEntityJPanels().forEach(EntityJPanel -> EntityJPanel.getTableModel().removeAllRows());
-                this.view.getMainPanel().getBodyPanel().getTextArea().setText(EMPTY);
-                this.view.getMainPanel().getResponsePanel().getTextArea().setText(EMPTY);
                 JComboBox<RequestData> urlField = this.view.getMainPanel().getUrlPanel().getUrlField();
                 urlField.removeItem(requestData);
                 if(urlField.getItemCount() > 0) {
                     urlField.setSelectedIndex(FIRST_INDEX);
+                    setRequestDataOnView(urlField.getItemAt(FIRST_INDEX), this.view);
+                } else {
+                    this.view.getMainPanel().getEntityJPanels().forEach(EntityJPanel -> EntityJPanel.getTableModel().removeAllRows());
+                    this.view.getMainPanel().getBodyPanel().getTextArea().setText(EMPTY);
+                    this.view.getMainPanel().getResponsePanel().getTextArea().setText(EMPTY);
+                    this.view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedIndex(FIRST_INDEX);
                 }
-                this.view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedIndex(FIRST_INDEX);
             } catch (DeletionException ex) {
                 System.err.println(ex.getMessage());
                 JOptionPane.showMessageDialog(view, "Cannot delete request",

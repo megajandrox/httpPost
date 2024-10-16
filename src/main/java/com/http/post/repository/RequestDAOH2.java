@@ -63,12 +63,13 @@ public class RequestDAOH2 implements DAO<Request> {
 
     @Override
     public void update(Request request) throws UpdateException {
+        Long id = request.getId();
         String url = request.getUrl();
         String method = request.getMethod().toString();
         Connection c = DBManager.connect();
         try {
             DBOperationManager.getInstance().trySqlAction(c, () -> {
-                String sql = "UPDATE request set url = '" + url + "' WHERE url = '" + url + "' AND method = '" + method + "'";
+                String sql = "UPDATE request set url = '" + url + "', method = '" + method + "', json_data = '" + request.toJson() + "' WHERE id = " + id;
                 Statement s = c.createStatement();
                 s.executeUpdate(sql);
                 c.commit();
@@ -123,4 +124,18 @@ public class RequestDAOH2 implements DAO<Request> {
             }
             return result;
         }
+
+    @Override
+    public void upsert(Request object) throws UpsertException {
+        Long id = object.getId();
+        try {
+        if (id == null) {
+            create(object);
+        } else {
+            update(object);
+        }
+        } catch (UpdateException | CreateException e) {
+            throw new UpsertException(e.getMessage());
+        }
+    }
 }

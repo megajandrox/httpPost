@@ -14,13 +14,14 @@ public class MainPanel extends JPanel {
     private List<EntityJPanel> entityJPanels = new ArrayList<>();
     private TextPanel bodyPanel;
     private final TextPanel responsePanel;
+    private JTabbedPane jTabbedPane;
 
     public MainPanel(List<EntityTableModel> tableModels) {
         super(new BorderLayout());
         this.requestTopPanel = new RequestTopPanel();
         requestTopPanel.setBorder(BorderFactory.createTitledBorder("URL"));
         add(requestTopPanel, BorderLayout.NORTH);
-        JTabbedPane jTabbedPane = new JTabbedPane();
+        this.jTabbedPane = new JTabbedPane();
         this.bodyPanel = new TextPanel("Body", true, BorderLayout.CENTER);
         jTabbedPane.add("Body", bodyPanel);
         tableModels.forEach(tableModel -> {
@@ -47,5 +48,9 @@ public class MainPanel extends JPanel {
 
     public TextPanel getResponsePanel() {
         return responsePanel;
+    }
+
+    public JTabbedPane getJTabbedPane() {
+        return jTabbedPane;
     }
 }

@@ -12,6 +12,7 @@ import static com.http.post.controller.URLFieldHelper.populateHttpRequest;
 
 public class UrlFieldPopupListener implements PopupMenuListener {
 
+    public static final int BODY_TAB = 0;
     private ViewManager view;
 
     public UrlFieldPopupListener(ViewManager view) {
@@ -22,6 +23,7 @@ public class UrlFieldPopupListener implements PopupMenuListener {
     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
         try {
             populateHttpRequest(this.view.getMainPanel().getUrlPanel().getUrlField());
+            this.view.getMainPanel().getJTabbedPane().setSelectedIndex(BODY_TAB);
         } catch (SearchException ex) {
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(this.view, "There was an error getting the URLs",

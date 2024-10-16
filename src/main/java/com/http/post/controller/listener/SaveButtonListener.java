@@ -1,9 +1,9 @@
 package com.http.post.controller.listener;
 
-import com.http.post.repository.Locator;
 import com.http.post.exceptions.InvalidMethodException;
+import com.http.post.repository.Locator;
 import com.http.post.view.ViewManager;
-import commons.db.utils.bussiness.exceptions.CreateException;
+import commons.db.utils.bussiness.exceptions.UpsertException;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -17,10 +17,10 @@ public class SaveButtonListener extends RequestHandler implements ActionListener
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         try {
-            Locator.getInstance().getRequestDAO().create(createRequest());
+            Locator.getInstance().getRequestDAO().upsert(createRequest());
             JOptionPane.showMessageDialog(view, "Saved successfully",
                     "Save", JOptionPane.INFORMATION_MESSAGE);
-        } catch (CreateException | InvalidMethodException ex) {
+        } catch (InvalidMethodException | UpsertException ex) {
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(view, "Cannot save request",
                     "Save", JOptionPane.ERROR_MESSAGE);
