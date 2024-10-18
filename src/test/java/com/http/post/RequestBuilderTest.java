@@ -11,7 +11,7 @@ public class RequestBuilderTest {
     @Test
     public void testBuild() throws InvalidMethodException {
         Request request = RequestBuilder.getInstance()
-                .addComponent(new Body("body", "application/json"))
+                .addComponent(new Body("application/json", "body"))
                 .addComponent(new Header("header", "value"))
                 .addComponent(new QueryParam("queryParam", "value"))
                 .build("url", "POST");
