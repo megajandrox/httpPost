@@ -2,8 +2,7 @@ package com.http.post.controller.listener;
 
 import com.http.post.repository.TableManager;
 import com.http.post.view.ViewManager;
-import commons.db.utils.exceptions.DDLActionException;
-
+import com.http.post.utils.exceptions.DDLActionException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

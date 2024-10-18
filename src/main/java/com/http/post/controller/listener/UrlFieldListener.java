@@ -4,11 +4,9 @@ import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
 import com.http.post.view.panel.EntityJPanel;
 import com.http.post.view.table.KeyValue;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import static com.http.post.controller.listener.RequestHandler.HEADER_TABLE;
 import static com.http.post.controller.listener.RequestHandler.PARAMETER_TABLE;
 

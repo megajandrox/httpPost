@@ -1,10 +1,9 @@
 package com.http.post.controller.listener;
 
 import com.http.post.repository.Locator;
+import com.http.post.utils.bussiness.exceptions.DeletionException;
 import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
-import commons.db.utils.bussiness.exceptions.DeletionException;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

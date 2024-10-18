@@ -1,13 +1,10 @@
 package com.http.post.controller.listener;
 
-import com.http.post.controller.RequestController;
 import com.http.post.view.ViewManager;
-import commons.db.utils.bussiness.exceptions.SearchException;
-
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-
+import com.http.post.utils.bussiness.exceptions.SearchException;
 import static com.http.post.controller.URLFieldHelper.populateHttpRequest;
 
 public class UrlFieldPopupListener implements PopupMenuListener {
@@ -32,12 +29,8 @@ public class UrlFieldPopupListener implements PopupMenuListener {
     }
 
     @Override
-    public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-        System.out.println("Arrow button clicked (ComboBox closed)!");
-    }
+    public void popupMenuWillBecomeInvisible(PopupMenuEvent e) { }
 
     @Override
-    public void popupMenuCanceled(PopupMenuEvent e) {
-        System.out.println("Arrow button clicked (ComboBox closed)!");
-    }
+    public void popupMenuCanceled(PopupMenuEvent e) {}
 }

@@ -5,7 +5,6 @@ import com.http.post.model.*;
 import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
 import com.http.post.view.panel.EntityJPanel;
-
 import java.util.List;
 
 public class RequestHandler {
