@@ -15,7 +15,7 @@ public class RequestTopPanel extends JPanel {
     private final JButton saveButton;
 
     public String getUrl() {
-        return urlField.getSelectedIndex() == 0 ? "https://jsonplaceholder.typicode.com/users/1" : Objects.requireNonNull(urlField.getSelectedItem()).toString();
+        return Objects.requireNonNull(urlField.getSelectedItem()).toString();
     }
 
     public String getMethod() {

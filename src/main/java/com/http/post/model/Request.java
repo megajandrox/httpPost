@@ -2,12 +2,13 @@ package com.http.post.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Request {
+public class Request implements Serializable {
 
     public Request() {}
 
