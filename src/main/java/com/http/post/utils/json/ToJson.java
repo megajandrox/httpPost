@@ -2,7 +2,7 @@ package com.http.post.utils.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.http.post.utils.exception.JsonMappingException;
+import com.http.post.utils.exceptions.JsonMappingException;
 
 public class ToJson {
 

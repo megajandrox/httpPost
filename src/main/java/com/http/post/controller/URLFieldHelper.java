@@ -1,13 +1,11 @@
 package com.http.post.controller;
 
 import com.http.post.repository.Locator;
+import com.http.post.utils.bussiness.exceptions.SearchException;
 import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
 import com.http.post.view.table.KeyValue;
-import commons.db.utils.bussiness.exceptions.SearchException;
-
 import javax.swing.*;
-
 import static com.http.post.controller.listener.RequestHandler.HEADER_TABLE;
 import static com.http.post.controller.listener.RequestHandler.PARAMETER_TABLE;
 

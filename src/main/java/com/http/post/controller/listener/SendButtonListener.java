@@ -1,5 +1,6 @@
 package com.http.post.controller.listener;
 
+import com.http.post.controller.worker.JobExecutor;
 import com.http.post.dto.HttpResponse;
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.exceptions.RequestExecutionException;
@@ -11,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class SendButtonListener extends RequestHandler implements ActionListener {
+public class SendButtonListener extends RequestHandler implements ActionListener, JobExecutor {
 
     public SendButtonListener(ViewManager view) {
         super(view);
@@ -19,8 +20,21 @@ public class SendButtonListener extends RequestHandler implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton sendButton = view.getMainPanel().getUrlPanel().getSendButton();
-        sendButton.setEnabled(false);
+        execute();
+    }
+
+    @Override
+    public void enableButton() {
+        view.getMainPanel().getUrlPanel().getSendButton().setEnabled(true);
+    }
+
+    @Override
+    public void disableButton() {
+        view.getMainPanel().getUrlPanel().getSendButton().setEnabled(false);
+    }
+
+    @Override
+    public void actionPerform() throws Exception {
         try {
             SingleRunner runner = new SingleRunner(createRequest());
             HttpResponse httpResponse = runner.execute();
@@ -29,8 +43,6 @@ public class SendButtonListener extends RequestHandler implements ActionListener
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(view, "Cannot send request",
                     "Send Request", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            sendButton.setEnabled(true);
         }
     }
 }

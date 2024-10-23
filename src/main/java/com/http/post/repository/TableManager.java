@@ -1,7 +1,7 @@
 package com.http.post.repository;
 
-import commons.db.utils.DBManager;
-import commons.db.utils.exceptions.DBOperationManager;
+import com.http.post.utils.DBManager;
+import com.http.post.utils.exceptions.DBOperationManager;
 
 import java.sql.Connection;
 import java.sql.Statement;

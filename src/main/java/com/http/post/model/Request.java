@@ -1,19 +1,16 @@
 package com.http.post.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@lombok.Data
-public class Request {
+public class Request implements Serializable {
+
+    public Request() {}
 
     public Request(String url, Method method) {
         this.url = url;
@@ -23,11 +20,8 @@ public class Request {
     private Long id;
     private String url;
     private Method method;
-    @EqualsAndHashCode.Exclude
     private Body body;
-    @EqualsAndHashCode.Exclude
     private List<Header> headers = new ArrayList<>();
-    @EqualsAndHashCode.Exclude
     private List<QueryParam> queryParams = new ArrayList<>();
 
     private String getQueryParamsAsString() {
@@ -45,5 +39,53 @@ public class Request {
 
     public String toJson() {
         return RequestParser.toJson(this);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public void setMethod(Method method) {
+        this.method = method;
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
+    }
+
+    public List<Header> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(List<Header> headers) {
+        this.headers = headers;
+    }
+
+    public List<QueryParam> getQueryParams() {
+        return queryParams;
+    }
+
+    public void setQueryParams(List<QueryParam> queryParams) {
+        this.queryParams = queryParams;
     }
 }

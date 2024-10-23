@@ -3,10 +3,10 @@ package com.http.post.repository;
 import com.http.post.model.Method;
 import com.http.post.model.Request;
 import com.http.post.model.RequestParser;
-import commons.db.utils.DBManager;
-import commons.db.utils.bussiness.exceptions.*;
-import commons.db.utils.exceptions.DBOperationManager;
-import commons.db.utils.exceptions.SQLActionException;
+import com.http.post.utils.DBManager;
+import com.http.post.utils.bussiness.exceptions.*;
+import com.http.post.utils.exceptions.DBOperationManager;
+import com.http.post.utils.exceptions.SQLActionException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -1,13 +1,34 @@
 package com.http.post.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@lombok.Data
 public class QueryParam implements HttpRequestComponent {
 
     private String key;
     private String value;
+
+    public QueryParam() {}
+
+    public QueryParam(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public String toString() {
+        return String.format("QueryParam{key='%s', value='%s'}", key, value);
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

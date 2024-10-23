@@ -3,18 +3,16 @@ package com.http.post.controller;
 import com.http.post.controller.listener.*;
 import com.http.post.view.ViewManager;
 import com.http.post.view.panel.EntityJPanel;
-import commons.db.utils.bussiness.exceptions.SearchException;
-
 import javax.swing.*;
 import java.util.List;
+import com.http.post.utils.bussiness.exceptions.SearchException;
 
 public class RequestController {
 
     private ViewManager view;
     private static final int HEADER_TABLE = 0;
     private static final int PARAMETERS_TABLE = 1;
-    //TODO: Implement add to favorites button
-    //TODO: Implement show response status code, status message and headers
+
     public RequestController(ViewManager viewManager) {
         this.view = viewManager;
         try {
@@ -30,18 +28,18 @@ public class RequestController {
         this.view.getMainPanel().getUrlPanel().getUrlField().addActionListener(new UrlFieldListener(this.view));
         this.view.getMainPanel().getUrlPanel().getUrlField().addPopupMenuListener(new UrlFieldPopupListener(this.view));
         List<EntityJPanel> entityJPanels = this.view.getMainPanel().getEntityJPanels();
-
         entityJPanels.get(HEADER_TABLE).getAddButton()
                 .addActionListener(new AddKeyValueItemListener(this.view, HEADER_TABLE));
         entityJPanels.get(PARAMETERS_TABLE).getAddButton()
                 .addActionListener(new AddKeyValueItemListener(this.view, PARAMETERS_TABLE));
-
         entityJPanels.get(HEADER_TABLE).getRemoveButton()
                 .addActionListener(new RemoveKeyValueItemListener(this.view, HEADER_TABLE));
         entityJPanels.get(PARAMETERS_TABLE).getRemoveButton()
                 .addActionListener(new RemoveKeyValueItemListener(this.view, PARAMETERS_TABLE));
 
         this.view.getCreateDatabase().addActionListener(new DatabaseCreationListener(this.view));
+        viewManager.getDbSQLOption().addActionListener(new DbSQLOptionListener(this.view));
+        viewManager.getDiskOption().addActionListener(new DiskOptionListener(this.view));
     }
 }
 

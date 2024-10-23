@@ -1,6 +1,6 @@
 package com.http.post.repository;
 
-import commons.db.utils.bussiness.exceptions.*;
+import com.http.post.utils.bussiness.exceptions.*;
 
 import java.util.List;
 import java.util.Optional;
