@@ -27,7 +27,6 @@ public class ViewManager extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().add(mainPanel, BorderLayout.CENTER);
-
         // Create the menu bar
         menuBar = new JMenuBar();
         configMenu = new JMenu("Settings");
@@ -41,7 +40,6 @@ public class ViewManager extends JFrame {
         storageOptionsGroup.add(diskOption);
         configMenu.add(dbSQLOption);
         configMenu.add(diskOption);
-
         menuBar.add(configMenu);
         this.setJMenuBar(menuBar);
 

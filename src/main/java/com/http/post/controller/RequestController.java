@@ -22,6 +22,7 @@ public class RequestController {
             JOptionPane.showMessageDialog(viewManager, "There was an error getting the URLs",
                     "Persistence Error", JOptionPane.ERROR_MESSAGE);
         }
+        this.view.getMainPanel().getUrlPanel().getSendButton().addActionListener(new SendButtonListener(this.view));
         this.view.getMainPanel().getUrlPanel().getClearButton().addActionListener(new ClearButtonListener(this.view));
         this.view.getMainPanel().getUrlPanel().getSaveButton().addActionListener(new SaveButtonListener(this.view));
         this.view.getMainPanel().getUrlPanel().getUrlField().addActionListener(new UrlFieldListener(this.view));

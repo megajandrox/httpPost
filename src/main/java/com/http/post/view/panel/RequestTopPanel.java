@@ -11,8 +11,10 @@ public class RequestTopPanel extends JPanel {
     private final JComboBox<RequestData> urlField = new JComboBox<>(new RequestData[] {new RequestData("https://jsonplaceholder.typicode.com/users/1", "GET", "")});
 
     private static final JComboBox<String> methodDropdown = new JComboBox<>(new String[] {"GET", "POST", "PUT", "DELETE"});
+    private final JButton sendButton;
     private final JButton clearButton;
     private final JButton saveButton;
+    private final JButton favoriteButton;
 
     public String getUrl() {
         return Objects.requireNonNull(urlField.getSelectedItem()).toString();
@@ -30,8 +32,12 @@ public class RequestTopPanel extends JPanel {
         this.urlField.setEditable(true);
         this.urlField.setPreferredSize(new Dimension(400, 25));
         add(urlField);
+        this.sendButton = new JButton("Send");
+        this.add(sendButton);
         this.saveButton = new JButton("Save");
         this.add(saveButton);
+        this.favoriteButton = new JButton("Favorite");
+        this.add(favoriteButton);
         this.clearButton = new JButton("Clear");
         this.add(clearButton);
     }
@@ -44,6 +50,10 @@ public class RequestTopPanel extends JPanel {
         return methodDropdown;
     }
 
+    public JButton getSendButton() {
+        return sendButton;
+    }
+
     public JButton getClearButton() {
         return clearButton;
     }
@@ -52,4 +62,7 @@ public class RequestTopPanel extends JPanel {
         return saveButton;
     }
 
+    public JButton getFavoriteButton() {
+        return favoriteButton;
+    }
 }

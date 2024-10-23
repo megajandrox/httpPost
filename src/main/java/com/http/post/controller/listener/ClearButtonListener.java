@@ -1,5 +1,6 @@
 package com.http.post.controller.listener;
 
+import com.http.post.controller.worker.JobExecutor;
 import com.http.post.repository.Locator;
 import com.http.post.utils.bussiness.exceptions.DeletionException;
 import com.http.post.view.ViewManager;
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 
 import static com.http.post.controller.URLFieldHelper.setRequestDataOnView;
 
-public class ClearButtonListener implements ActionListener {
+public class ClearButtonListener implements ActionListener, JobExecutor {
 
     public static final String EMPTY = "";
     public static final int FIRST_INDEX = 0;
@@ -22,6 +23,21 @@ public class ClearButtonListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        execute();
+    }
+
+    @Override
+    public void enableButton() {
+        this.view.getMainPanel().getUrlPanel().getClearButton().setEnabled(true);
+    }
+
+    @Override
+    public void disableButton() {
+        this.view.getMainPanel().getUrlPanel().getClearButton().setEnabled(false);
+    }
+
+    @Override
+    public void actionPerform() throws Exception {
         Object selectedItem = this.view.getMainPanel().getUrlPanel().getUrlField().getSelectedItem();
         if(selectedItem instanceof RequestData) {
             RequestData requestData = (RequestData) selectedItem;
