@@ -3,8 +3,7 @@ package com.http.post;
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.model.*;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class RequestBuilderTest {
 

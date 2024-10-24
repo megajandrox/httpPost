@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class RequestTopPanel extends JPanel {
 
-    private final JComboBox<RequestData> urlField = new JComboBox<>(new RequestData[] {new RequestData("https://jsonplaceholder.typicode.com/users/1", "GET", "")});
+    private final TextField urlField = new TextField();
 
     private static final JComboBox<String> methodDropdown = new JComboBox<>(new String[] {"GET", "POST", "PUT", "DELETE"});
     private final JButton sendButton;
@@ -17,7 +17,7 @@ public class RequestTopPanel extends JPanel {
     private final JButton favoriteButton;
 
     public String getUrl() {
-        return Objects.requireNonNull(urlField.getSelectedItem()).toString();
+        return Objects.requireNonNull(urlField.getText());
     }
 
     public String getMethod() {
@@ -42,7 +42,7 @@ public class RequestTopPanel extends JPanel {
         this.add(clearButton);
     }
 
-    public JComboBox<RequestData> getUrlField() {
+    public TextField getUrlField() {
         return urlField;
     }
 

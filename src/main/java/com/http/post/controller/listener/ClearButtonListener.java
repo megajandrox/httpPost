@@ -38,12 +38,12 @@ public class ClearButtonListener implements ActionListener, JobExecutor {
 
     @Override
     public void actionPerform() throws Exception {
-        Object selectedItem = this.view.getMainPanel().getUrlPanel().getUrlField().getSelectedItem();
+        Object selectedItem = this.view.getUrlSearch().getSelectedItem();
         if(selectedItem instanceof RequestData) {
             RequestData requestData = (RequestData) selectedItem;
             try {
                 Locator.getInstance().getRequestDAO().delete(requestData.getId());
-                JComboBox<RequestData> urlField = this.view.getMainPanel().getUrlPanel().getUrlField();
+                JComboBox<RequestData> urlField = this.view.getUrlSearch();
                 urlField.removeItem(requestData);
                 if(urlField.getItemCount() > 0) {
                     urlField.setSelectedIndex(FIRST_INDEX);

@@ -34,7 +34,7 @@ public class AbstractPersistListener implements ActionListener {
         if(this.radioButton.isSelected()) {
             try {
                 Locator.getInstance().switchDAOType(type);
-                URLFieldHelper.populateHttpRequest(this.viewManager.getMainPanel().getUrlPanel().getUrlField());
+                URLFieldHelper.populateHttpRequest(this.viewManager.getUrlSearch());
             } catch (SearchException ex) {
                 System.err.println(ex.getMessage());
                 JOptionPane.showMessageDialog(viewManager, title, message, JOptionPane.ERROR_MESSAGE);

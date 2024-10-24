@@ -16,7 +16,7 @@ public class RequestController {
     public RequestController(ViewManager viewManager) {
         this.view = viewManager;
         try {
-            URLFieldHelper.populateHttpRequest(this.view.getMainPanel().getUrlPanel().getUrlField());
+            URLFieldHelper.populateHttpRequest(this.view.getUrlSearch());
         } catch (SearchException e) {
             System.err.println(e.getMessage());
             JOptionPane.showMessageDialog(viewManager, "There was an error getting the URLs",
@@ -25,8 +25,8 @@ public class RequestController {
         this.view.getMainPanel().getUrlPanel().getSendButton().addActionListener(new SendButtonListener(this.view));
         this.view.getMainPanel().getUrlPanel().getClearButton().addActionListener(new ClearButtonListener(this.view));
         this.view.getMainPanel().getUrlPanel().getSaveButton().addActionListener(new SaveButtonListener(this.view));
-        this.view.getMainPanel().getUrlPanel().getUrlField().addActionListener(new UrlFieldListener(this.view));
-        this.view.getMainPanel().getUrlPanel().getUrlField().addPopupMenuListener(new UrlFieldPopupListener(this.view));
+        this.view.getUrlSearch().addActionListener(new UrlSearchListener(this.view));
+        this.view.getUrlSearch().addPopupMenuListener(new UrlFieldPopupListener(this.view));
         List<EntityJPanel> entityJPanels = this.view.getMainPanel().getEntityJPanels();
         entityJPanels.get(HEADER_TABLE).getAddButton()
                 .addActionListener(new AddKeyValueItemListener(this.view, HEADER_TABLE));

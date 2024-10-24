@@ -37,7 +37,7 @@ public class UrlFieldPopupListener implements PopupMenuListener, JobExecutor {
     @Override
     public void actionPerform() throws Exception {
         try {
-            populateHttpRequest(this.view.getMainPanel().getUrlPanel().getUrlField());
+            populateHttpRequest(this.view.getUrlSearch());
             this.view.getMainPanel().getJTabbedPane().setSelectedIndex(BODY_TAB);
         } catch (SearchException ex) {
             System.err.println(ex.getMessage());

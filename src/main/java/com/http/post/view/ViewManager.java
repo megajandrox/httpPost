@@ -1,5 +1,6 @@
 package com.http.post.view;
 
+import com.http.post.view.model.RequestData;
 import com.http.post.view.panel.MainPanel;
 import com.http.post.view.table.KeyValueTableModel;
 
@@ -9,6 +10,7 @@ import java.util.Arrays;
 
 public class ViewManager extends JFrame {
 
+    private final JTabbedPane jTabbedPane;
     private MainPanel mainPanel;
     private JMenuBar menuBar;
     private JMenu configMenu;
@@ -16,17 +18,23 @@ public class ViewManager extends JFrame {
     private JRadioButtonMenuItem dbSQLOption;
     private JRadioButtonMenuItem diskOption;
     private ButtonGroup storageOptionsGroup;
+    private final JComboBox<RequestData> urlSearch = new JComboBox<>(new RequestData[] {new RequestData("", "GET", "")});
 
     public ViewManager() {
         // Setting up the main frame
         setTitle("HTTP Post");
         setSize(800, 600);
+        this.urlSearch.setEditable(true);
+        this.urlSearch.setPreferredSize(new Dimension(400, 25));
+        this.jTabbedPane = new JTabbedPane();
         KeyValueTableModel headerTableModel = new KeyValueTableModel("Header");
         KeyValueTableModel parameterTableModel = new KeyValueTableModel("Parameter");
         this.mainPanel = new MainPanel(Arrays.asList(headerTableModel, parameterTableModel));
+        jTabbedPane.add("New Request", mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        getContentPane().add(mainPanel, BorderLayout.CENTER);
+        getContentPane().add(jTabbedPane, BorderLayout.CENTER);
+        getContentPane().add(urlSearch, BorderLayout.NORTH);
         // Create the menu bar
         menuBar = new JMenuBar();
         configMenu = new JMenu("Settings");
@@ -69,5 +77,9 @@ public class ViewManager extends JFrame {
 
     public JRadioButtonMenuItem getDiskOption() {
         return diskOption;
+    }
+
+    public JComboBox<RequestData> getUrlSearch() {
+        return urlSearch;
     }
 }

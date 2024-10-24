@@ -31,7 +31,7 @@ public class RequestHandler {
         entityJPanels.get(PARAMETER_TABLE).getTableModel().getContent()
                 .stream().filter(kv -> !kv.getKey().isEmpty() && !kv.getValue().isEmpty())
                 .forEach(kv -> rb.addComponent(new QueryParam(kv.getKey(), kv.getValue())));
-        Object selectedItem = view.getMainPanel().getUrlPanel().getUrlField().getSelectedItem();
+        Object selectedItem = view.getUrlSearch().getSelectedItem();
         Request request = rb.build(url, method);
         if (selectedItem instanceof RequestData) {
             RequestData requestData = (RequestData) selectedItem;
