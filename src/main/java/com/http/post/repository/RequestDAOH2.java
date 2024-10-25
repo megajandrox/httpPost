@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.http.post.model.RequestParser.parse;
+
 public class RequestDAOH2 implements DAO<Request> {
 
     @Override
@@ -22,11 +24,12 @@ public class RequestDAOH2 implements DAO<Request> {
         String url = request.getUrl();
         String method = request.getMethod().toString();
         String json = request.toJson();
+        String isFavorite = request.getFavorite() ? "TRUE" : "FALSE";
         Connection c = DBManager.connect();
         try {
             DBOperationManager.getInstance().trySqlAction(c, () -> {
                 Statement s = c.createStatement();
-                String sql = "INSERT INTO request (url, method, json_data) VALUES ('" + url + "', '" + method + "', '" + json + "')";
+                String sql = "INSERT INTO request (url, method, json_data, is_favorite) VALUES ('" + url + "', '" + method + "', '" + json + "', " + isFavorite + ")";
                 s.executeUpdate(sql);
                 c.commit();
                 return java.util.Optional.empty();
@@ -47,9 +50,9 @@ public class RequestDAOH2 implements DAO<Request> {
                 Statement s = c.createStatement();
                 ResultSet rs = s.executeQuery(sql);
                 if (rs.next()) {
-                    String url = rs.getString("url");
-                    String method = rs.getString("method");
-                    return Optional.of(new Request(url, Method.valueOf(method)));
+                    Request requestFromDB = parse(rs.getString("json_data"));
+                    requestFromDB.setId(rs.getLong("id"));
+                    return Optional.of(requestFromDB);
                 }
                 return Optional.empty();
             }, c::rollback);
@@ -66,10 +69,11 @@ public class RequestDAOH2 implements DAO<Request> {
         Long id = request.getId();
         String url = request.getUrl();
         String method = request.getMethod().toString();
+        String isFavorite = request.getFavorite() ? "1" : "0";
         Connection c = DBManager.connect();
         try {
             DBOperationManager.getInstance().trySqlAction(c, () -> {
-                String sql = "UPDATE request set url = '" + url + "', method = '" + method + "', json_data = '" + request.toJson() + "' WHERE id = " + id;
+                String sql = "UPDATE request set url = '" + url + "', method = '" + method + "', json_data = '" + request.toJson() + "', is_favorite = " + isFavorite + " WHERE  url = '" + url + "' AND method = '" + method + "'";
                 Statement s = c.createStatement();
                 s.executeUpdate(sql);
                 c.commit();
@@ -111,7 +115,7 @@ public class RequestDAOH2 implements DAO<Request> {
                     ResultSet rs = s.executeQuery(sql);
                     while (rs.next()) {
                         String json = rs.getString("json_data");
-                        Request request = RequestParser.parse(json);
+                        Request request = parse(json);
                         request.setId(rs.getLong("id"));
                         result.add(request);
                     }

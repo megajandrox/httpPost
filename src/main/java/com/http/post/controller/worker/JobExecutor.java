@@ -1,8 +1,9 @@
 package com.http.post.controller.worker;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
-public interface JobExecutor {
+public interface JobExecutor extends ActionListener {
 
     void enableButton();
 

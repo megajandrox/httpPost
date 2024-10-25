@@ -23,6 +23,7 @@ public class Request implements Serializable {
     private Body body;
     private List<Header> headers = new ArrayList<>();
     private List<QueryParam> queryParams = new ArrayList<>();
+    private Boolean isFavorite = false;
 
     private String getQueryParamsAsString() {
         return this.queryParams.stream()
@@ -87,5 +88,13 @@ public class Request implements Serializable {
 
     public void setQueryParams(List<QueryParam> queryParams) {
         this.queryParams = queryParams;
+    }
+
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
     }
 }

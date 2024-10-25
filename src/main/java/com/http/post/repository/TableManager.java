@@ -11,7 +11,7 @@ public class TableManager {
 	public static void createRequestTable() {
 		Connection c = DBManager.connect();
 		DBOperationManager.getInstance().tryDDLAction(c, () -> {
-			String sql = "CREATE TABLE  IF NOT EXISTS request (id INTEGER IDENTITY, url VARCHAR(1024), method VARCHAR(20), json_data CLOB)";
+			String sql = "CREATE TABLE  IF NOT EXISTS request (id INTEGER IDENTITY, url VARCHAR(1024), method VARCHAR(20), json_data CLOB, is_favorite BIT, PRIMARY KEY (id))";
 			Statement s = c.createStatement();
 			s.execute(sql);
 		}, c::rollback);
