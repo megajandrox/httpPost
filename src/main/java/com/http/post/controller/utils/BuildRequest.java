@@ -1,4 +1,4 @@
-package com.http.post.controller.listener;
+package com.http.post.controller.utils;
 
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.model.*;
@@ -7,8 +7,8 @@ import com.http.post.view.panel.EntityJPanel;
 
 import java.util.List;
 
-import static com.http.post.controller.listener.CreateRequestForCreation.HEADER_TABLE;
-import static com.http.post.controller.listener.CreateRequestForCreation.PARAMETER_TABLE;
+import static com.http.post.controller.utils.CreateRequestForCreation.HEADER_TABLE;
+import static com.http.post.controller.utils.CreateRequestForCreation.PARAMETER_TABLE;
 
 public interface BuildRequest {
 

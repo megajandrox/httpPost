@@ -40,7 +40,7 @@ public class RequestDAOH2 implements DAO<Request> {
     }
 
     @Override
-    public Optional<Request> read(Request request) throws GetException {
+    public Optional<Request> get(Request request) throws GetException {
         Connection c = DBManager.connect();
         try {
             Optional<Request> optResult = DBOperationManager.getInstance().trySqlAction(c, () -> {

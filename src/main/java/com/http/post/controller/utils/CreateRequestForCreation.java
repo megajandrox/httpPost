@@ -1,10 +1,10 @@
-package com.http.post.controller.listener;
+package com.http.post.controller.utils;
 
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.model.Request;
 import com.http.post.view.ViewManager;
 
-public class CreateRequestForCreation implements BuildRequest {
+public abstract class CreateRequestForCreation implements BuildRequest {
 
     public static final int HEADER_TABLE = 0;
     public static final int PARAMETER_TABLE = 1;

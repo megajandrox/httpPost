@@ -8,8 +8,8 @@ import com.http.post.view.table.KeyValue;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static com.http.post.controller.listener.CreateRequestForCreation.HEADER_TABLE;
-import static com.http.post.controller.listener.CreateRequestForCreation.PARAMETER_TABLE;
+import static com.http.post.controller.utils.CreateRequestForCreation.HEADER_TABLE;
+import static com.http.post.controller.utils.CreateRequestForCreation.PARAMETER_TABLE;
 
 public class UrlSearchListener implements ActionListener, JobExecutor {
 

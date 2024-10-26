@@ -29,6 +29,7 @@ public class RequestController {
         this.view.getMainPanel().getUrlPanel().getFavoriteButton().addActionListener(new AddFavoriteButtonListener(this.view));
         this.view.getSearchPanel().getUrlSearch().addActionListener(new UrlSearchListener(this.view));
         this.view.getSearchPanel().getUrlSearch().addPopupMenuListener(new UrlFieldPopupListener(this.view));
+
         List<EntityJPanel> entityJPanels = this.view.getMainPanel().getEntityJPanels();
         entityJPanels.get(HEADER_TABLE).getAddButton()
                 .addActionListener(new AddKeyValueItemListener(this.view, HEADER_TABLE));

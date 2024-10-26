@@ -1,5 +1,6 @@
 package com.http.post.controller.listener;
 
+import com.http.post.controller.utils.CleanUpRequest;
 import com.http.post.controller.worker.JobExecutor;
 import com.http.post.repository.Locator;
 import com.http.post.utils.bussiness.exceptions.DeletionException;

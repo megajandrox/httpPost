@@ -29,17 +29,17 @@ public class RequestDAOH2Test {
     @org.junit.Test
     public void create() throws CreateException, GetException {
         requestDAO.create(new Request("http://localhost:8080/test", Method.GET));
-        Optional<Request> read = requestDAO.read(new Request("http://localhost:8080/test", Method.GET));
+        Optional<Request> read = requestDAO.get(new Request("http://localhost:8080/test", Method.GET));
         read.ifPresent(r -> Assert.assertEquals("http://localhost:8080/test", r.getUrl()));
     }
 
     @org.junit.Test
     public void update() throws CreateException, GetException, UpdateException {
         requestDAO.create(new Request("http://localhost:8080/test", Method.GET));
-        Request request = requestDAO.read(new Request("http://localhost:8080/test", Method.GET)).get();
+        Request request = requestDAO.get(new Request("http://localhost:8080/test", Method.GET)).get();
         request.setFavorite(false);
         requestDAO.update(request);
-        Optional<Request> read = requestDAO.read(request);
+        Optional<Request> read = requestDAO.get(request);
         read.ifPresent(r -> Assert.assertEquals("http://localhost:8080/test", r.getUrl()));
         read.ifPresent(r -> Assert.assertEquals(r.getFavorite(), request.getFavorite()));
         read.ifPresent(r -> Assert.assertEquals(r.getMethod(), request.getMethod()));

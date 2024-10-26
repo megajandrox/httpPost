@@ -21,7 +21,7 @@ public class RequestDAOJson extends JsonManager<Request> implements DAO<Request>
     }
 
     @Override
-    public Optional<Request> read(Request request) throws GetException {
+    public Optional<Request> get(Request request) throws GetException {
         throw new UnsupportedOperationException();
     }
 
