@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class SendButtonListener extends RequestHandler implements ActionListener, JobExecutor {
+public class SendButtonListener extends CreateRequestForUpdate implements ActionListener, JobExecutor {
 
     public SendButtonListener(ViewManager view) {
         super(view);
@@ -36,7 +36,7 @@ public class SendButtonListener extends RequestHandler implements ActionListener
     @Override
     public void actionPerform() throws Exception {
         try {
-            SingleRunner runner = new SingleRunner(createRequest());
+            SingleRunner runner = new SingleRunner(create());
             HttpResponse httpResponse = runner.execute();
             view.getMainPanel().getResponsePanel().getTextArea().setText(httpResponse.getBody());
         } catch (IOException | RequestExecutionException | InvalidMethodException ex) {

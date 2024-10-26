@@ -19,7 +19,6 @@ public class MainPanel extends JPanel {
     public MainPanel(List<EntityTableModel> tableModels) {
         super(new BorderLayout());
         this.requestTopPanel = new RequestTopPanel();
-        requestTopPanel.setBorder(BorderFactory.createTitledBorder("URL"));
         add(requestTopPanel, BorderLayout.NORTH);
         this.jTabbedPane = new JTabbedPane();
         this.bodyPanel = new TextPanel("Body", true, BorderLayout.CENTER);

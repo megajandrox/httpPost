@@ -6,8 +6,8 @@ import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
 import com.http.post.view.table.KeyValue;
 import javax.swing.*;
-import static com.http.post.controller.listener.RequestHandler.HEADER_TABLE;
-import static com.http.post.controller.listener.RequestHandler.PARAMETER_TABLE;
+import static com.http.post.controller.listener.CreateRequestForCreation.HEADER_TABLE;
+import static com.http.post.controller.listener.CreateRequestForCreation.PARAMETER_TABLE;
 
 public class URLFieldHelper {
 
@@ -24,7 +24,7 @@ public class URLFieldHelper {
     }
 
     public static void setRequestDataOnView(RequestData requestData, ViewManager view) {
-        view.getUrlSearch().setSelectedItem(requestData);
+        view.getSearchPanel().getUrlSearch().setSelectedItem(requestData);
         view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedItem(requestData.getMethod());
         view.getMainPanel().getBodyPanel().getTextArea().setText(requestData.getBody());
         view.getMainPanel().getResponsePanel().getTextArea().setText(requestData.getBody());

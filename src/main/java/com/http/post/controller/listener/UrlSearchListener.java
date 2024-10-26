@@ -8,8 +8,8 @@ import com.http.post.view.table.KeyValue;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static com.http.post.controller.listener.RequestHandler.HEADER_TABLE;
-import static com.http.post.controller.listener.RequestHandler.PARAMETER_TABLE;
+import static com.http.post.controller.listener.CreateRequestForCreation.HEADER_TABLE;
+import static com.http.post.controller.listener.CreateRequestForCreation.PARAMETER_TABLE;
 
 public class UrlSearchListener implements ActionListener, JobExecutor {
 
@@ -21,7 +21,7 @@ public class UrlSearchListener implements ActionListener, JobExecutor {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JComboBox<RequestData> urlField = view.getUrlSearch();
+        JComboBox<RequestData> urlField = view.getSearchPanel().getUrlSearch();
         if (e.getSource() == urlField) {
             execute();
         }
@@ -35,7 +35,7 @@ public class UrlSearchListener implements ActionListener, JobExecutor {
 
     @Override
     public void actionPerform() throws Exception {
-        JComboBox<RequestData> urlField = view.getUrlSearch();
+        JComboBox<RequestData> urlField = view.getSearchPanel().getUrlSearch();
         if (urlField.getSelectedItem() != null && urlField.getSelectedItem() instanceof RequestData) {
             RequestData selectedItem = (RequestData) urlField.getSelectedItem();
             view.getMainPanel().getUrlPanel().getUrlField().setText(selectedItem.getUrl());

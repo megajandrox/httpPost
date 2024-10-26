@@ -5,14 +5,13 @@ import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.model.Request;
 import com.http.post.repository.Locator;
 import com.http.post.utils.bussiness.exceptions.UpdateException;
-import com.http.post.utils.bussiness.exceptions.UpsertException;
 import com.http.post.view.ViewManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 
-public class AddFavoriteButtonListener extends RequestHandler implements JobExecutor {
+public class AddFavoriteButtonListener extends CreateRequestForUpdate implements JobExecutor {
 
     public AddFavoriteButtonListener(ViewManager view) {
         super(view);
@@ -36,7 +35,7 @@ public class AddFavoriteButtonListener extends RequestHandler implements JobExec
     @Override
     public void actionPerform() throws Exception {
         try {
-            Optional<Request> optRequest = Locator.getInstance().getRequestDAO().read(createRequest());
+            Optional<Request> optRequest = Locator.getInstance().getRequestDAO().read(create());
             if (optRequest.isPresent()) {
                 Request request = optRequest.get();
                 request.setFavorite(!request.getFavorite());

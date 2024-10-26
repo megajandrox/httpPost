@@ -9,7 +9,7 @@ import com.http.post.view.ViewManager;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class AbstractPersistListener implements ActionListener {
+public abstract class AbstractPersistListener implements ActionListener {
 
     private final String title;
     private final String message;
@@ -34,7 +34,7 @@ public class AbstractPersistListener implements ActionListener {
         if(this.radioButton.isSelected()) {
             try {
                 Locator.getInstance().switchDAOType(type);
-                URLFieldHelper.populateHttpRequest(this.viewManager.getUrlSearch());
+                URLFieldHelper.populateHttpRequest(this.viewManager.getSearchPanel().getUrlSearch());
             } catch (SearchException ex) {
                 System.err.println(ex.getMessage());
                 JOptionPane.showMessageDialog(viewManager, title, message, JOptionPane.ERROR_MESSAGE);

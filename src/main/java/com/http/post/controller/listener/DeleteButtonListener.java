@@ -11,13 +11,13 @@ import java.awt.event.ActionListener;
 
 import static com.http.post.controller.URLFieldHelper.setRequestDataOnView;
 
-public class ClearButtonListener implements ActionListener, JobExecutor {
+public class DeleteButtonListener implements ActionListener, JobExecutor, CleanUpRequest {
 
     public static final String EMPTY = "";
     public static final int FIRST_INDEX = 0;
     private ViewManager view;
 
-    public ClearButtonListener(ViewManager view) {
+    public DeleteButtonListener(ViewManager view) {
         this.view = view;
     }
 
@@ -28,31 +28,28 @@ public class ClearButtonListener implements ActionListener, JobExecutor {
 
     @Override
     public void enableButton() {
-        this.view.getMainPanel().getUrlPanel().getClearButton().setEnabled(true);
+        this.view.getMainPanel().getUrlPanel().getDeleteButton().setEnabled(true);
     }
 
     @Override
     public void disableButton() {
-        this.view.getMainPanel().getUrlPanel().getClearButton().setEnabled(false);
+        this.view.getMainPanel().getUrlPanel().getDeleteButton().setEnabled(false);
     }
 
     @Override
     public void actionPerform() throws Exception {
-        Object selectedItem = this.view.getUrlSearch().getSelectedItem();
+        Object selectedItem = this.view.getSearchPanel().getUrlSearch().getSelectedItem();
         if(selectedItem instanceof RequestData) {
             RequestData requestData = (RequestData) selectedItem;
             try {
                 Locator.getInstance().getRequestDAO().delete(requestData.getId());
-                JComboBox<RequestData> urlField = this.view.getUrlSearch();
+                JComboBox<RequestData> urlField = this.view.getSearchPanel().getUrlSearch();
                 urlField.removeItem(requestData);
                 if(urlField.getItemCount() > 0) {
                     urlField.setSelectedIndex(FIRST_INDEX);
                     setRequestDataOnView(urlField.getItemAt(FIRST_INDEX), this.view);
                 } else {
-                    this.view.getMainPanel().getEntityJPanels().forEach(EntityJPanel -> EntityJPanel.getTableModel().removeAllRows());
-                    this.view.getMainPanel().getBodyPanel().getTextArea().setText(EMPTY);
-                    this.view.getMainPanel().getResponsePanel().getTextArea().setText(EMPTY);
-                    this.view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedIndex(FIRST_INDEX);
+                    cleanUpRequestComponents(this.view);
                 }
             } catch (DeletionException ex) {
                 System.err.println(ex.getMessage());
@@ -61,4 +58,5 @@ public class ClearButtonListener implements ActionListener, JobExecutor {
             }
         }
     }
+
 }

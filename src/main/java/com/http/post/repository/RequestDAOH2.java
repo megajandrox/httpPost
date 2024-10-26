@@ -1,8 +1,6 @@
 package com.http.post.repository;
 
-import com.http.post.model.Method;
 import com.http.post.model.Request;
-import com.http.post.model.RequestParser;
 import com.http.post.utils.DBManager;
 import com.http.post.utils.bussiness.exceptions.*;
 import com.http.post.utils.exceptions.DBOperationManager;
@@ -73,7 +71,7 @@ public class RequestDAOH2 implements DAO<Request> {
         Connection c = DBManager.connect();
         try {
             DBOperationManager.getInstance().trySqlAction(c, () -> {
-                String sql = "UPDATE request set url = '" + url + "', method = '" + method + "', json_data = '" + request.toJson() + "', is_favorite = " + isFavorite + " WHERE  url = '" + url + "' AND method = '" + method + "'";
+                String sql = "UPDATE request set url = '" + url + "', method = '" + method + "', json_data = '" + request.toJson() + "', is_favorite = " + isFavorite + " WHERE  id = " + id;
                 Statement s = c.createStatement();
                 s.executeUpdate(sql);
                 c.commit();
