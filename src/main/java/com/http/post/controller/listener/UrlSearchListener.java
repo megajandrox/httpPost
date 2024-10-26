@@ -1,6 +1,6 @@
 package com.http.post.controller.listener;
 
-import com.http.post.controller.worker.JobExecutor;
+import com.http.post.controller.worker.SingleExecutor;
 import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
 import com.http.post.view.panel.EntityJPanel;
@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import static com.http.post.controller.utils.CreateRequestForCreation.HEADER_TABLE;
 import static com.http.post.controller.utils.CreateRequestForCreation.PARAMETER_TABLE;
 
-public class UrlSearchListener implements ActionListener, JobExecutor {
+public class UrlSearchListener implements ActionListener, SingleExecutor {
 
     private final ViewManager view;
 
@@ -26,12 +26,6 @@ public class UrlSearchListener implements ActionListener, JobExecutor {
             execute();
         }
     }
-
-    @Override
-    public void enableButton() { }
-
-    @Override
-    public void disableButton() { }
 
     @Override
     public void actionPerform() throws Exception {

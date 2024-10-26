@@ -3,7 +3,7 @@ package com.http.post.controller.worker;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public interface JobExecutor extends ActionListener {
+public interface ButtonExecutor extends ActionListener {
 
     void enableButton();
 

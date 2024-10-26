@@ -1,18 +1,19 @@
 package com.http.post.controller.listener;
 
 import com.http.post.controller.utils.CleanUpRequest;
-import com.http.post.controller.worker.JobExecutor;
+import com.http.post.controller.worker.ButtonExecutor;
 import com.http.post.repository.Locator;
 import com.http.post.utils.bussiness.exceptions.DeletionException;
 import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static com.http.post.controller.URLFieldHelper.setRequestDataOnView;
 
-public class DeleteButtonListener implements ActionListener, JobExecutor, CleanUpRequest {
+public class DeleteButtonListener implements ActionListener, ButtonExecutor, CleanUpRequest {
 
     public static final String EMPTY = "";
     public static final int FIRST_INDEX = 0;

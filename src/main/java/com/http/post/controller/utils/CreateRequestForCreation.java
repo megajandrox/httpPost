@@ -14,7 +14,7 @@ public abstract class CreateRequestForCreation implements BuildRequest {
         this.view = view;
     }
 
-    public Request create() throws InvalidMethodException {
+    public Request createRequest() throws InvalidMethodException {
         String bodyText = view.getMainPanel().getBodyPanel().getTextArea().getText();
         String url = view.getMainPanel().getUrlPanel().getUrl();
         String method = view.getMainPanel().getUrlPanel().getMethod();

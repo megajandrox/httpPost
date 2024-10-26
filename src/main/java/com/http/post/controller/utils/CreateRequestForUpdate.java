@@ -11,8 +11,8 @@ public abstract class CreateRequestForUpdate extends CreateRequestForCreation {
         super(view);
     }
 
-    public Request create() throws InvalidMethodException {
-        Request request = super.create();
+    public Request createRequest() throws InvalidMethodException {
+        Request request = super.createRequest();
         Object selectedItem = view.getSearchPanel().getUrlSearch().getSelectedItem();
         if (selectedItem instanceof RequestData) {
             RequestData requestData = (RequestData) selectedItem;

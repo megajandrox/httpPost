@@ -2,7 +2,8 @@ package com.http.post.controller.listener;
 
 import com.http.post.controller.utils.CleanUpRequest;
 import com.http.post.controller.utils.CreateRequestForCreation;
-import com.http.post.controller.worker.JobExecutor;
+import com.http.post.controller.worker.ButtonExecutor;
+import com.http.post.controller.worker.SingleExecutor;
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.repository.Locator;
 import com.http.post.utils.bussiness.exceptions.CreateException;
@@ -12,7 +13,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddButtonListener extends CreateRequestForCreation implements ActionListener, JobExecutor, CleanUpRequest {
+public class AddButtonListener extends CreateRequestForCreation implements ActionListener, ButtonExecutor, CleanUpRequest {
 
     public AddButtonListener(ViewManager view) {
         super(view);
@@ -37,7 +38,7 @@ public class AddButtonListener extends CreateRequestForCreation implements Actio
     public void actionPerform() throws Exception {
         cleanUpRequestComponents(this.view);
         try {
-            Locator.getInstance().getRequestDAO().create(create());
+            Locator.getInstance().getRequestDAO().create(createRequest());
             JOptionPane.showMessageDialog(view, "Created successfully",
                     "Create", JOptionPane.INFORMATION_MESSAGE);
         } catch (InvalidMethodException | CreateException ex) {

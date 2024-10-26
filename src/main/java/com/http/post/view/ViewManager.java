@@ -1,6 +1,5 @@
 package com.http.post.view;
 
-import com.http.post.view.model.RequestData;
 import com.http.post.view.panel.MainPanel;
 import com.http.post.view.panel.SearchPanel;
 import com.http.post.view.table.KeyValueTableModel;
@@ -21,7 +20,6 @@ public class ViewManager extends JFrame {
     private ButtonGroup storageOptionsGroup;
 
     public ViewManager() {
-        // Setting up the main frame
         setTitle("HTTP Post");
         setSize(800, 600);
         KeyValueTableModel headerTableModel = new KeyValueTableModel("Header");

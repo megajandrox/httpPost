@@ -1,14 +1,16 @@
 package com.http.post.controller.listener;
 
-import com.http.post.controller.worker.JobExecutor;
+import com.http.post.controller.worker.ButtonExecutor;
+import com.http.post.controller.worker.SingleExecutor;
 import com.http.post.repository.TableManager;
-import com.http.post.view.ViewManager;
 import com.http.post.utils.exceptions.DDLActionException;
+import com.http.post.view.ViewManager;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DatabaseCreationListener  implements ActionListener, JobExecutor {
+public class DatabaseCreationListener  implements ActionListener, SingleExecutor {
 
     private final ViewManager viewManager;
 
@@ -20,12 +22,6 @@ public class DatabaseCreationListener  implements ActionListener, JobExecutor {
     public void actionPerformed(ActionEvent e) {
         execute();
     }
-
-    @Override
-    public void enableButton() {}
-
-    @Override
-    public void disableButton() {}
 
     @Override
     public void actionPerform() throws Exception {
