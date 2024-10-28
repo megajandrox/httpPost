@@ -1,6 +1,6 @@
 package com.http.post.view.popup;
 
-import com.http.post.controller.listener.URLSearchMouseListener;
+import com.http.post.controller.adapter.URLSearchMouseAdapter;
 import com.http.post.view.ViewManager;
 
 import javax.swing.*;
@@ -49,7 +49,7 @@ public class SearchPopupComponent {
             }
         });
 
-        resultList.addMouseListener(new URLSearchMouseListener(view));
+        resultList.addMouseListener(new URLSearchMouseAdapter(view));
     }
 
     public void addData(SearchableItem item) {

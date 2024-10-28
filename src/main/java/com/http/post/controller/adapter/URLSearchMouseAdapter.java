@@ -1,4 +1,4 @@
-package com.http.post.controller.listener;
+package com.http.post.controller.adapter;
 
 import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
@@ -14,11 +14,11 @@ import java.awt.event.MouseEvent;
 import static com.http.post.controller.utils.CreateRequestForCreation.HEADER_TABLE;
 import static com.http.post.controller.utils.CreateRequestForCreation.PARAMETER_TABLE;
 
-public class URLSearchMouseListener extends MouseAdapter {
+public class URLSearchMouseAdapter extends MouseAdapter {
 
     private ViewManager view;
 
-    public URLSearchMouseListener(ViewManager view) {
+    public URLSearchMouseAdapter(ViewManager view) {
         this.view = view;
     }
 

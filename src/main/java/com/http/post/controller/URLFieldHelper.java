@@ -6,8 +6,6 @@ import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
 import com.http.post.view.popup.SearchPopupComponent;
 import com.http.post.view.table.KeyValue;
-import javax.swing.*;
-import java.util.List;
 
 import static com.http.post.controller.utils.CreateRequestForCreation.HEADER_TABLE;
 import static com.http.post.controller.utils.CreateRequestForCreation.PARAMETER_TABLE;
