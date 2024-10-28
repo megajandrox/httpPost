@@ -25,7 +25,7 @@ public class ViewManager extends JFrame {
         KeyValueTableModel headerTableModel = new KeyValueTableModel("Header");
         KeyValueTableModel parameterTableModel = new KeyValueTableModel("Parameter");
         mainPanel = new MainPanel(Arrays.asList(headerTableModel, parameterTableModel));
-        searchPanel = new SearchPanel();
+        searchPanel = new SearchPanel(this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().add(mainPanel, BorderLayout.CENTER);

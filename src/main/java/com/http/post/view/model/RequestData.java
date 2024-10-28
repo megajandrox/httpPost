@@ -1,9 +1,11 @@
 package com.http.post.view.model;
 
+import com.http.post.view.popup.SearchableItem;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestData {
+public class RequestData implements SearchableItem {
 
     private Long id;
     private String url;
@@ -29,8 +31,9 @@ public class RequestData {
         this.parameters.put(key, value);
     }
 
+    @Override
     public String toString() {
-        return this.url;
+        return url;
     }
 
     public Long getId() {
@@ -87,5 +90,10 @@ public class RequestData {
 
     public void setParameters(Map<String, String> parameters) {
         this.parameters = parameters;
+    }
+
+    @Override
+    public String getSearchField() {
+        return this.url;
     }
 }
