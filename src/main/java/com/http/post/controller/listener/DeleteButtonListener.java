@@ -39,18 +39,15 @@ public class DeleteButtonListener implements ActionListener, ButtonExecutor, Cle
 
     @Override
     public void actionPerform() throws Exception {
-        Object selectedItem = this.view.getSelectedRequestData();
-        if(selectedItem instanceof RequestData) {
-            RequestData requestData = (RequestData) selectedItem;
-            try {
-                Locator.getInstance().getRequestDAO().delete(requestData.getId());
-                cleanUpRequestComponents(this.view);
-                refresh();
-            } catch (DeletionException ex) {
-                System.err.println(ex.getMessage());
-                JOptionPane.showMessageDialog(view, "Cannot delete request",
-                        "Delete", JOptionPane.ERROR_MESSAGE);
-            }
+        RequestData requestData = this.view.getSelectedRequestData();
+        try {
+            Locator.getInstance().getRequestDAO().delete(requestData.getId());
+            cleanUpRequestComponents(this.view);
+            refresh();
+        } catch (DeletionException ex) {
+            System.err.println(ex.getMessage());
+            JOptionPane.showMessageDialog(view, "Cannot delete request",
+                    "Delete", JOptionPane.ERROR_MESSAGE);
         }
     }
 
