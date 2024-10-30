@@ -38,7 +38,6 @@ public class RequestController {
         entityJPanels.get(PARAMETERS_TABLE).getRemoveButton()
                 .addActionListener(new RemoveKeyValueItemListener(this.view, PARAMETERS_TABLE));
 
-        this.view.getCreateDatabase().addActionListener(new DatabaseCreationListener(this.view));
         viewManager.getDbSQLOption().addActionListener(new DbSQLOptionListener(this.view));
         viewManager.getDiskOption().addActionListener(new DiskOptionListener(this.view));
     }

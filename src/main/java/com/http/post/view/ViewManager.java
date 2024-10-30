@@ -15,7 +15,6 @@ public class ViewManager extends JFrame {
     private MainPanel mainPanel;
     private JMenuBar menuBar;
     private JMenu configMenu;
-    private JCheckBoxMenuItem createDatabase;
     private JRadioButtonMenuItem dbSQLOption;
     private JRadioButtonMenuItem diskOption;
     private ButtonGroup storageOptionsGroup;
@@ -35,9 +34,6 @@ public class ViewManager extends JFrame {
         // Create the menu bar
         menuBar = new JMenuBar();
         configMenu = new JMenu("Settings");
-        createDatabase = new JCheckBoxMenuItem("Create Database");
-        configMenu.add(createDatabase);
-
         dbSQLOption = new JRadioButtonMenuItem("dbSQL");
         diskOption = new JRadioButtonMenuItem("Disk");
         storageOptionsGroup = new ButtonGroup();
@@ -58,10 +54,6 @@ public class ViewManager extends JFrame {
 
     public void setMainPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
-    }
-
-    public JCheckBoxMenuItem getCreateDatabase() {
-        return createDatabase;
     }
 
     public ButtonGroup getStorageOptionsGroup() {
