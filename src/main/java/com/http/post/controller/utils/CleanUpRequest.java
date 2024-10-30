@@ -8,6 +8,7 @@ import static com.http.post.controller.listener.DeleteButtonListener.FIRST_INDEX
 public interface CleanUpRequest {
 
     default void cleanUpRequestComponents(ViewManager view) {
+        view.setSelectedRequestData(null);
         view.getMainPanel().getEntityJPanels().forEach(EntityJPanel -> EntityJPanel.getTableModel().removeAllRows());
         view.getMainPanel().getUrlPanel().getUrlField().setText(EMPTY);
         view.getMainPanel().getBodyPanel().getTextArea().setText(EMPTY);

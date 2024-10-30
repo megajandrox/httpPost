@@ -25,7 +25,7 @@ public class URLFieldHelper {
     }
 
     public static void setRequestDataOnView(RequestData requestData, ViewManager view) {
-        view.getSearchPanel().getUrlSearch().setSelectedItem(requestData);
+        view.getSearchPanel().getSearchPopupComponent().setSelectedItem(requestData);
         view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedItem(requestData.getMethod());
         view.getMainPanel().getBodyPanel().getTextArea().setText(requestData.getBody());
         view.getMainPanel().getResponsePanel().getTextArea().setText(requestData.getBody());

@@ -12,7 +12,7 @@ public class Locator {
         return INSTANCE;
     }
 
-    private DAO<Request> requestDAO = new RequestDAOH2();
+    private DAO<Request> requestDAO = new RequestDAOPostgres();
 
     public DAO<Request> getRequestDAO() {
         return requestDAO;
@@ -26,7 +26,7 @@ public class Locator {
         if (Objects.requireNonNull(selector) == DAOType.FILE) {
             requestDAO = new RequestDAOJson();
         } else {
-            requestDAO = new RequestDAOH2();
+            requestDAO = new RequestDAOPostgres();
         }
     }
 }

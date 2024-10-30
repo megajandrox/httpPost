@@ -8,6 +8,6 @@ public interface SearchableItem {
     String getSearchField();
 
     default boolean similarTo(SearchableItem other) {
-        return URLSimilarityCalculator.switchStrategy(SimilarityType.JaroWinkler).checkSimilarity(getSearchField(), other.getSearchField());
+        return URLSimilarityCalculator.getInstance().checkSimilarity(getSearchField(), other.getSearchField());
     }
 }

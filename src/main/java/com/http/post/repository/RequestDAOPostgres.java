@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static com.http.post.model.RequestParser.parse;
 
-public class RequestDAOH2 implements DAO<Request> {
+public class RequestDAOPostgres implements DAO<Request> {
 
     @Override
     public void create(Request request) throws CreateException {
@@ -28,7 +28,8 @@ public class RequestDAOH2 implements DAO<Request> {
             DBOperationManager.getInstance().trySqlAction(c, () -> {
                 Statement s = c.createStatement();
                 String sql = "INSERT INTO request (url, method, json_data, is_favorite) VALUES ('" + url + "', '" + method + "', '" + json + "', " + isFavorite + ")";
-                s.executeUpdate(sql);
+                int result = s.executeUpdate(sql);
+                request.setId((long) result);
                 c.commit();
                 return java.util.Optional.empty();
             }, c::rollback);
@@ -67,7 +68,7 @@ public class RequestDAOH2 implements DAO<Request> {
         Long id = request.getId();
         String url = request.getUrl();
         String method = request.getMethod().toString();
-        String isFavorite = request.getFavorite() ? "1" : "0";
+        String isFavorite = request.getFavorite() ? "TRUE" : "FALSE";
         Connection c = DBManager.connect();
         try {
             DBOperationManager.getInstance().trySqlAction(c, () -> {

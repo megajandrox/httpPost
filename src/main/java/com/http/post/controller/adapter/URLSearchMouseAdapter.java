@@ -39,6 +39,7 @@ public class URLSearchMouseAdapter extends MouseAdapter {
 
     private void setSelectedItem(SearchableItem selectedValue) {
         RequestData requestData = (RequestData) selectedValue;
+        view.setSelectedRequestData(requestData);
         view.getMainPanel().getUrlPanel().getUrlField().setText(requestData.getUrl());
         view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedItem(requestData.getMethod());
         view.getMainPanel().getBodyPanel().getTextArea().setText(requestData.getBody());

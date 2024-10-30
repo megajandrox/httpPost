@@ -3,7 +3,7 @@ package com.http.post;
 import com.http.post.model.Method;
 import com.http.post.model.Request;
 import com.http.post.repository.DAO;
-import com.http.post.repository.RequestDAOH2;
+import com.http.post.repository.RequestDAOPostgres;
 import com.http.post.repository.TableManager;
 import com.http.post.utils.bussiness.exceptions.CreateException;
 import com.http.post.utils.bussiness.exceptions.GetException;
@@ -12,9 +12,9 @@ import org.junit.Assert;
 
 import java.util.Optional;
 
-public class RequestDAOH2Test {
+public class RequestDAOPostgresTest {
 
-    private DAO<Request> requestDAO = new RequestDAOH2();
+    private DAO<Request> requestDAO = new RequestDAOPostgres();
 
     @org.junit.Before
     public void setUp() throws Exception {

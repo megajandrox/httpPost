@@ -2,6 +2,7 @@ package com.http.post.controller.listener;
 
 import com.http.post.controller.utils.CleanUpRequest;
 import com.http.post.controller.worker.ButtonExecutor;
+import com.http.post.controller.worker.Refreshable;
 import com.http.post.repository.Locator;
 import com.http.post.utils.bussiness.exceptions.DeletionException;
 import com.http.post.view.ViewManager;
@@ -11,9 +12,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static com.http.post.controller.URLFieldHelper.setRequestDataOnView;
-
-public class DeleteButtonListener implements ActionListener, ButtonExecutor, CleanUpRequest {
+public class DeleteButtonListener implements ActionListener, ButtonExecutor, CleanUpRequest , Refreshable {
 
     public static final String EMPTY = "";
     public static final int FIRST_INDEX = 0;
@@ -40,19 +39,13 @@ public class DeleteButtonListener implements ActionListener, ButtonExecutor, Cle
 
     @Override
     public void actionPerform() throws Exception {
-        Object selectedItem = this.view.getSearchPanel().getUrlSearch().getSelectedItem();
+        Object selectedItem = this.view.getSelectedRequestData();
         if(selectedItem instanceof RequestData) {
             RequestData requestData = (RequestData) selectedItem;
             try {
                 Locator.getInstance().getRequestDAO().delete(requestData.getId());
-                JComboBox<RequestData> urlField = this.view.getSearchPanel().getUrlSearch();
-                urlField.removeItem(requestData);
-                if(urlField.getItemCount() > 0) {
-                    urlField.setSelectedIndex(FIRST_INDEX);
-                    setRequestDataOnView(urlField.getItemAt(FIRST_INDEX), this.view);
-                } else {
-                    cleanUpRequestComponents(this.view);
-                }
+                cleanUpRequestComponents(this.view);
+                refresh();
             } catch (DeletionException ex) {
                 System.err.println(ex.getMessage());
                 JOptionPane.showMessageDialog(view, "Cannot delete request",
@@ -61,4 +54,13 @@ public class DeleteButtonListener implements ActionListener, ButtonExecutor, Cle
         }
     }
 
+    @Override
+    public void addData(RequestData requestData) {
+        this.view.getSearchPanel().getSearchPopupComponent().addData(requestData);
+    }
+
+    @Override
+    public void clearData() {
+        this.view.getSearchPanel().getSearchPopupComponent().clearData();
+    }
 }

@@ -1,5 +1,6 @@
 package com.http.post.view;
 
+import com.http.post.view.model.RequestData;
 import com.http.post.view.panel.MainPanel;
 import com.http.post.view.panel.SearchPanel;
 import com.http.post.view.table.KeyValueTableModel;
@@ -18,6 +19,7 @@ public class ViewManager extends JFrame {
     private JRadioButtonMenuItem dbSQLOption;
     private JRadioButtonMenuItem diskOption;
     private ButtonGroup storageOptionsGroup;
+    private RequestData selectedRequestData;
 
     public ViewManager() {
         setTitle("HTTP Post");
@@ -76,5 +78,13 @@ public class ViewManager extends JFrame {
 
     public SearchPanel getSearchPanel() {
         return searchPanel;
+    }
+
+    public RequestData getSelectedRequestData() {
+        return selectedRequestData;
+    }
+
+    public void setSelectedRequestData(RequestData selectedRequestData) {
+        this.selectedRequestData = selectedRequestData;
     }
 }

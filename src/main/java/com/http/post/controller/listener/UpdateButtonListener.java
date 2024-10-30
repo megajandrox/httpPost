@@ -2,15 +2,18 @@ package com.http.post.controller.listener;
 
 import com.http.post.controller.utils.CreateRequestForUpdate;
 import com.http.post.controller.worker.ButtonExecutor;
+import com.http.post.controller.worker.Refreshable;
 import com.http.post.exceptions.InvalidMethodException;
+import com.http.post.model.Request;
 import com.http.post.repository.Locator;
-import com.http.post.utils.bussiness.exceptions.UpsertException;
+import com.http.post.utils.bussiness.exceptions.UpdateException;
 import com.http.post.view.ViewManager;
+import com.http.post.view.model.RequestData;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class UpdateButtonListener extends CreateRequestForUpdate implements ActionListener, ButtonExecutor {
+public class UpdateButtonListener extends CreateRequestForUpdate implements ActionListener, ButtonExecutor, Refreshable {
 
     public UpdateButtonListener(ViewManager view) {
         super(view);
@@ -34,13 +37,26 @@ public class UpdateButtonListener extends CreateRequestForUpdate implements Acti
     @Override
     public void actionPerform() throws Exception {
         try {
-            Locator.getInstance().getRequestDAO().upsert(createRequest());
+            Request request = createRequest();
+            System.out.println(request);
+            Locator.getInstance().getRequestDAO().update(request);
+            refresh();
             JOptionPane.showMessageDialog(view, "Updated successfully",
                     "Update", JOptionPane.INFORMATION_MESSAGE);
-        } catch (InvalidMethodException | UpsertException ex) {
+        } catch (InvalidMethodException | UpdateException ex) {
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(view, "Cannot update the request",
                     "Update", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    @Override
+    public void addData(RequestData requestData) {
+        this.view.getSearchPanel().getSearchPopupComponent().addData(requestData);
+    }
+
+    @Override
+    public void clearData() {
+        this.view.getSearchPanel().getSearchPopupComponent().clearData();
     }
 }

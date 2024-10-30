@@ -87,6 +87,10 @@ public class SearchPopupComponent {
         return selectedItem;
     }
 
+    public void setSelectedItem(SearchableItem selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
     public static class ItemURL implements SearchableItem {
         private String url;
 

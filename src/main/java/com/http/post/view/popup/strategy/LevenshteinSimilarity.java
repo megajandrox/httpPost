@@ -9,7 +9,7 @@ public class LevenshteinSimilarity implements URLSimilarityStrategy {
     @Override
     public boolean areSimilar(String url1, String url2) {
         int levDistance = levenshtein.apply(url1, url2);
-        if(levDistance >= 0 && levDistance <= 15) {
+        if(levDistance >= 0 && levDistance <= 20) {
             return true;
         }
         return false;

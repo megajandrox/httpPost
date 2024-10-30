@@ -1,13 +1,13 @@
 # Create a view to manage the request and httpResponse
 
-- Add a button to add the request on a favorites list
+- When the customer types a URL, should be displayed a list of favorites.
 - Add a visualizer to show httpResponse as XML, JSON or IMAGE.
 - Add a tab option to show the String httpResponse as HTTP protocol format.
   Bonus:
 - Add a pattern observer to change the value of the URL when the URL changes and similar manner when the grid changes.
-- When the customer types a URL, should be displayed a list of favorites.
 
 ### Already done:
+- Add a button to add the request on a favorites list
 - Add a view to add a URL to the request
 - Add a dropdown list of methods (GET, POST, PUT, DELETE)
 - Add a grid to add parameters to the request

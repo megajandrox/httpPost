@@ -13,7 +13,7 @@ public abstract class CreateRequestForUpdate extends CreateRequestForCreation {
 
     public Request createRequest() throws InvalidMethodException {
         Request request = super.createRequest();
-        Object selectedItem = view.getSearchPanel().getUrlSearch().getSelectedItem();
+        Object selectedItem = view.getSelectedRequestData();
         if (selectedItem instanceof RequestData) {
             RequestData requestData = (RequestData) selectedItem;
             request.setId(requestData.getId());
