@@ -1,11 +1,12 @@
 package com.http.post.controller;
 
 import com.http.post.controller.listener.*;
+import com.http.post.service.ServiceException;
 import com.http.post.view.ViewManager;
 import com.http.post.view.panel.EntityJPanel;
+
 import javax.swing.*;
 import java.util.List;
-import com.http.post.utils.bussiness.exceptions.SearchException;
 
 public class RequestController {
 
@@ -17,7 +18,7 @@ public class RequestController {
         this.view = viewManager;
         try {
             URLFieldHelper.populateHttpRequest(this.view.getSearchPanel().getSearchPopupComponent());
-        } catch (SearchException e) {
+        } catch (ServiceException e) {
             System.err.println(e.getMessage());
             JOptionPane.showMessageDialog(viewManager, "There was an error getting the URLs",
                     "Persistence Error", JOptionPane.ERROR_MESSAGE);

@@ -5,8 +5,8 @@ import com.http.post.controller.worker.ButtonExecutor;
 import com.http.post.controller.worker.Refreshable;
 import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.model.Request;
-import com.http.post.repository.Locator;
-import com.http.post.utils.bussiness.exceptions.UpdateException;
+import com.http.post.service.ServiceException;
+import com.http.post.service.ServiceLocator;
 import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
 
@@ -39,11 +39,11 @@ public class UpdateButtonListener extends CreateRequestForUpdate implements Acti
         try {
             Request request = createRequest();
             System.out.println(request);
-            Locator.getInstance().getRequestDAO().update(request);
+            ServiceLocator.getInstance().getRequestService().updateRequest(request);
             refresh();
             JOptionPane.showMessageDialog(view, "Updated successfully",
                     "Update", JOptionPane.INFORMATION_MESSAGE);
-        } catch (InvalidMethodException | UpdateException ex) {
+        } catch (InvalidMethodException | ServiceException ex) {
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(view, "Cannot update the request",
                     "Update", JOptionPane.ERROR_MESSAGE);

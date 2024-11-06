@@ -3,8 +3,8 @@ package com.http.post.controller.listener;
 import com.http.post.controller.utils.CleanUpRequest;
 import com.http.post.controller.worker.ButtonExecutor;
 import com.http.post.controller.worker.Refreshable;
-import com.http.post.repository.Locator;
-import com.http.post.utils.bussiness.exceptions.DeletionException;
+import com.http.post.service.ServiceException;
+import com.http.post.service.ServiceLocator;
 import com.http.post.view.ViewManager;
 import com.http.post.view.model.RequestData;
 
@@ -41,10 +41,10 @@ public class DeleteButtonListener implements ActionListener, ButtonExecutor, Cle
     public void actionPerform() throws Exception {
         RequestData requestData = this.view.getSelectedRequestData();
         try {
-            Locator.getInstance().getRequestDAO().delete(requestData.getId());
+            ServiceLocator.getInstance().getRequestService().deleteRequest(requestData.getId());
             cleanUpRequestComponents(this.view);
             refresh();
-        } catch (DeletionException ex) {
+        } catch (ServiceException ex) {
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(view, "Cannot delete request",
                     "Delete", JOptionPane.ERROR_MESSAGE);

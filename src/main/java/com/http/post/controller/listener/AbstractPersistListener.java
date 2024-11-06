@@ -1,9 +1,9 @@
 package com.http.post.controller.listener;
 
 import com.http.post.controller.URLFieldHelper;
-import com.http.post.repository.DAOType;
-import com.http.post.repository.Locator;
-import com.http.post.utils.bussiness.exceptions.SearchException;
+import com.http.post.service.DBType;
+import com.http.post.service.ServiceException;
+import com.http.post.service.ServiceLocator;
 import com.http.post.view.ViewManager;
 
 import javax.swing.*;
@@ -13,29 +13,29 @@ public abstract class AbstractPersistListener implements ActionListener {
 
     private final String title;
     private final String message;
-    private final DAOType daoType;
+    private final DBType dbType;
     private ViewManager viewManager;
     private JRadioButtonMenuItem radioButton;
 
-    public AbstractPersistListener(ViewManager viewManager, JRadioButtonMenuItem radioButton, String title, String message, DAOType daoType) {
+    public AbstractPersistListener(ViewManager viewManager, JRadioButtonMenuItem radioButton, String title, String message, DBType dbType) {
         this.radioButton = radioButton;
         this.viewManager = viewManager;
         this.title = title;
         this.message = message;
-        this.daoType = daoType;
+        this.dbType = dbType;
     }
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
-        performed(daoType);
+        performed(dbType);
     }
 
-    private void performed(DAOType type) {
+    private void performed(DBType type) {
         if(this.radioButton.isSelected()) {
             try {
-                Locator.getInstance().switchDAOType(type);
+                ServiceLocator.getInstance().switchDBType(type);
                 URLFieldHelper.populateHttpRequest(this.viewManager.getSearchPanel().getSearchPopupComponent());
-            } catch (SearchException ex) {
+            } catch (ServiceException ex) {
                 System.err.println(ex.getMessage());
                 JOptionPane.showMessageDialog(viewManager, title, message, JOptionPane.ERROR_MESSAGE);
             }

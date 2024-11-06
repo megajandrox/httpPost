@@ -43,18 +43,4 @@ public class RequestDAOJson extends JsonManager<Request> implements DAO<Request>
     public List<Request> getAll() throws SearchException {
         return readAll(Request.class);
     }
-
-    @Override
-    public void upsert(Request request) throws UpsertException {
-        Long id = request.getId();
-        try {
-            if (id == null) {
-                create(request);
-            } else {
-                update(request);
-            }
-        } catch (UpdateException | CreateException e) {
-            throw new UpsertException(e.getMessage());
-        }
-    }
 }

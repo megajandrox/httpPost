@@ -1,9 +1,9 @@
 package com.http.post.controller.worker;
 
-import com.http.post.repository.Locator;
-import com.http.post.utils.bussiness.exceptions.SearchException;
-import com.http.post.view.model.RequestData;
 import com.http.post.model.Request;
+import com.http.post.service.ServiceException;
+import com.http.post.service.ServiceLocator;
+import com.http.post.view.model.RequestData;
 
 public interface Refreshable {
 
@@ -14,7 +14,7 @@ public interface Refreshable {
     default void refresh() {
         clearData();
         try {
-            Locator.getInstance().getRequestDAO().getAll()
+            ServiceLocator.getInstance().getRequestService().getAllRequests()
                     .stream().filter(Request::getFavorite)
                     .forEach(r -> {
                         String content = r.getBody() != null ? r.getBody().getContent() : "";
@@ -24,7 +24,7 @@ public interface Refreshable {
                         r.getQueryParams().forEach(p -> requestData.addParameter(p.getKey(), p.getValue()));
                         addData(requestData);
                     });
-        } catch (SearchException e) {
+        } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
     }

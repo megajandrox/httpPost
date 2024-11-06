@@ -12,5 +12,4 @@ public interface DAO<T> {
     void update(T object) throws UpdateException;
     void delete(Long id) throws DeletionException;
     List<T> getAll() throws SearchException;
-    void upsert(T object) throws UpsertException;
 }

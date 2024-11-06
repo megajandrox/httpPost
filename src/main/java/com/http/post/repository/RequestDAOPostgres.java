@@ -105,40 +105,26 @@ public class RequestDAOPostgres implements DAO<Request> {
 
     @Override
     public List<Request> getAll() throws SearchException {
-            List<Request> result = new ArrayList<>();
-            Connection c = DBManager.connect();
-            try {
-                DBOperationManager.getInstance().trySqlAction(c, () -> {
-                    String sql = "SELECT * FROM request";
-                    Statement s = c.createStatement();
-                    ResultSet rs = s.executeQuery(sql);
-                    while (rs.next()) {
-                        String json = rs.getString("json_data");
-                        Request request = parse(json);
-                        request.setId(rs.getLong("id"));
-                        result.add(request);
-                    }
-                    return Optional.empty();
-                }, c::rollback);
-            } catch (SQLActionException e) {
-                String msgError = "There was an error getting the customer";
-                System.err.println(msgError);
-                throw new SearchException(msgError);
-            }
-            return result;
-        }
-
-    @Override
-    public void upsert(Request object) throws UpsertException {
-        Long id = object.getId();
+        List<Request> result = new ArrayList<>();
+        Connection c = DBManager.connect();
         try {
-        if (id == null) {
-            create(object);
-        } else {
-            update(object);
+            DBOperationManager.getInstance().trySqlAction(c, () -> {
+                String sql = "SELECT * FROM request";
+                Statement s = c.createStatement();
+                ResultSet rs = s.executeQuery(sql);
+                while (rs.next()) {
+                    String json = rs.getString("json_data");
+                    Request request = parse(json);
+                    request.setId(rs.getLong("id"));
+                    result.add(request);
+                }
+                return Optional.empty();
+            }, c::rollback);
+        } catch (SQLActionException e) {
+            String msgError = "There was an error getting the customer";
+            System.err.println(msgError);
+            throw new SearchException(msgError);
         }
-        } catch (UpdateException | CreateException e) {
-            throw new UpsertException(e.getMessage());
-        }
+        return result;
     }
 }
