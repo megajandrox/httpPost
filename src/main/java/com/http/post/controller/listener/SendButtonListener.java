@@ -7,8 +7,10 @@ import com.http.post.exceptions.InvalidMethodException;
 import com.http.post.exceptions.RequestExecutionException;
 import com.http.post.service.SingleRunner;
 import com.http.post.view.ViewManager;
+import com.http.post.view.panel.Responsible;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -39,8 +41,10 @@ public class SendButtonListener extends CreateRequestForUpdate implements Action
         try {
             SingleRunner runner = new SingleRunner(createRequest());
             HttpResponse httpResponse = runner.execute();
-            view.getMainPanel().getResponsePanel().setBodyText(httpResponse.getBody(), httpResponse.getContentType());
-            //view.getMainPanel().getResponsePanel().getTextArea().setText(httpResponse.getBody());
+            for (Component component : view.getMainPanel().getJTabbedPaneImg().getComponents()) {
+                Responsible responsible = (Responsible) component;
+                responsible.setBody(httpResponse.getBody(), httpResponse.getContentType());
+            }
         } catch (IOException | RequestExecutionException | InvalidMethodException ex) {
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(view, "Cannot send request",

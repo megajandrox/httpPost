@@ -13,8 +13,8 @@ public class MainPanel extends JPanel {
     private final RequestTopPanel requestTopPanel;
     private List<EntityJPanel> entityJPanels = new ArrayList<>();
     private TextPanel bodyPanel;
-    private final TextPanel responsePanel;
     private JTabbedPane jTabbedPane;
+    private JTabbedPane jTabbedPaneImg;
 
     public MainPanel(List<EntityTableModel> tableModels) {
         super(new BorderLayout());
@@ -29,8 +29,11 @@ public class MainPanel extends JPanel {
             jTabbedPane.add(panel, panel.getTableName());
         });
         add(jTabbedPane, BorderLayout.CENTER);
-        this.responsePanel = new TextPanel("Response", false, BorderLayout.SOUTH);
-        add(responsePanel, BorderLayout.SOUTH);
+        this.jTabbedPaneImg = new JTabbedPane();
+        jTabbedPaneImg.add("Response Body", new TextPanel("Response", false, BorderLayout.SOUTH));
+        jTabbedPaneImg.add("Image", new ImagePanel("Image", false, BorderLayout.SOUTH));
+        jTabbedPaneImg.add("Image", new ImagePanel("Image", false, BorderLayout.SOUTH));
+        add(jTabbedPaneImg, BorderLayout.SOUTH);
     }
 
     public List<EntityJPanel> getEntityJPanels() {
@@ -45,11 +48,11 @@ public class MainPanel extends JPanel {
         return requestTopPanel;
     }
 
-    public TextPanel getResponsePanel() {
-        return responsePanel;
-    }
-
     public JTabbedPane getJTabbedPane() {
         return jTabbedPane;
+    }
+
+    public JTabbedPane getJTabbedPaneImg() {
+        return jTabbedPaneImg;
     }
 }

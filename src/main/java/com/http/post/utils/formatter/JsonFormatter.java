@@ -1,21 +1,21 @@
-package com.http.post.utils.json;
+package com.http.post.utils.formatter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-public class JsonFormatter {
+public class JsonFormatter implements Formatter  {
 
-    public static String format(String jsonString) throws JsonFormatterException {
+    public String format(String content) throws FormatterException {
         String prettyJson="";
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Object json = mapper.readValue(jsonString, Object.class);
+            Object json = mapper.readValue(content, Object.class);
 
             ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
             prettyJson = writer.writeValueAsString(json);
             System.out.println(prettyJson);
         } catch (Exception e) {
-            throw new JsonFormatterException("Error formatting JSON: " , e);
+            throw new FormatterException("Error formatting JSON: " , e);
         }
         return prettyJson;
     }

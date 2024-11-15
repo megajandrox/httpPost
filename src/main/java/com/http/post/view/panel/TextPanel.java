@@ -1,16 +1,15 @@
 package com.http.post.view.panel;
 
-import com.http.post.utils.json.JsonFormatter;
-import com.http.post.utils.json.JsonFormatterException;
-import com.http.post.utils.xml.XmlFormatter;
-import com.http.post.utils.xml.XmlFormatterException;
+import com.http.post.utils.formatter.ContextFormatter;
+import com.http.post.utils.formatter.FormatterException;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TextPanel extends JPanel {
+public class TextPanel extends JPanel implements Responsible {
 
-    private JTextArea textArea;
+    private final JTextArea textArea;
+    private JPanel panel;
 
     public TextPanel(String name, Boolean editable, String layout) {
         setLayout(new BorderLayout());
@@ -20,7 +19,7 @@ public class TextPanel extends JPanel {
     }
 
     private JPanel createTextAreaPanel(String title, JTextArea textArea, String layout) {
-        JPanel panel = new JPanel(new BorderLayout());
+        this.panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createTitledBorder(title));
         panel.add(new JScrollPane(textArea), layout);
         return panel;
@@ -30,25 +29,13 @@ public class TextPanel extends JPanel {
         return textArea;
     }
 
-    public void setBodyText(String body, String contentType) {
+    @Override
+    public void setBody(String body, String contentType) {
         try {
-            switch (contentType.split(";")[0].trim()) {
-                case "application/json":
-                    textArea.setText(JsonFormatter.format(body));
-                    break;
-                case "application/xml":
-                    textArea.setText(XmlFormatter.format(body));
-                    break;
-                case "image/png":
-                    textArea.setText(body);
-                    //TODO display image and check all type of content type related to images
-                    break;
-                default:
-                    textArea.setText(body);
-                    break;
-            }
-        } catch (JsonFormatterException | XmlFormatterException e) {
-            throw new RuntimeException(e);
+            ContextFormatter contextFormatter = new ContextFormatter(contentType);
+            textArea.setText(contextFormatter.format(body));
+        } catch (FormatterException e) {
+            throw new IllegalStateException(e);
         }
     }
 }
