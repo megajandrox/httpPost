@@ -39,7 +39,8 @@ public class SendButtonListener extends CreateRequestForUpdate implements Action
         try {
             SingleRunner runner = new SingleRunner(createRequest());
             HttpResponse httpResponse = runner.execute();
-            view.getMainPanel().getResponsePanel().getTextArea().setText(httpResponse.getBody());
+            view.getMainPanel().getResponsePanel().setBodyText(httpResponse.getBody(), httpResponse.getContentType());
+            //view.getMainPanel().getResponsePanel().getTextArea().setText(httpResponse.getBody());
         } catch (IOException | RequestExecutionException | InvalidMethodException ex) {
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(view, "Cannot send request",

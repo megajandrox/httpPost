@@ -69,6 +69,7 @@ public class SingleRunner {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     httpResponseModel.setBody(HttpEntityUtils.getContentType(entity));
+                    System.out.println("Response ContentType: " + entity.getContentType());
                     httpResponseModel.setContentType(entity.getContentType() != null ? entity.getContentType().getValue() : null);
                 }
                 httpResponseModel.setStatusCode(response.getStatusLine().getStatusCode());

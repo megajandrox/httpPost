@@ -1,7 +1,6 @@
 package com.http.post.view.panel;
 
 import com.http.post.view.ViewManager;
-import com.http.post.view.model.RequestData;
 import com.http.post.view.popup.SearchPopupComponent;
 
 import javax.swing.*;
