@@ -10,6 +10,8 @@ import com.http.post.service.build.PostStrategy;
 import com.http.post.service.build.PutStrategy;
 import com.http.post.utils.HttpEntityUtils;
 import com.http.post.utils.RequestConfigUtils;
+import org.apache.http.Header;
+import org.apache.http.HeaderIterator;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -26,6 +28,9 @@ import java.io.IOException;
  */
 public class SingleRunner {
 
+    public static final String SPACE = " ";
+    public static final String COLON = " : ";
+    public static final String LINE_BREAK = "\n";
     private final Request request;
     public SingleRunner(Request request) {
         this.request = request;
@@ -69,11 +74,25 @@ public class SingleRunner {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     httpResponseModel.setBody(HttpEntityUtils.getContentType(entity));
-                    System.out.println("Response ContentType: " + entity.getContentType());
+                    //System.out.println("Response ContentType: " + entity.getContentType());
                     httpResponseModel.setContentType(entity.getContentType() != null ? entity.getContentType().getValue() : null);
                 }
                 httpResponseModel.setStatusCode(response.getStatusLine().getStatusCode());
                 httpResponseModel.setStatusMessage(response.getStatusLine().getReasonPhrase());
+                StringBuilder sb = new StringBuilder();
+                sb.append(response.getStatusLine().getProtocolVersion())
+                        .append(SPACE)
+                        .append(response.getStatusLine().getStatusCode())
+                        .append(SPACE)
+                        .append(response.getStatusLine().getReasonPhrase())
+                        .append(LINE_BREAK);
+                HeaderIterator it = response.headerIterator();
+                while (it.hasNext()) {
+                    Header header = it.nextHeader();
+                    sb.append(header.getName()).append(COLON).append(header.getValue()).append(LINE_BREAK);;
+                }
+                httpResponseModel.setHttpProtocolResultMessage(sb.toString());
+                httpClient.close();
                 return httpResponseModel;
             }
         }

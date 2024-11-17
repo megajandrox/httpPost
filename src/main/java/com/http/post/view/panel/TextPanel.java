@@ -6,7 +6,9 @@ import com.http.post.utils.formatter.FormatterException;
 import javax.swing.*;
 import java.awt.*;
 
-public class TextPanel extends JPanel implements Responsible {
+import static com.http.post.controller.listener.DeleteButtonListener.EMPTY;
+
+public class TextPanel extends JPanel implements HandleBodyResponse, HandleEmpty {
 
     private final JTextArea textArea;
     private JPanel panel;
@@ -25,10 +27,6 @@ public class TextPanel extends JPanel implements Responsible {
         return panel;
     }
 
-    public JTextArea getTextArea() {
-        return textArea;
-    }
-
     @Override
     public void setBody(String body, String contentType) {
         try {
@@ -38,4 +36,14 @@ public class TextPanel extends JPanel implements Responsible {
             throw new IllegalStateException(e);
         }
     }
+
+    @Override
+    public void empty() {
+        this.textArea.setText(EMPTY);
+    }
+
+    public JTextArea getTextArea() {
+        return textArea;
+    }
+
 }

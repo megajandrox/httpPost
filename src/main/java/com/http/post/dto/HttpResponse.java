@@ -7,6 +7,7 @@ public class HttpResponse {
     private int statusCode;
     private String statusMessage;
     private String contentType;
+    private String httpProtocolResultMessage;
 
     public HttpResponse() {}
 
@@ -47,5 +48,13 @@ public class HttpResponse {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public String getHttpProtocolResultMessage() {
+        return httpProtocolResultMessage;
+    }
+
+    public void setHttpProtocolResultMessage(String httpProtocolResultMessage) {
+        this.httpProtocolResultMessage = httpProtocolResultMessage;
     }
 }

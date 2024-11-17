@@ -13,7 +13,7 @@ public class JsonFormatter implements Formatter  {
 
             ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
             prettyJson = writer.writeValueAsString(json);
-            System.out.println(prettyJson);
+            //System.out.println(prettyJson);
         } catch (Exception e) {
             throw new FormatterException("Error formatting JSON: " , e);
         }

@@ -1,7 +1,8 @@
 package com.http.post.controller.utils;
 
 import com.http.post.view.ViewManager;
-import com.http.post.view.panel.TextPanel;
+import com.http.post.view.panel.HandleBodyResponse;
+import com.http.post.view.panel.HandleEmpty;
 
 import java.awt.*;
 
@@ -17,8 +18,10 @@ public interface CleanUpRequest {
         view.getMainPanel().getBodyPanel().getTextArea().setText(EMPTY);
         view.getMainPanel().getJTabbedPane().setSelectedIndex(FIRST_INDEX);
         view.getMainPanel().getJTabbedPaneImg().setSelectedIndex(FIRST_INDEX);
-        TextPanel textPanel = (TextPanel) view.getMainPanel().getJTabbedPaneImg().getComponentAt(0);
-        textPanel.getTextArea().setText(EMPTY);
+        for (Component component : view.getMainPanel().getJTabbedPaneImg().getComponents()) {
+            HandleEmpty handleEmpty = (HandleEmpty) component;
+            handleEmpty.empty();
+        }
         view.getMainPanel().getUrlPanel().getMethodDropdown().setSelectedIndex(FIRST_INDEX);
     }
 }

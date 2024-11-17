@@ -32,7 +32,7 @@ public class MainPanel extends JPanel {
         this.jTabbedPaneImg = new JTabbedPane();
         jTabbedPaneImg.add("Response Body", new TextPanel("Response", false, BorderLayout.SOUTH));
         jTabbedPaneImg.add("Image", new ImagePanel("Image", false, BorderLayout.SOUTH));
-        jTabbedPaneImg.add("Image", new ImagePanel("Image", false, BorderLayout.SOUTH));
+        jTabbedPaneImg.add("Response Protocol", new ProtocolTextPanel("Protocol", false, BorderLayout.SOUTH));
         add(jTabbedPaneImg, BorderLayout.SOUTH);
     }
 

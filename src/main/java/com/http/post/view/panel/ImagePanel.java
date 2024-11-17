@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class ImagePanel extends JPanel implements Responsible  {
+public class ImagePanel extends JPanel implements HandleBodyResponse , HandleEmpty{
 
     private JLabel labelImage;
     private JPanel panel;
@@ -33,7 +33,7 @@ public class ImagePanel extends JPanel implements Responsible  {
     @Override
     public void setBody(String content, String contentType) {
         try {
-            ContextFormatter contextFormatter = new ContextFormatter(contentType);
+            /*ContextFormatter contextFormatter = new ContextFormatter(contentType);
             byte[] imageBytes = contextFormatter.format(content).getBytes();
             if (imageBytes.length == 0) {
                 throw new IOException("No image data found after formatting.");
@@ -41,17 +41,24 @@ public class ImagePanel extends JPanel implements Responsible  {
             File tempFile = ByteArrayToFile.writeFile(imageBytes);
             BufferedImage image = ImageIO.read(tempFile);
             if (image == null) {
-                throw new IOException("Image data could not be decoded.");
+                throw new RuntimeException("Image data could not be decoded.");
             }
             labelImage.setIcon(new ImageIcon(image));
             panel.revalidate();
-            panel.repaint();
+            panel.repaint();*/
         } catch (FormatterException e) {
             System.err.println(e.getMessage());
-            throw new IllegalStateException("Error formatting content: " + e.getMessage(), e);
-        } catch (IOException e) {
+            throw new RuntimeException("Error formatting content: " + e.getMessage(), e);
+        }/* catch (IOException e) {
             System.err.println(e.getMessage());
             throw new RuntimeException("Error loading image: " + e.getMessage(), e);
-        }
+        }*/
+    }
+
+    @Override
+    public void empty() {
+        this.labelImage = new JLabel(new ImageIcon("src/main/resources/images/Untitled.png"));
+        panel.revalidate();
+        panel.repaint();
     }
 }
