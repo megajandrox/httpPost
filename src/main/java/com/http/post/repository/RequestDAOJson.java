@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class RequestDAOJson extends JsonManager<Request> implements DAO<Request> {
+public class RequestDAOJson extends JsonManager<Request> implements DAO2<Request> {
 
     public RequestDAOJson() {
         super("resquest");
@@ -21,7 +21,7 @@ public class RequestDAOJson extends JsonManager<Request> implements DAO<Request>
     }
 
     @Override
-    public Optional<Request> get(Request request) throws GetException {
+    public Optional<Request> get(Long id) throws GetException {
         throw new UnsupportedOperationException();
     }
 

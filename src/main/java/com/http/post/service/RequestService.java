@@ -2,6 +2,7 @@ package com.http.post.service;
 
 import com.http.post.model.Request;
 import com.http.post.repository.DAO;
+import com.http.post.repository.DAO2;
 import com.http.post.utils.bussiness.exceptions.*;
 
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.Optional;
 
 public class RequestService {
 
-    private DAO<Request> requestDAO;
+    private DAO2<Request> requestDAO;
 
-    public RequestService(DAO<Request> requestDAO) {
+    public RequestService(DAO2<Request> requestDAO) {
         this.requestDAO = requestDAO;
     }
 
@@ -25,7 +26,7 @@ public class RequestService {
 
     public Optional<Request> getRequest(Request request) throws ServiceException {
         try {
-            return requestDAO.get(request);
+            return requestDAO.get(request.getId());
         } catch (GetException e) {
             throw new ServiceException("Failed to retrieve request", e);
         }

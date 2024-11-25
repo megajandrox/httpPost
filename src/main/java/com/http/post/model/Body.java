@@ -1,6 +1,6 @@
 package com.http.post.model;
 
-public class Body implements HttpRequestComponent {
+public class Body extends Entity implements HttpRequestComponent {
 
     private String contentType;
     private String content;

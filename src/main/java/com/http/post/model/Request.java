@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Request implements Serializable {
+public class Request extends Entity implements Serializable {
 
     public Request() {}
 
@@ -17,7 +17,6 @@ public class Request implements Serializable {
         this.method = method;
     }
 
-    private Long id;
     private String url;
     private Method method;
     private Body body;
@@ -40,14 +39,6 @@ public class Request implements Serializable {
 
     public String toJson() {
         return RequestParser.toJson(this);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUrl() {
