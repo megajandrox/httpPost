@@ -21,7 +21,7 @@ public class RequestDAOPostgresV2 extends BaseORM<Request> {
     }
 
     public List<Request> getAll() throws SearchException {
-        String sql = "SELECT r.id AS request_id, r.url, r.method, r.isfavorite, b.id AS body_id, b.content, b.contentType " + "FROM request r " +
+        String sql = "SELECT r.id AS request_id, r.id, r.url, r.method, r.isfavorite, b.id AS body_id, b.content, b.contentType " + "FROM request r " +
                 "LEFT JOIN body b ON r.id = b.requestid ";
         System.out.println(sql);
         try (Connection conn = getConnection();
