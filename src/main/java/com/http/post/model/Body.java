@@ -4,6 +4,7 @@ public class Body extends Entity implements HttpRequestComponent {
 
     private String contentType;
     private String content;
+    private Long requestId;
 
     public Body() {}
 
@@ -30,5 +31,13 @@ public class Body extends Entity implements HttpRequestComponent {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Long getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(Long requestId) {
+        this.requestId = requestId;
     }
 }

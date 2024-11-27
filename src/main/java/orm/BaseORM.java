@@ -1,8 +1,6 @@
 package orm;
 
-import com.http.post.model.Body;
 import com.http.post.model.Entity;
-import com.http.post.repository.DAO;
 import com.http.post.repository.DAO2;
 import com.http.post.utils.DBManager;
 import com.http.post.utils.bussiness.exceptions.*;
@@ -14,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseORM<T extends Entity> implements DAO2<T> {
-    private final Class<T> type;
-
+    protected final Class<T> type;
+    private Connection conn;
     public BaseORM(Class<T> type) {
         this.type = type;
     }
@@ -31,9 +29,11 @@ public abstract class BaseORM<T extends Entity> implements DAO2<T> {
         List<String> fields = new ArrayList<>();
         List<Object> values = new ArrayList<>();
 
+        // Collect fields and values for the main entity
         for (Field field : type.getDeclaredFields()) {
             field.setAccessible(true);
-            if (!field.getName().equalsIgnoreCase("id")) {
+            if (!field.getName().equalsIgnoreCase("id") && (field.getAnnotation(OneToOne.class) == null &&
+                    field.getAnnotation(OneToMany.class) == null)) {
                 fields.add(field.getName());
                 try {
                     values.add(field.get(entity));
@@ -50,20 +50,83 @@ public abstract class BaseORM<T extends Entity> implements DAO2<T> {
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
 
+            // Set parameters for the main entity
             for (int i = 0; i < values.size(); i++) {
-                ps.setObject(i + 1, values.get(i));
+                Object value = values.get(i);
+
+                // Check if the value is an Enum and convert to String (or other appropriate type)
+                if (value != null && value.getClass().isEnum()) {
+                    ps.setObject(i + 1, value.toString()); // Store enum as String
+                } else {
+                    ps.setObject(i + 1, value);
+                }
             }
 
             ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
-                    Field idField = type.getDeclaredField("id");
+                    Field idField = getFieldFromHierarchy(type, "id");
                     idField.setAccessible(true);
-                    idField.set(entity, rs.getInt(1));
+                    idField.set(entity, rs.getLong(1));
                 }
             }
+
+            // Handle @OneToOne relationships
+            for (Field field : type.getDeclaredFields()) {
+                OneToOne oneToOne = field.getAnnotation(OneToOne.class);
+                if (oneToOne != null) {
+                    handleOneToOne(conn, field, entity, oneToOne);
+                }
+            }
+            conn.commit();
         } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
             throw new CreateException(e.getMessage());
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                throw new CreateException(e.getMessage());
+            }
+        }
+    }
+
+    protected Field getFieldFromHierarchy(Class<?> clazz, String fieldName) throws NoSuchFieldException {
+        while (clazz != null) {
+            try {
+                return clazz.getDeclaredField(fieldName);
+            } catch (NoSuchFieldException e) {
+                clazz = clazz.getSuperclass(); // Move to superclass
+            }
+        }
+        throw new NoSuchFieldException("Field '" + fieldName + "' not found in class hierarchy.");
+    }
+
+    protected void handleOneToOne(Connection conn, Field field, T entity, OneToOne oneToOne)
+            throws IllegalAccessException, SQLException, NoSuchFieldException {
+        field.setAccessible(true);
+        Entity relatedEntity = (Entity) field.get(entity);
+        if (relatedEntity != null) {
+            Field idField = getFieldFromHierarchy(type, "id");
+            idField.setAccessible(true);
+            long parentId = (long) idField.get(entity);
+
+            // Set the foreign key in the related entity
+            String mappedBy = oneToOne.mappedBy();
+            Field foreignKeyField = getFieldFromHierarchy(relatedEntity.getClass(), mappedBy);
+            //Field foreignKeyField = relatedEntity.getClass().getDeclaredField(mappedBy);
+            foreignKeyField.setAccessible(true);
+            //TODO review this part.
+            foreignKeyField.set(relatedEntity, parentId);
+
+            // Persist the related entity
+            GenericDao relatedDao = new GenericDao(relatedEntity.getClass());
+            try {
+                relatedDao.create(relatedEntity, conn);
+            } catch (CreateException e) {
+                System.err.println("Failed to create related entity: " + e.getMessage());
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -146,13 +209,42 @@ public abstract class BaseORM<T extends Entity> implements DAO2<T> {
         for (Field field : type.getDeclaredFields()) {
             field.setAccessible(true);
             String columnName = field.getName();
-            if (field.getType().equals(Body.class)) {
-                // Create a Body object from the ResultSet
-                Body body = new Body(
-                        rs.getString("content"), // Body content
-                        rs.getString("contenttype")     // Body type
-                );
-                field.set(entity, body);
+            if (field.isAnnotationPresent(OneToMany.class)) {
+                OneToMany annotation = field.getAnnotation(OneToMany.class);
+                Class<?> targetEntity = annotation.targetEntity();
+                String foreignKey = annotation.mappedBy();
+                String relatedSql = "SELECT * FROM " + targetEntity.getSimpleName().toLowerCase() + " WHERE " + foreignKey + " = ?";
+                List<Object> relatedEntities = new ArrayList<>();
+
+                try (Connection conn = getConnection();
+                     PreparedStatement ps = conn.prepareStatement(relatedSql)) {
+                    ps.setObject(1, rs.getObject(foreignKey)); // Assuming "id" is the primary key in the main entity
+                    try (ResultSet relatedRs = ps.executeQuery()) {
+                        while (relatedRs.next()) {
+                            Object relatedEntity = targetEntity.getDeclaredConstructor().newInstance();
+
+                            for (Field relatedField : targetEntity.getDeclaredFields()) {
+                                relatedField.setAccessible(true);
+                                relatedField.set(relatedEntity, relatedRs.getObject(relatedField.getName()));
+                            }
+
+                            relatedEntities.add(relatedEntity);
+                        }
+                    }
+                }
+                field.set(entity, relatedEntities);
+            } else if (field.isAnnotationPresent(OneToOne.class)) {
+                OneToOne annotation = field.getAnnotation(OneToOne.class);
+                Class<?> targetEntity = annotation.targetEntity();
+                String[] columns = annotation.columns();
+                Object relatedEntity = targetEntity.getDeclaredConstructor().newInstance();
+                for (String column : columns) {
+                    Field relatedField = targetEntity.getDeclaredField(column);
+                    relatedField.setAccessible(true);
+                    relatedField.set(relatedEntity, rs.getObject(column));
+                }
+                field.set(entity, relatedEntity);
+
             } else if (field.getType().isEnum()) {
                 // Handle Enums
                 String value = rs.getString(columnName);

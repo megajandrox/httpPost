@@ -1,6 +1,8 @@
 package com.http.post.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import orm.OneToMany;
+import orm.OneToOne;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,8 +21,11 @@ public class Request extends Entity implements Serializable {
 
     private String url;
     private Method method;
+    @OneToOne(targetEntity = Body.class, columns = {"content", "contentType"}, name = "body", mappedBy = "requestId")
     private Body body;
+    @OneToMany(targetEntity = Header.class, mappedBy = "request_id")
     private List<Header> headers = new ArrayList<>();
+    @OneToMany(targetEntity = QueryParam.class, mappedBy = "request_id")
     private List<QueryParam> queryParams = new ArrayList<>();
     private Boolean isFavorite = true;
 

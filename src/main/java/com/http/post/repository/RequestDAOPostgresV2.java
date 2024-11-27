@@ -21,11 +21,11 @@ public class RequestDAOPostgresV2 extends BaseORM<Request> {
     }
 
     public List<Request> getAll() throws SearchException {
-        StringBuilder sql = new StringBuilder("SELECT r.id AS request_id, r.url, r.method, b.id AS body_id, b.content, b.contentType ");
-        sql.append("FROM request r ")
-                .append("LEFT JOIN body b ON r.id = b.requestid ");
+        String sql = "SELECT r.id AS request_id, r.url, r.method, r.isfavorite, b.id AS body_id, b.content, b.contentType " + "FROM request r " +
+                "LEFT JOIN body b ON r.id = b.requestid ";
+        System.out.println(sql);
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 List<Request> result = new ArrayList<>();
                 while (rs.next()) {
@@ -39,13 +39,12 @@ public class RequestDAOPostgresV2 extends BaseORM<Request> {
     }
 
     public Optional<Request> get(Long id) throws GetException {
-        StringBuilder sql = new StringBuilder("SELECT r.id AS request_id, r.url, r.method, b.id AS body_id, b.content, b.contentType ");
-        sql.append("FROM request r ")
-                .append("LEFT JOIN body b ON r.id = b.requestid ")
-                .append("WHERE r.id = ?");
-
+        String sql = "SELECT r.id AS request_id, r.url, r.method, b.id AS body_id, b.content, b.contentType " + "FROM request r " +
+                "LEFT JOIN body b ON r.id = b.requestid " +
+                "WHERE r.id = ?";
+        System.out.println(sql);
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {

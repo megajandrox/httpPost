@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 
@@ -19,6 +20,7 @@ public class DBManager {
 	private static final String USER = "user";
 	private static final String PASSWORD = "password";
 	private static final Properties properties= new Properties();
+	private static final String SCHEMA = "schema";
 
 	static {
 		try (InputStream input = DBManager.class.getClassLoader().getResourceAsStream("database.properties")) {
@@ -67,6 +69,10 @@ public class DBManager {
 			String dbPassword = getDBProperty(PASSWORD);
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 			c.setAutoCommit(false);
+			String schema = getDBProperty(SCHEMA); // Add this to your properties
+			try (Statement stmt = c.createStatement()) {
+				stmt.execute("SET search_path TO " + schema);
+			}
 		} catch (SQLException e) {
 			throw new DBConnectionRuntimeException(e);
 		}
