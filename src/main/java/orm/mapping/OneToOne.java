@@ -1,4 +1,4 @@
-package orm;
+package orm.mapping;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

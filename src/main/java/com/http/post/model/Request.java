@@ -1,8 +1,8 @@
 package com.http.post.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import orm.OneToMany;
-import orm.OneToOne;
+import orm.mapping.OneToMany;
+import orm.mapping.OneToOne;
 
 import java.io.Serializable;
 import java.util.ArrayList;

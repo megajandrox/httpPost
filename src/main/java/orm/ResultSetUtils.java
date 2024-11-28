@@ -9,7 +9,7 @@ import static orm.ReflexionUtils.getFieldFromHierarchy;
 
 public class ResultSetUtils {
 
-    public static <T> void addResult(Class<T> type, T entity, PreparedStatement ps) throws SQLException, NoSuchFieldException, IllegalAccessException {
+    public static <T> void addPersistedResult(Class<T> type, T entity, PreparedStatement ps) throws SQLException, NoSuchFieldException, IllegalAccessException {
         try (ResultSet rs = ps.getGeneratedKeys()) {
             if (rs.next()) {
                 Field idField = getFieldFromHierarchy(type, "id");

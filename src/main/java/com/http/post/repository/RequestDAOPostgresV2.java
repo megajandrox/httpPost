@@ -6,12 +6,12 @@ import com.http.post.model.Request;
 import com.http.post.utils.bussiness.exceptions.GetException;
 import com.http.post.utils.bussiness.exceptions.SearchException;
 import orm.BaseORM;
+import orm.mappers.MapQueryResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,13 +26,7 @@ public class RequestDAOPostgresV2 extends BaseORM<Request> {
         System.out.println(sql);
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            try (ResultSet rs = ps.executeQuery()) {
-                List<Request> result = new ArrayList<>();
-                while (rs.next()) {
-                    result.add(mapResultSetToEntity(rs));
-                }
-                return result;
-            }
+            return MapQueryResult.addQueryResult(type, ps, conn);
         } catch (Exception e) {
             throw new SearchException(e.getMessage());
         }

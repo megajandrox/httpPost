@@ -4,6 +4,7 @@ public class QueryParam implements HttpRequestComponent {
 
     private String key;
     private String value;
+    private Long requestId;
 
     public QueryParam() {}
 
@@ -30,5 +31,13 @@ public class QueryParam implements HttpRequestComponent {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Long getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(Long requestId) {
+        this.requestId = requestId;
     }
 }

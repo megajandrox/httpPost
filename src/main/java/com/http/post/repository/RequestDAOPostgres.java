@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static com.http.post.model.RequestParser.parse;
 
+@Deprecated
 public class RequestDAOPostgres implements DAO<Request> {
 
     @Override
