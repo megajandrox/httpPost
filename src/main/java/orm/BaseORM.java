@@ -42,6 +42,7 @@ public abstract class BaseORM<T extends Entity> implements DAO2<T> {
             //TODO create one to many fields
             conn.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CreateException(e.getMessage());
         } finally {
             try {
@@ -68,6 +69,7 @@ public abstract class BaseORM<T extends Entity> implements DAO2<T> {
             //TODO update one to many fields
             conn.commit();
         }  catch (Exception e) {
+            e.printStackTrace();
             throw new UpdateException(e.getMessage());
         } finally {
             try {

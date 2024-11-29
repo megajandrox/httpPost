@@ -1,5 +1,6 @@
 package orm.handlers;
 
+import orm.ColumnUtils;
 import orm.mapping.OneToMany;
 import orm.mapping.OneToOne;
 
@@ -15,9 +16,9 @@ public class PrimitiveFieldOnGetting {
         if(columnName.equalsIgnoreCase("id")) {
             Field foreignKeyField = getFieldFromHierarchy(type, "id");
             foreignKeyField.setAccessible(true);
-            foreignKeyField.set(entity, rs.getLong(columnName));
+            foreignKeyField.set(entity, rs.getLong("request_id"));
         } else if(!field.isAnnotationPresent(OneToMany.class) && !field.isAnnotationPresent(OneToOne.class) && !field.getType().isEnum()) {
-            field.set(entity, rs.getObject(columnName));
+            field.set(entity, rs.getObject(ColumnUtils.toSnakeCase(columnName)));
         }
     }
 }

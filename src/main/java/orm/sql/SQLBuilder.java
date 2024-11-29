@@ -1,5 +1,6 @@
 package orm.sql;
 
+import orm.ColumnUtils;
 import orm.ReflexionUtils;
 
 import java.lang.reflect.Field;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -20,7 +22,7 @@ public class SQLBuilder {
         List<String> fields = new ArrayList<>();
         ReflexionUtils.addRegularFields(type, entity, fields, values);
 
-        sql.append(String.join(", ", fields)).append(") VALUES (");
+        sql.append(fields.stream().map(ColumnUtils::toSnakeCase).collect(Collectors.joining(", "))).append(") VALUES (");
         sql.append("?,".repeat(fields.size()).replaceAll(",$", ""));
         sql.append(")");
         return sql.toString();

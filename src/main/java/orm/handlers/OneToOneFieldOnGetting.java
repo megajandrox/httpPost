@@ -1,5 +1,6 @@
 package orm.handlers;
 
+import orm.ColumnUtils;
 import orm.mapping.OneToOne;
 
 import java.lang.reflect.Field;
@@ -16,7 +17,7 @@ public class OneToOneFieldOnGetting {
             for (String column : columns) {
                 Field relatedField = targetEntity.getDeclaredField(column);
                 relatedField.setAccessible(true);
-                relatedField.set(relatedEntity, rs.getObject(column));
+                relatedField.set(relatedEntity, rs.getObject(ColumnUtils.toSnakeCase(column)));
             }
             field.set(entity, relatedEntity);
         }
