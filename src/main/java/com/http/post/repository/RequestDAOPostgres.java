@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class RequestDAOPostgres extends BaseORM<Request> {
+
     public RequestDAOPostgres() {
         super(Request.class);
     }

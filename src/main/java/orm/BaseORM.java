@@ -4,9 +4,7 @@ import com.http.post.model.Entity;
 import com.http.post.repository.DAO;
 import com.http.post.utils.DBManager;
 import com.http.post.utils.bussiness.exceptions.*;
-import orm.handlers.OneToManyFieldOnCreation;
-import orm.handlers.OneToOneFieldOnCreation;
-import orm.handlers.OneToOneFieldOnUpdating;
+import orm.handlers.*;
 import orm.mappers.MapQueryResult;
 import orm.mapping.OneToMany;
 import orm.mapping.OneToOne;
@@ -36,6 +34,7 @@ public abstract class BaseORM<T extends Entity> implements DAO<T> {
         String sql = SQLBuilder.buildInsert(type, entity, values);
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            this.conn = conn;
             addValuesOnPreparedStatement(values, ps);
             ps.executeUpdate();
             addPersistedResult(type, entity, ps);
@@ -67,7 +66,8 @@ public abstract class BaseORM<T extends Entity> implements DAO<T> {
             ps.setLong(values.size() + 1, id);
             ps.executeUpdate();
             OneToOneFieldOnUpdating.handle(conn, entity, type);
-            //TODO update one to many fields
+            OneToManyFieldOnDeletion.handle(conn, entity, type);
+            OneToManyFieldOnUpdating.handle(conn, entity, type);
             conn.commit();
         }  catch (Exception e) {
             e.printStackTrace();
@@ -98,12 +98,12 @@ public abstract class BaseORM<T extends Entity> implements DAO<T> {
         return Optional.empty();
     }
 
-    public void delete(Long id) throws DeletionException {
+    public int delete(Long id) throws DeletionException {
         String sql = "DELETE FROM " + type.getSimpleName().toLowerCase() + " WHERE id = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
-            ps.executeUpdate();
+            return ps.executeUpdate();
         } catch (SQLException e) {
             throw new DeletionException(e.getMessage());
         }

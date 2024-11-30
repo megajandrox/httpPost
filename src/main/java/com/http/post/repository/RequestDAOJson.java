@@ -31,12 +31,13 @@ public class RequestDAOJson extends JsonManager<Request> implements DAO<Request>
     }
 
     @Override
-    public void delete(Long id) throws DeletionException {
+    public int delete(Long id) throws DeletionException {
         try {
             removeObject(readAll(Request.class), request -> request.getId().equals(id));
         } catch (SearchException e) {
             throw new DeletionException("There was an error deleting the object");
         }
+        return 1;
     }
 
     @Override

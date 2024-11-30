@@ -2,9 +2,8 @@ package orm;
 
 import com.http.post.model.Entity;
 import com.http.post.utils.bussiness.exceptions.CreateException;
+import com.http.post.utils.bussiness.exceptions.DeletionException;
 import com.http.post.utils.bussiness.exceptions.UpdateException;
-import orm.mapping.OneToMany;
-import orm.mapping.OneToOne;
 import orm.sql.SQLBuilder;
 
 import java.lang.reflect.Field;
@@ -35,7 +34,7 @@ public class GenericDao<T extends Entity> extends BaseORM<T> {
         }
     }
 
-    public void update(T entity, Connection conn) throws UpdateException {
+    public int update(T entity, Connection conn) throws UpdateException {
         List<Object> values = new ArrayList<>();
         String sql = SQLBuilder.buildUpdate(type, entity, values,f-> !f.getName().equalsIgnoreCase("requestId"), "requestId");
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -44,9 +43,20 @@ public class GenericDao<T extends Entity> extends BaseORM<T> {
             idField.setAccessible(true);
             long parentId = (long) idField.get(entity);
             ps.setLong(values.size() + 1, parentId);
-            ps.executeUpdate();
+            System.out.println(ps);
+            return ps.executeUpdate();
         } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
             throw new UpdateException(e.getMessage());
+        }
+    }
+
+    public int delete(Long id, Connection conn) throws DeletionException {
+        String sql = "DELETE FROM " + type.getSimpleName().toLowerCase() + " WHERE request_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DeletionException(e.getMessage());
         }
     }
 

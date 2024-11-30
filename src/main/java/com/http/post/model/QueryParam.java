@@ -1,6 +1,6 @@
 package com.http.post.model;
 
-public class QueryParam implements HttpRequestComponent {
+public class QueryParam extends Entity implements HttpRequestComponent {
 
     private String key;
     private String value;

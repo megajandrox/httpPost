@@ -30,7 +30,7 @@ public class OneToManyFieldOnGetting {
                         Object relatedEntity = targetEntity.getDeclaredConstructor().newInstance();
                         for (Field relatedField : targetEntity.getDeclaredFields()) {
                             relatedField.setAccessible(true);
-                            relatedField.set(relatedEntity, relatedRs.getObject(relatedField.getName()));
+                            relatedField.set(relatedEntity, relatedRs.getObject(ColumnUtils.toSnakeCase(relatedField.getName())));
                         }
                         relatedEntities.add(relatedEntity);
                     }

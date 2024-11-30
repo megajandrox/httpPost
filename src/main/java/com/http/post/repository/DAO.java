@@ -10,6 +10,6 @@ public interface DAO<T extends Entity> {
     void create(T entity) throws CreateException;
     Optional<T> get(Long id) throws GetException;
     void update(T entity) throws UpdateException;
-    void delete(Long id) throws DeletionException;
+    int delete(Long id) throws DeletionException;
     List<T> getAll() throws SearchException;
 }
