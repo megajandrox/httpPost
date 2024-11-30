@@ -1,5 +1,6 @@
 package orm.handlers;
 
+import orm.ColumnUtils;
 import orm.mapping.OneToMany;
 
 import java.lang.reflect.Field;
@@ -19,7 +20,7 @@ public class OneToManyFieldOnGetting {
         if (field.isAnnotationPresent(OneToMany.class)) {
             OneToMany annotation = field.getAnnotation(OneToMany.class);
             Class<?> targetEntity = annotation.targetEntity();
-            String foreignKey = annotation.mappedBy();
+            String foreignKey = ColumnUtils.toSnakeCase(annotation.mappedBy());
             String relatedSql = getSelectFrom(targetEntity, foreignKey);
             List<Object> relatedEntities = new ArrayList<>();
             try (PreparedStatement ps = conn.prepareStatement(relatedSql)) {

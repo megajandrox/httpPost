@@ -23,9 +23,9 @@ public class Request extends Entity implements Serializable {
     private Method method;
     @OneToOne(targetEntity = Body.class, columns = {"content", "contentType"}, name = "body", mappedBy = "requestId")
     private Body body;
-    @OneToMany(targetEntity = Header.class, mappedBy = "request_id")
+    @OneToMany(targetEntity = Header.class, mappedBy = "requestId")
     private List<Header> headers = new ArrayList<>();
-    @OneToMany(targetEntity = QueryParam.class, mappedBy = "request_id")
+    @OneToMany(targetEntity = QueryParam.class, mappedBy = "requestId")
     private List<QueryParam> queryParams = new ArrayList<>();
     private Boolean isFavorite = true;
 

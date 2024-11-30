@@ -4,6 +4,7 @@ import com.http.post.model.Entity;
 import com.http.post.repository.DAO;
 import com.http.post.utils.DBManager;
 import com.http.post.utils.bussiness.exceptions.*;
+import orm.handlers.OneToManyFieldOnCreation;
 import orm.handlers.OneToOneFieldOnCreation;
 import orm.handlers.OneToOneFieldOnUpdating;
 import orm.mappers.MapQueryResult;
@@ -39,7 +40,7 @@ public abstract class BaseORM<T extends Entity> implements DAO<T> {
             ps.executeUpdate();
             addPersistedResult(type, entity, ps);
             OneToOneFieldOnCreation.handle(conn, entity, type);
-            //TODO create one to many fields
+            OneToManyFieldOnCreation.handle(conn, entity, type);
             conn.commit();
         } catch (Exception e) {
             e.printStackTrace();
