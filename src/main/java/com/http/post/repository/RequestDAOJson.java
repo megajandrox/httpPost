@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class RequestDAOJson extends JsonManager<Request> implements DAO2<Request> {
+public class RequestDAOJson extends JsonManager<Request> implements DAO<Request> {
 
     public RequestDAOJson() {
         super("resquest");

@@ -2,7 +2,6 @@ package com.http.post.service;
 
 import com.http.post.model.Request;
 import com.http.post.repository.DAO;
-import com.http.post.repository.DAO2;
 import com.http.post.utils.bussiness.exceptions.*;
 
 import java.util.List;
@@ -10,9 +9,9 @@ import java.util.Optional;
 
 public class RequestService {
 
-    private DAO2<Request> requestDAO;
+    private DAO<Request> requestDAO;
 
-    public RequestService(DAO2<Request> requestDAO) {
+    public RequestService(DAO<Request> requestDAO) {
         this.requestDAO = requestDAO;
     }
 

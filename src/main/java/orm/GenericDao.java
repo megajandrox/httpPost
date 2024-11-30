@@ -37,7 +37,7 @@ public class GenericDao<T extends Entity> extends BaseORM<T> {
 
     public void update(T entity, Connection conn) throws UpdateException {
         List<Object> values = new ArrayList<>();
-        String sql = SQLBuilder.buildUpdate(type, entity, values,f-> !f.getName().equalsIgnoreCase("requestId"), "requestid");
+        String sql = SQLBuilder.buildUpdate(type, entity, values,f-> !f.getName().equalsIgnoreCase("requestId"), "requestId");
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             addValuesOnPreparedStatement(values, ps);
             Field idField = getFieldFromHierarchy(entity.getClass(), "requestId");

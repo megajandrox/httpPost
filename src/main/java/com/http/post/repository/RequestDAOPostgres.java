@@ -1,131 +1,89 @@
 package com.http.post.repository;
 
+import com.http.post.model.Body;
+import com.http.post.model.Method;
 import com.http.post.model.Request;
-import com.http.post.utils.DBManager;
-import com.http.post.utils.bussiness.exceptions.*;
-import com.http.post.utils.exceptions.DBOperationManager;
-import com.http.post.utils.exceptions.SQLActionException;
+import com.http.post.utils.bussiness.exceptions.GetException;
+import com.http.post.utils.bussiness.exceptions.SearchException;
+import orm.BaseORM;
+import orm.ColumnUtils;
+import orm.mappers.MapQueryResult;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import static com.http.post.model.RequestParser.parse;
-
-@Deprecated
-public class RequestDAOPostgres implements DAO<Request> {
-
-    @Override
-    public void create(Request request) throws CreateException {
-        String url = request.getUrl();
-        String method = request.getMethod().toString();
-        String json = request.toJson();
-        String isFavorite = request.getFavorite() ? "TRUE" : "FALSE";
-        Connection c = DBManager.connect();
-        try {
-            DBOperationManager.getInstance().trySqlAction(c, () -> {
-                Statement s = c.createStatement();
-                String sql = "INSERT INTO request (url, method, json_data, is_favorite) VALUES ('" + url + "', '" + method + "', '" + json + "', " + isFavorite + ")";
-                int result = s.executeUpdate(sql);
-                request.setId((long) result);
-                c.commit();
-                return java.util.Optional.empty();
-            }, c::rollback);
-        } catch (SQLActionException e) {
-            String msgError = "There was an error inserting the request";
-            System.err.println(msgError);
-            throw new CreateException(msgError);
-        }
+public class RequestDAOPostgres extends BaseORM<Request> {
+    public RequestDAOPostgres() {
+        super(Request.class);
     }
 
-    @Override
-    public Optional<Request> get(Request request) throws GetException {
-        Connection c = DBManager.connect();
-        try {
-            Optional<Request> optResult = DBOperationManager.getInstance().trySqlAction(c, () -> {
-                String sql = "SELECT * FROM request WHERE url = '" + request.getUrl() + "' AND method = '" + request.getMethod().toString() + "'";
-                Statement s = c.createStatement();
-                ResultSet rs = s.executeQuery(sql);
-                if (rs.next()) {
-                    Request requestFromDB = parse(rs.getString("json_data"));
-                    requestFromDB.setId(rs.getLong("id"));
-                    return Optional.of(requestFromDB);
-                }
-                return Optional.empty();
-            }, c::rollback);
-            return optResult;
-        } catch (SQLActionException e) {
-            String msgError = "There was an error updating the request";
-            System.err.println(msgError);
-            throw new GetException(msgError);
-        }
-    }
-
-    @Override
-    public void update(Request request) throws UpdateException {
-        Long id = request.getId();
-        String url = request.getUrl();
-        String method = request.getMethod().toString();
-        String isFavorite = request.getFavorite() ? "TRUE" : "FALSE";
-        Connection c = DBManager.connect();
-        try {
-            DBOperationManager.getInstance().trySqlAction(c, () -> {
-                String sql = "UPDATE request set url = '" + url + "', method = '" + method + "', json_data = '" + request.toJson() + "', is_favorite = " + isFavorite + " WHERE  id = " + id;
-                Statement s = c.createStatement();
-                s.executeUpdate(sql);
-                c.commit();
-                return java.util.Optional.empty();
-            }, c::rollback);
-        } catch (SQLActionException e) {
-            String msgError = "There was an error updating the request";
-            System.err.println(msgError);
-            throw new UpdateException(msgError);
-        }
-    }
-
-    @Override
-    public void delete(Long id) throws DeletionException {
-        Connection c = DBManager.connect();
-        try {
-            DBOperationManager.getInstance().trySqlAction(c, () -> {
-                String sql = "DELETE FROM request WHERE id = " + id ;
-                Statement s = c.createStatement();
-                s.executeUpdate(sql);
-                c.commit();
-                return java.util.Optional.empty();
-            }, c::rollback);
-        } catch (SQLActionException e) {
-            String msgError = "There was an error deleting the request";
-            System.err.println(msgError);
-            throw new DeletionException(msgError);
-        }
-    }
-
-    @Override
     public List<Request> getAll() throws SearchException {
-        List<Request> result = new ArrayList<>();
-        Connection c = DBManager.connect();
-        try {
-            DBOperationManager.getInstance().trySqlAction(c, () -> {
-                String sql = "SELECT * FROM request";
-                Statement s = c.createStatement();
-                ResultSet rs = s.executeQuery(sql);
-                while (rs.next()) {
-                    String json = rs.getString("json_data");
-                    Request request = parse(json);
-                    request.setId(rs.getLong("id"));
-                    result.add(request);
-                }
-                return Optional.empty();
-            }, c::rollback);
-        } catch (SQLActionException e) {
-            String msgError = "There was an error getting the customer";
-            System.err.println(msgError);
-            throw new SearchException(msgError);
+        String sql = "SELECT \n" +
+                "    r.id AS request_id,\n" +
+                "    r.url,\n" +
+                "    r.method,\n" +
+                "    r.is_favorite,\n" +
+                "    b.id AS body_id,\n" +
+                "    b.content,\n" +
+                "    b.content_type\n" +
+                "FROM \n" +
+                "    Request r\n" +
+                "LEFT JOIN \n" +
+                "    Body b ON r.id = b.request_id;";
+        System.out.println(sql);
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            return MapQueryResult.addQueryResult(type, ps, conn);
+        } catch (Exception e) {
+            throw new SearchException(e.getMessage());
         }
-        return result;
+    }
+
+    public Optional<Request> get(Long id) throws GetException {
+        String sql = "SELECT \n" +
+                "    r.id AS request_id, \n" +
+                "    r.url, \n" +
+                "    r.method, \n" +
+                "    r.is_favorite, \n" +
+                "    b.id AS body_id, \n" +
+                "    b.content, \n" +
+                "    b.content_type \n" +
+                "FROM \n" +
+                "    Request r\n" +
+                "LEFT JOIN \n" +
+                "    Body b ON r.id = b.request_id\n" +
+                "WHERE \n" +
+                "    r.id = ?;";
+        System.out.println(sql);
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Request request = new Request(
+                            rs.getString("url"),
+                            Method.valueOf(rs.getString("method").toUpperCase())
+                    );
+                    request.setFavorite(rs.getBoolean("is_favorite"));
+                    request.setId(rs.getLong("request_id"));
+
+                    // Map Body if available
+                    if (rs.getString("content") != null) {
+                        Body body = new Body(rs.getString(ColumnUtils.toSnakeCase("contentType")), rs.getString("content"));
+                        body.setId(rs.getLong("body_id"));
+                        request.setBody(body);
+                    }
+                    return Optional.of(request);
+                }
+            }
+        } catch (SQLException e) {
+            throw new GetException(e.getMessage());
+        }
+        return Optional.empty();
     }
 }

@@ -1,7 +1,7 @@
 package orm;
 
 import com.http.post.model.Entity;
-import com.http.post.repository.DAO2;
+import com.http.post.repository.DAO;
 import com.http.post.utils.DBManager;
 import com.http.post.utils.bussiness.exceptions.*;
 import orm.handlers.OneToOneFieldOnCreation;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import static orm.PreparedStatementUtils.addValuesOnPreparedStatement;
 import static orm.ResultSetUtils.addPersistedResult;
 
-public abstract class BaseORM<T extends Entity> implements DAO2<T> {
+public abstract class BaseORM<T extends Entity> implements DAO<T> {
     protected final Class<T> type;
     private Connection conn;
     public BaseORM(Class<T> type) {

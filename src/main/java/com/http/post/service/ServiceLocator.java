@@ -1,7 +1,7 @@
 package com.http.post.service;
 
 import com.http.post.repository.RequestDAOJson;
-import com.http.post.repository.RequestDAOPostgresV2;
+import com.http.post.repository.RequestDAOPostgres;
 
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ public class ServiceLocator {
         return INSTANCE;
     }
 
-    private RequestService requestService = new RequestService(new RequestDAOPostgresV2());
+    private RequestService requestService = new RequestService(new RequestDAOPostgres());
 
 
     private ServiceLocator() {
@@ -24,7 +24,7 @@ public class ServiceLocator {
         if (Objects.requireNonNull(selector) == DBType.JSON) {
             requestService = new RequestService(new RequestDAOJson());
         } else {
-            requestService = new RequestService(new RequestDAOPostgresV2());
+            requestService = new RequestService(new RequestDAOPostgres());
         }
     }
 

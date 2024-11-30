@@ -34,14 +34,14 @@ public class SQLBuilder {
         List<String> fields = new ArrayList<>();
         Arrays.stream(type.getDeclaredFields()).filter(filter).forEach(field -> {
             field.setAccessible(true);
-            fields.add(field.getName() + " = ?");
+            fields.add(ColumnUtils.toSnakeCase(field.getName()) + " = ?");
             try {
                 values.add(field.get(entity));
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
         });
-        sql.append(String.join(", ", fields)).append(format(" WHERE %s = ? ", idFieldName));
+        sql.append(String.join(", ", fields)).append(format(" WHERE %s = ? ", ColumnUtils.toSnakeCase(idFieldName)));
         return sql.toString();
     }
 
