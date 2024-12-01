@@ -56,12 +56,22 @@ public abstract class BaseORM<T extends Entity> implements DAO<T> {
 
     public int delete(Long id) throws DeletionException {
         String sql = "DELETE FROM " + type.getSimpleName().toLowerCase() + " WHERE id = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        Connection conn = getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
-            return ps.executeUpdate();
+            int executed = ps.executeUpdate();
+            conn.commit();
+            return executed;
         } catch (SQLException e) {
             throw new DeletionException(e.getMessage());
+        } finally {
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new DeletionException(e.getMessage());
+            }
         }
     }
 
