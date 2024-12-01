@@ -17,13 +17,13 @@ public class PostStrategy implements RequestStrategy {
         StringBuilder headerSB = request.getHeaders().stream().map(kv -> kv.getKey() + ":" + kv.getValue()).collect(StringBuilder::new, StringBuilder::append, StringBuilder::append);
         StringBuilder qpSB = request.getQueryParams().stream().map(kv -> kv.getKey() + ":" + kv.getValue()).collect(StringBuilder::new, StringBuilder::append, StringBuilder::append);
         if(request.getBody() != null) {
-            System.out.println(request.getBody().getContent());
+            //System.out.println(request.getBody().getContent());
             entity.setContent(InputStreamUtils.convertStringToInputStream(request.getBody().getContent()));
             entity.setContentType(request.getBody().getContentType());
             requestBase.setEntity(entity);
         }
-        System.out.println(headerSB);
-        System.out.println(qpSB);
+        //System.out.println(headerSB);
+        //System.out.println(qpSB);
         return addHeaders(requestBase, request);
     }
 }

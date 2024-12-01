@@ -13,13 +13,12 @@ public class MainPanel extends JPanel {
     private final RequestTopPanel requestTopPanel;
     private List<EntityJPanel> entityJPanels = new ArrayList<>();
     private TextPanel bodyPanel;
-    private final TextPanel responsePanel;
     private JTabbedPane jTabbedPane;
+    private JTabbedPane jTabbedPaneImg;
 
     public MainPanel(List<EntityTableModel> tableModels) {
         super(new BorderLayout());
         this.requestTopPanel = new RequestTopPanel();
-        requestTopPanel.setBorder(BorderFactory.createTitledBorder("URL"));
         add(requestTopPanel, BorderLayout.NORTH);
         this.jTabbedPane = new JTabbedPane();
         this.bodyPanel = new TextPanel("Body", true, BorderLayout.CENTER);
@@ -30,8 +29,11 @@ public class MainPanel extends JPanel {
             jTabbedPane.add(panel, panel.getTableName());
         });
         add(jTabbedPane, BorderLayout.CENTER);
-        this.responsePanel = new TextPanel("Response", false, BorderLayout.SOUTH);
-        add(responsePanel, BorderLayout.SOUTH);
+        this.jTabbedPaneImg = new JTabbedPane();
+        jTabbedPaneImg.add("Response Body", new TextPanel("Response", false, BorderLayout.SOUTH));
+        jTabbedPaneImg.add("Image", new ImagePanel("Image", false, BorderLayout.SOUTH));
+        jTabbedPaneImg.add("Response Protocol", new ProtocolTextPanel("Protocol", false, BorderLayout.SOUTH));
+        add(jTabbedPaneImg, BorderLayout.SOUTH);
     }
 
     public List<EntityJPanel> getEntityJPanels() {
@@ -46,11 +48,11 @@ public class MainPanel extends JPanel {
         return requestTopPanel;
     }
 
-    public TextPanel getResponsePanel() {
-        return responsePanel;
-    }
-
     public JTabbedPane getJTabbedPane() {
         return jTabbedPane;
+    }
+
+    public JTabbedPane getJTabbedPaneImg() {
+        return jTabbedPaneImg;
     }
 }

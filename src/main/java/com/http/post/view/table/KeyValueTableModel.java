@@ -11,7 +11,7 @@ public class KeyValueTableModel extends EntityTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        KeyValue item = (KeyValue) this.content.get(rowIndex);
+        KeyValue item = this.content.get(rowIndex);
         switch (columnIndex) {
             case KEY:
                 return item.getKey();

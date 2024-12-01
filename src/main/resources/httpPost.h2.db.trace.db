@@ -1,3 +1,0 @@
-2024-10-15 21:13:14 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "REQUEST" not found; SQL statement:
-SELECT * FROM request [42102-200]

@@ -2,7 +2,6 @@ package com.http.post.controller.listener;
 
 import com.http.post.view.ViewManager;
 import com.http.post.view.panel.EntityJPanel;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

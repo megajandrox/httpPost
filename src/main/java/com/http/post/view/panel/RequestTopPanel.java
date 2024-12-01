@@ -1,23 +1,22 @@
 package com.http.post.view.panel;
 
-import com.http.post.view.model.RequestData;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
 public class RequestTopPanel extends JPanel {
 
-    private final JComboBox<RequestData> urlField = new JComboBox<>(new RequestData[] {new RequestData("https://jsonplaceholder.typicode.com/users/1", "GET", "")});
+    private final TextField urlField = new TextField();
 
     private static final JComboBox<String> methodDropdown = new JComboBox<>(new String[] {"GET", "POST", "PUT", "DELETE"});
     private final JButton sendButton;
-    private final JButton clearButton;
-    private final JButton saveButton;
+    private final JButton deleteButton;
+    private final JButton updateButton;
+    private final JButton addButton;
     private final JButton favoriteButton;
 
     public String getUrl() {
-        return urlField.getSelectedIndex() == 0 ? "https://jsonplaceholder.typicode.com/users/1" : Objects.requireNonNull(urlField.getSelectedItem()).toString();
+        return Objects.requireNonNull(urlField.getText());
     }
 
     public String getMethod() {
@@ -34,15 +33,17 @@ public class RequestTopPanel extends JPanel {
         add(urlField);
         this.sendButton = new JButton("Send");
         this.add(sendButton);
-        this.saveButton = new JButton("Save");
-        this.add(saveButton);
+        this.addButton = new JButton("Add");
+        this.add(addButton);
+        this.updateButton = new JButton("Update");
+        this.add(updateButton);
         this.favoriteButton = new JButton("Favorite");
         this.add(favoriteButton);
-        this.clearButton = new JButton("Clear");
-        this.add(clearButton);
+        this.deleteButton = new JButton("Delete");
+        this.add(deleteButton);
     }
 
-    public JComboBox<RequestData> getUrlField() {
+    public TextField getUrlField() {
         return urlField;
     }
 
@@ -54,15 +55,19 @@ public class RequestTopPanel extends JPanel {
         return sendButton;
     }
 
-    public JButton getClearButton() {
-        return clearButton;
+    public JButton getDeleteButton() {
+        return deleteButton;
     }
 
-    public JButton getSaveButton() {
-        return saveButton;
+    public JButton getUpdateButton() {
+        return updateButton;
     }
 
     public JButton getFavoriteButton() {
         return favoriteButton;
+    }
+
+    public JButton getAddButton() {
+        return addButton;
     }
 }
