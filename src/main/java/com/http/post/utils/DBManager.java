@@ -23,7 +23,7 @@ public class DBManager {
 	private static final String SCHEMA = "schema";
 
 	static {
-		try (InputStream input = DBManager.class.getClassLoader().getResourceAsStream("dev.database.properties")) {
+		try (InputStream input = DBManager.class.getClassLoader().getResourceAsStream("database.properties")) {
 			if (input == null) {
 				System.err.println("Please create a database.properties file in the resources folder");
 				System.exit(0);
